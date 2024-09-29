@@ -1,0 +1,43 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="100.014" height="100.014" viewBox="0 0 1055 1055">
+  <defs>
+    <style>
+      .cls-1 {
+        fill: #282c31;
+      }
+
+      .cls-1, .cls-2, .cls-3 {
+        stroke: #000;
+        stroke-width: 1px;
+      }
+
+      .cls-2, .cls-3, .cls-4, .cls-5 {
+        fill-rule: evenodd;
+      }
+
+      .cls-3 {
+        fill: #ef4c38;
+      }
+
+      .cls-4, .cls-5 {
+        fill: none;
+      }
+
+      .cls-4 {
+        stroke: #282c31;
+        stroke-width: 4.68px;
+      }
+
+      .cls-5 {
+        stroke: #fff;
+        stroke-width: 8px;
+      }
+    </style>
+  </defs>
+  <rect id="Retângulo_4" data-name="Retângulo 4" class="cls-1" x="-92" y="-87" width="1239" height="1279"/>
+  <path id="Retângulo_4-2" data-name="Retângulo 4" class="cls-2" d="M85,86H969V969H85V86Zm0,0H969V969H85V86Z"/>
+  <image id="Retângulo_4-3" data-name="Retângulo 4" x="85" y="86" width="884" height="883" xlink:href="data:img/png;base64,iVBORw0KGgoAAAANSUhEUgAAAFQAAABUCAYAAAAcaxDBAAAA9ElEQVR4nO3dMRECQRREwc8W6RpACSLw7wBSgjNAnYcOKHjtYJ6Bubwf9+fM7IlwXGfmVkpmr7Pqj4z5Bsf69wJaQbGCYgXFCooVFCsoVlCsoFhBsYJiBcUKihUUKyhWUKygWEGxgmIFxQqKFRQrKFZQrKBYQbGCYgXFCooVFCsoVlCsoFhBsYJiBcUKihUUKyhWUKygWEGxgmIFxQqKFRQrKFZQrKBYQbGCYgXFCooVFCsoVlCsoFhBsYJiBcUKihUUKyhWUKygWEGxgmIFxQqKFRQrKFZQrKBYQbGCYgXFCooVFCsotnr7ovb5+PUqKjJzfADhQQgRLfJf8wAAAABJRU5ErkJggg=="/>
+  <path id="Forma_3" data-name="Forma 3" class="cls-2" d="M248.643,298.1L15.23,754.8l1026.61-10.332-236.516-447.4ZM1217.41,52.184"/>
+  <path id="Forma_1" data-name="Forma 1" class="cls-3" d="M14.094,756.783h21.08L275.482,301.315l-12.647-3.163Zm152.828-8.435,171.8-451.25,14.755,3.163L188,748.348h-21.08Zm147.558,0,20.026,1.054,98.02-449.141-14.756-1.055ZM491.627,299.53l-37.2,453.491,148.808-2.66L575.331,298.2Zm146.427-3.487,94.858,452.3,20.026,3.163L649.647,294.989Zm82.21,6.326L874.146,750.457h24.242L735.02,300.261ZM1025.92,750.457l16.86-5.272L804.291,299.133,786.734,298.1ZM11.986,761L1047,757.837M105.083,570.88L13.164,751.7"/>
+  <path id="Forma_4" data-name="Forma 4" class="cls-4" d="M64,749L290,299l31,1L122,750h96L368,302l37,1L275,750l81,2,88-451h33L426,750H641L592,301h30l80,447,77,1L667,300l29,1L840,748l83-2L750,300l27-1L997,746"/>
+  <path id="Forma_2" data-name="Forma 2" class="cls-5" d="M8,755.68l1039-6.649L807.844,295.54l-559.359,1.33ZM63,752"/>
+</svg>

@@ -1,105 +1,189 @@
-import React, {useState, useRef, useEffect} from 'react';
-import './MapViewer.css'; // Importar o arquivo CSS
-import MapSelector from '../MapSelector'; // Importar o seletor de mapas
+import React, {useEffect, useRef, useState} from 'react';
+import './MapViewer.css';
+import MapSelector from '../MapSelector';
 import {R6Map} from "../models/R6Map";
 import {AllMaps} from "../models/AllMaps";
 import {MapLevel} from "../models/MapLevel";
 import {BombSite} from "../models/BombSite";
-import {FaRegArrowAltCircleUp} from "react-icons/fa";
 import {WallDirection} from "../models/WallDirection";
-import {FaArrowsSpin} from "react-icons/fa6";
+import BombIcon from "./icons/BombIcon";
+import HatchIcon from "./icons/HatchIcon";
+import WallReinforcementIcon from "./icons/WallReinforcementIcon";
+import WallDestructionIcon from "./icons/WallDestructionIcon";
 import {WallDestruction} from "../models/WallDestruction";
 import {WallDestructionType} from "../models/WallDestructionType";
-import { GiHeadshot } from "react-icons/gi";
-
+import ControlPanel from '../../components/ControlPanel';
+import {WallReinforcement} from "../models/WallReinforcement";
+import {Hatch} from "../models/Hatch";
 
 const MapViewer: React.FC = () => {
     const allMaps: AllMaps = new AllMaps();
     const [selectedMap, setSelectedMap] = useState<R6Map>(allMaps.getAllMaps()[0]);
     const [selectedLevel, setSelectedLevel] = useState<MapLevel>(allMaps.getAllMaps()[0].levels[0]);
     const [selectedBombSite, setSelectedBombSite] = useState<BombSite>(allMaps.getAllMaps()[0].bombSites[0]);
-    const [iconSize, setIconSize] = useState(30); // Tamanho inicial dos ícones
-    const [containerWidth, setContainerWidth] = useState(85); // Inicial width em %
+    const [iconSize, setIconSize] = useState(30);
+    const [containerWidth, setContainerWidth] = useState(85);
+    const [dynamicWallDestructions, setDynamicWallDestructions] = useState<WallDestruction[]>([]);
+    const [dynamicWallReinforcement, setDynamicWallReinforcement] = useState<WallReinforcement[]>([]);
+    const [dynamicHatch, setDynamicHatch] = useState<Hatch[]>([]);
+    const [isPlacingItem, setIsPlacingItem] = useState(false);
+    const [itemPlacingType, setItemPlacingType] = useState<string>('');
+    const [mousePosition, setMousePosition] = useState<{ x: number, y: number } | null>(null);
+    const [itemDirection, setItemDirection] = useState<WallDirection>(WallDirection.N);
+    const xAdjustment = -5;
+    const yAdjustment = -15;
 
-    const mapImageRef = useRef<HTMLImageElement>(null); // Referência para a imagem do mapa
-    const iconContainerRef = useRef<HTMLDivElement>(null); // Referência para o contêiner dos ícones
+    const mapImageRef = useRef<HTMLImageElement>(null);
+    const iconContainerRef = useRef<HTMLDivElement>(null);
 
-    // Função para atualizar o mapa selecionado
-    const handleSelectMap = (r6Map: R6Map) => {
-        const map = allMaps.getMapByName(r6Map.name);
+    const handleMouseMove = (event: React.MouseEvent<HTMLImageElement>) => {
+        if (mapImageRef.current) {
+            const rect = mapImageRef.current.getBoundingClientRect();
+            const x = event.clientX - rect.left;
+            const y = event.clientY - rect.top;
+            setMousePosition({ x, y });
+        }
+    };
+
+    const handleMouseRoll = (event: React.WheelEvent<HTMLImageElement>) => {
+        if (isPlacingItem) {
+            if (event.deltaY < 0) {
+                setItemDirection(WallDirection.getNext(itemDirection));
+            } else {
+                setItemDirection(WallDirection.getPrevious(itemDirection));
+            }
+        }
+    };
+
+    const handleMapClick = (event: React.MouseEvent<HTMLImageElement>) => {
+        if (isPlacingItem && mapImageRef.current && mousePosition) {
+            const rect = mapImageRef.current.getBoundingClientRect();
+            const x = (event.clientX - rect.left) * 100 / (mapImageRef.current.width || 1);
+            const y = (event.clientY - rect.top) * 100 / (mapImageRef.current.height || 1);
+            const adjustedX = (mousePosition.x + xAdjustment) * 100 / rect.width;
+            const adjustedY = (mousePosition.y + yAdjustment) * 100 / rect.height;
+            const floor = selectedLevel.floor;
+
+            const destructionTypes: Record<string, WallDestructionType> = {
+                head: WallDestructionType.HeadHeight,
+                rotation: WallDestructionType.Rotation,
+                foot: WallDestructionType.FootHeight,
+                vault: WallDestructionType.Vault
+            };
+
+            if (itemPlacingType in destructionTypes) {
+                setDynamicWallDestructions([...dynamicWallDestructions, new WallDestruction(adjustedX, adjustedY, floor, itemDirection, destructionTypes[itemPlacingType])]);
+            }
+
+            if (itemPlacingType === 'reinforcement') {
+                setDynamicWallReinforcement([...dynamicWallReinforcement, new WallReinforcement(adjustedX, adjustedY, floor, itemDirection)]);
+            }
+
+            if (itemPlacingType === 'hatch') {
+                setDynamicHatch([...dynamicHatch, new Hatch(adjustedX, adjustedY, floor)]);
+            }
+
+            setItemPlacingType('');
+            setIsPlacingItem(false);
+        }
+    };
+
+
+
+    const handleAddFootHeightWallDestruction = () => {
+        setItemPlacingType('foot')
+        setIsPlacingItem(true);
+    }
+    const handleAddWallRotation = () => {
+        setItemPlacingType('rotation')
+        setIsPlacingItem(true);
+    };
+    const handleAddWallHeadHeight = () => {
+        setItemPlacingType('head')
+        setIsPlacingItem(true);
+    };
+    const handleAddWallVault = () => {
+        setItemPlacingType('vault')
+        setIsPlacingItem(true);
+    };
+    const handleAddWallReinforcement = () => {
+        setItemPlacingType('reinforcement')
+        setIsPlacingItem(true);
+    };
+    const handleAddHatchReinforcement = () => {
+        setItemPlacingType('hatch')
+        setIsPlacingItem(true);
+    };
+
+    const saveConfiguration = () => {
+        const configuration = {
+            map: selectedMap.name,
+            level: selectedLevel.floor,
+            bombSites: selectedMap.bombSites,
+            wallDestructions: dynamicWallDestructions,
+            wallReinforcements: dynamicWallReinforcement, // Adiciona os reforços de parede
+            hatches: dynamicHatch, // Adiciona os hatches
+        };
+
+        const json = JSON.stringify(configuration, null, 2);
+        // Aqui você pode salvar o JSON em um arquivo ou em localStorage, por exemplo:
+        console.log(json);
+    };
+
+    const loadConfiguration = (data: string) => {
+        const configuration = JSON.parse(data);
+
+        // Atualizar o estado com a configuração carregada
+        const map = allMaps.getAllMaps().find(m => m.name === configuration.map);
         if (map) {
             setSelectedMap(map);
-            setSelectedLevel(map.levels[0]); // Resetar o andar ao selecionar um novo mapa
+            setSelectedLevel(map.getMapLevelByFloor(configuration.level));
+            setSelectedBombSite(map.bombSites[0]); // Você pode querer escolher um bomb site específico
+
+            const wallDestructions = configuration.wallDestructions.map((wd: any) =>
+                new WallDestruction(wd.x, wd.y, wd.floor, wd.direction, wd.type)
+            );
+            setDynamicWallDestructions(wallDestructions);
+
+            const wallReinforcements = configuration.wallReinforcements.map((wr: any) =>
+                new WallReinforcement(wr.x, wr.y, wr.floor, wr.direction)
+            );
+            setDynamicWallReinforcement(wallReinforcements);
+
+            const hatches = configuration.hatches.map((h: any) =>
+                new Hatch(h.x, h.y, h.floor)
+            );
+            setDynamicHatch(hatches);
         }
     };
 
-    const handleSelectLevel = (mapLevel: MapLevel) => {
-        setSelectedLevel(mapLevel);
-    };
 
-    const handleSelectBombSite = (site: BombSite) => {
-        setSelectedBombSite(site);
-    };
-
-    const getRotation = (direction: string) => {
-        switch (direction) {
-            case WallDirection.N.toString():
-                return '0'
-            case WallDirection.E.toString():
-                return '90deg'
-            case WallDirection.W.toString():
-                return '-0.25turn'
-            case WallDirection.S.toString():
-                return '3.142rad'
-        }
-    }
-
-
-    // Atualizar o tamanho dos ícones baseado no tamanho da imagem do mapa
     useEffect(() => {
         const updateIconSize = () => {
             if (mapImageRef.current) {
                 const imageWidth = mapImageRef.current.offsetWidth;
-                // Definir o tamanho dos ícones como 5% do tamanho da largura da imagem
-                const newSize = Math.max(imageWidth * 0.05, 20); // Tamanho mínimo de 20px
+                const newSize = Math.max(imageWidth * 0.05, 20);
                 setIconSize(newSize);
             }
         };
 
-        // Chamar quando a janela for redimensionada ou a imagem for carregada
         window.addEventListener('resize', updateIconSize);
-        updateIconSize(); // Chamar ao montar o componente
+        updateIconSize();
 
         return () => {
             window.removeEventListener('resize', updateIconSize);
         };
     }, [containerWidth]);
 
-    // Obtendo o mapa selecionado baseado no mapa e nível escolhidos
     const displayedMap = selectedMap?.getMapLevelByFloor(selectedLevel?.floor.valueOf() as string);
 
     return (
-        <div>
-            <div className="slider-container">
-                <input
-                    type="range"
-                    min="85"
-                    max="200"
-                    value={containerWidth}
-                    onChange={(e) => setContainerWidth(parseInt(e.target.value))}
-                    className="slider"
-                    id="widthSlider"
-                />
-            </div>
-
-            <div
-                className="map-viewer-container"
-                style={{ width: `${containerWidth}%` }} // Aplicar a largura dinâmica
-            >
+        <div className="map-viewer-wrapper">
+            <div className="map-viewer-container" style={{ width: `${containerWidth}%` }}>
                 <MapSelector
-                    onSelectMap={handleSelectMap}
-                    onSelectLevel={handleSelectLevel}
-                    onSelectBombSite={handleSelectBombSite}
+                    onSelectMap={setSelectedMap}
+                    onSelectLevel={setSelectedLevel}
+                    onSelectBombSite={setSelectedBombSite}
                     allMaps={allMaps}
                     selectedLevel={selectedLevel}
                     selectedMap={selectedMap}
@@ -112,100 +196,131 @@ const MapViewer: React.FC = () => {
                             <img
                                 src={displayedMap.image}
                                 className="map-image"
-                                ref={mapImageRef} // Referência para a imagem
+                                ref={mapImageRef}
                                 alt={`Map view of ${selectedMap.name} - ${selectedLevel.floor}`}
+                                onMouseMove={handleMouseMove}
+                                onClick={handleMapClick}
+                                //onWheel={handleMouseRoll}
                             />
+                            {isPlacingItem && mousePosition && (
+                                <div
+                                    style={{
+                                        position: 'absolute',
+                                        top: `${mousePosition.y + yAdjustment}px`,
+                                        left: `${mousePosition.x + xAdjustment}px`,
+                                        transform: 'translate(-50%, -50%)',
+                                        pointerEvents: 'none',
+                                    }}
+                                >
+                                    {itemPlacingType === 'head' && (
+                                    <WallDestructionIcon
+                                        wall={new WallDestruction(0, 0, selectedLevel.floor, itemDirection, WallDestructionType.HeadHeight)}
+                                        level={selectedLevel.floor}
+                                        iconSize={iconSize}
+                                    />
+                                    )}
+                                    {itemPlacingType === 'foot' && (
+                                        <WallDestructionIcon
+                                            wall={new WallDestruction(0, 0, selectedLevel.floor, itemDirection, WallDestructionType.FootHeight)}
+                                            level={selectedLevel.floor}
+                                            iconSize={iconSize}
+                                        />
+                                    )}
+                                    {itemPlacingType === 'rotation' && (
+                                        <WallDestructionIcon
+                                        wall={new WallDestruction(0, 0, selectedLevel.floor, itemDirection, WallDestructionType.Rotation)}
+                                        level={selectedLevel.floor}
+                                        iconSize={iconSize}
+                                        />
+                                        )}
+                                    {itemPlacingType === 'vault' && (
+                                        <WallDestructionIcon
+                                            wall={new WallDestruction(0, 0, selectedLevel.floor, itemDirection, WallDestructionType.Vault)}
+                                            level={selectedLevel.floor}
+                                            iconSize={iconSize}
+                                        />
+                                    )}
+                                    {itemPlacingType === 'reinforcement' && (
+                                        <WallReinforcementIcon
+                                            wall={new WallReinforcement(0, 0, selectedLevel.floor, itemDirection)}
+                                            level={selectedLevel.floor}
+                                            iconSize={iconSize}
+                                        />
+                                    )}
+                                    {itemPlacingType === 'hatch' && (
+                                        <HatchIcon
+                                            hatch={new Hatch(0, 0, selectedLevel.floor)}
+                                            level={selectedLevel.floor}
+                                            iconSize={iconSize}
+                                        />
+                                    )}
+                                </div>
+                            )}
 
                             <div className="icon-container" ref={iconContainerRef}>
                                 {selectedBombSite?.bombs.map((bomb, index) => (
-                                    bomb.floor === selectedLevel.floor && (
-                                        <div
-                                            key={index}
-                                            className="bomb-icon"
-                                            style={{
-                                                left: `${bomb.x}%`,  // Usar porcentagem para a posição horizontal
-                                                top: `${bomb.y}%`,   // Usar porcentagem para a posição vertical
-                                                width: `${iconSize * 0.5}px`, // Largura proporcional
-                                                height: `${iconSize * 0.5}px`, // Altura proporcional
-                                            }}
-                                        >
-                                            {String.fromCharCode(65 + index)} {/* Exibir letras A, B, ... */}
-                                        </div>
-                                    )
+                                    <BombIcon
+                                        key={index}
+                                        bomb={bomb}
+                                        index={index}
+                                        level={selectedLevel.floor}
+                                        iconSize={iconSize}
+                                    />
                                 ))}
-                                {selectedBombSite?.hatches.map((hatch, index) => (
-                                    hatch.floor === selectedLevel.floor && (
-                                        <div
-                                            key={index}
-                                            className="hatch-icon"
-                                            style={{
-                                                left: `${hatch.x}%`,  // Usar porcentagem para a posição horizontal
-                                                top: `${hatch.y}%`,   // Usar porcentagem para a posição vertical
-                                                width: `${iconSize * 0.5}px`, // Largura proporcional
-                                                height: `${iconSize * 0.5}px`, // Altura proporcional
-                                            }}
-                                        >
-                                        </div>
-                                    )
+
+                                {dynamicHatch?.map((hatch, index) => (
+                                    <HatchIcon
+                                        key={index}
+                                        hatch={hatch}
+                                        level={selectedLevel.floor}
+                                        iconSize={iconSize}
+                                    />
                                 ))}
+
                                 {selectedBombSite?.wallReinforcements.map((wall, index) => (
-                                    wall.floor === selectedLevel.floor && (
-                                        <div
-                                            key={index}
-                                            className="wall-reinforcement-icon"
-                                            style={{
-                                                left: `${wall.x}%`,  // Usar porcentagem para a posição horizontal
-                                                top: `${wall.y}%`,   // Usar porcentagem para a posição vertical
-                                                width: `${iconSize * 0.4}px`, // Largura proporcional
-                                                height: `${iconSize * 0.12}px`, // Altura proporcional
-                                                rotate: `${getRotation(wall.direction.toString())}`,
-                                            }}
-                                        >
-                                            <FaRegArrowAltCircleUp/>
-                                        </div>
-                                    )
-                                ))}
-                                {selectedBombSite?.wallDestructions.map((wall, index) => (
-                                    wall.floor === selectedLevel.floor && wall.type === WallDestructionType.Rotation && (
-                                        <div
-                                            key={index}
-                                            className="wall-rotation-icon"
-                                            style={{
-                                                left: `${wall.x}%`,  // Usar porcentagem para a posição horizontal
-                                                top: `${wall.y}%`,   // Usar porcentagem para a posição vertical
-                                                width: `${iconSize * 0.4}px`, // Largura proporcional
-                                                height: `${iconSize * 0.12}px`, // Altura proporcional
-                                                rotate: `${getRotation(wall.direction.toString())}`,
-                                            }}
-                                        >
-                                            <FaArrowsSpin/>
-                                        </div>
-                                    )
-                                ))}
-                                {selectedBombSite?.wallDestructions.map((wall, index) => (
-                                    wall.floor === selectedLevel.floor && wall.type === WallDestructionType.HeadHeight && (
-                                        <div
-                                            key={index}
-                                            className="wall-rotation-icon"
-                                            style={{
-                                                left: `${wall.x}%`,  // Usar porcentagem para a posição horizontal
-                                                top: `${wall.y}%`,   // Usar porcentagem para a posição vertical
-                                                width: `${iconSize * 0.4}px`, // Largura proporcional
-                                                height: `${iconSize * 0.12}px`, // Altura proporcional
-                                                rotate: `${getRotation(wall.direction.toString())}`,
-                                            }}
-                                        >
-                                            <GiHeadshot />
-                                        </div>
-                                    )
+                                    <WallReinforcementIcon
+                                        key={index}
+                                        wall={wall}
+                                        level={selectedLevel.floor}
+                                        iconSize={iconSize}
+                                    />
                                 ))}
 
+                                {dynamicWallDestructions.map((wall, index) => (
+                                    <WallDestructionIcon
+                                        key={index}
+                                        wall={wall}
+                                        level={selectedLevel.floor}
+                                        iconSize={iconSize}
+                                    />
+                                ))}
+                                {dynamicWallReinforcement.map((wall, index) => (
+                                    <WallReinforcementIcon
+                                        key={index}
+                                        wall={wall}
+                                        level={selectedLevel.floor}
+                                        iconSize={iconSize}
+                                    />
+                                ))}
                             </div>
-
                         </>
                     )}
                 </div>
             </div>
+
+            <ControlPanel
+                containerWidth={containerWidth}
+                setContainerWidth={setContainerWidth}
+                handleAddWallDestruction={handleAddFootHeightWallDestruction}
+                handleAddWallRotation={handleAddWallRotation}
+                handleAddWallHeadHeight={handleAddWallHeadHeight}
+                handleAddWallFootHeight={handleAddFootHeightWallDestruction}
+                handleAddWallVault={handleAddWallVault}
+                handleAddWallReinforcement={handleAddWallReinforcement}
+                handleAddHatchReinforcement={handleAddHatchReinforcement}
+                saveConfiguration={saveConfiguration}
+                loadConfiguration={loadConfiguration}
+            />
         </div>
     );
 };
