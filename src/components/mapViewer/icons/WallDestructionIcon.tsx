@@ -16,9 +16,11 @@ interface WallDestructionIconProps {
     wall: WallDestruction
     level: string;
     iconSize: number;
+    onClick?: () => void
+    isErasing?: boolean
 }
 
-const WallDestructionIcon: React.FC<WallDestructionIconProps> = ({wall, level, iconSize}) => {
+const WallDestructionIcon: React.FC<WallDestructionIconProps> = ({wall, level, iconSize, onClick,isErasing = false }) => {
     if (wall.floor !== level) return null;
 
     const getRotation = (direction: WallDirection): string => {
@@ -34,7 +36,7 @@ const WallDestructionIcon: React.FC<WallDestructionIconProps> = ({wall, level, i
 
 
     return (
-        <div className={"icon-items"}
+        <div  onClick={onClick}  className={`${isErasing ? "icon-items-erasing" : "icon-items"}`}
              style={{
                  left: `${wall.x}%`,
                  top: `${wall.y}%`,

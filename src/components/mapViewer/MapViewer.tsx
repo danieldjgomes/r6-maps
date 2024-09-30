@@ -32,6 +32,7 @@ const MapViewer: React.FC = () => {
     const [itemPlacingType, setItemPlacingType] = useState<string>('');
     const [mousePosition, setMousePosition] = useState<{ x: number, y: number } | null>(null);
     const [itemDirection, setItemDirection] = useState<WallDirection>(WallDirection.N);
+    const [isErasing, setIsErasing] = useState(false);
     const xAdjustment = -5;
     const yAdjustment = -15;
 
@@ -116,6 +117,19 @@ const MapViewer: React.FC = () => {
         setIsPlacingItem(true);
     };
 
+    const handleIconClick = (erasingWall: WallDestruction) => {
+        if (isErasing) {
+            if (erasingWall instanceof WallDestruction) {
+                setDynamicWallDestructions((prev) => prev.filter(wall => wall !== erasingWall));
+            }
+
+        }
+    }
+    const handleIconEraser = () => {
+        setIsErasing(!isErasing)
+    };
+
+
     const saveConfiguration = () => {
         const configuration = {
             map: selectedMap.name,
@@ -174,7 +188,6 @@ const MapViewer: React.FC = () => {
     }, []); // A lista de dependências está vazia, portanto, essa execução só ocorrerá uma vez
 
 
-
     useEffect(() => {
         const updateIconSize = () => {
             if (mapImageRef.current) {
@@ -210,7 +223,7 @@ const MapViewer: React.FC = () => {
                 <div className="map-container">
                     {displayedMap && (
                         <>
-                            <img
+                            <img style={{        filter: isErasing ? 'brightness(0.5)' : 'none'}}
                                 src={displayedMap.image}
                                 className="map-image"
                                 ref={mapImageRef}
@@ -277,9 +290,9 @@ const MapViewer: React.FC = () => {
                             )}
 
                             <div className="icon-container"
-                                style={{
-                                    pointerEvents: isPlacingItem ? "none" : "all",
-                                }} ref={iconContainerRef}>
+                                 style={{
+                                     pointerEvents: isPlacingItem ? "none" : "all",
+                                 }} ref={iconContainerRef}>
                                 {selectedBombSite?.bombs.map((bomb, index) => (
                                     <BombIcon
                                         key={index}
@@ -299,13 +312,15 @@ const MapViewer: React.FC = () => {
                                     />
                                 ))}
 
-
                                 {dynamicWallDestructions.map((wall, index) => (
                                     <WallDestructionIcon
                                         key={index}
                                         wall={wall}
                                         level={selectedLevel.floor}
                                         iconSize={iconSize}
+                                        onClick={() => handleIconClick(wall)}
+                                        isErasing={isErasing}
+
                                     />
                                 ))}
                                 {dynamicWallReinforcement.map((wall, index) => (
@@ -336,6 +351,7 @@ const MapViewer: React.FC = () => {
                 handleAddHatchReinforcement={handleAddHatchReinforcement}
                 saveConfiguration={saveConfiguration}
                 loadConfiguration={loadConfiguration}
+                handleEraser={handleIconEraser}
             />
         </div>
     );

@@ -10,6 +10,7 @@ interface ControlPanelProps {
     containerWidth: number;
     setContainerWidth: (width: number) => void;
     handleAddWallDestruction: () => void;
+    handleEraser: () => void;
     handleAddWallRotation: () => void;
     handleAddWallHeadHeight: () => void;
     handleAddWallFootHeight: () => void;
@@ -31,6 +32,7 @@ const ControlPanel: React.FC<ControlPanelProps> = ({
                                                        handleAddWallReinforcement,
                                                        saveConfiguration,  // Adicionado
                                                        loadConfiguration,  // Adicionado
+                                                       handleEraser
                                                    }) => {
     const handleLoadClick = () => {
         const jsonData = prompt("Cole a configuração JSON aqui:");
@@ -58,6 +60,7 @@ const ControlPanel: React.FC<ControlPanelProps> = ({
             <img src={HeadHeightIconSVG} onClick={handleAddWallHeadHeight} alt="Head Height" />
             <button onClick={saveConfiguration}>Save</button>  {/* Adicionado */}
             <button onClick={handleLoadClick}>Load</button>  {/* Adicionado */}
+            <button onClick={handleEraser}>Eraser</button>  {/* Adicionado */}
         </div>
     );
 };
