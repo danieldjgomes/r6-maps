@@ -15,6 +15,7 @@ import {WallDestructionType} from "../models/WallDestructionType";
 import ControlPanel from '../../components/ControlPanel';
 import {WallReinforcement} from "../models/WallReinforcement";
 import {Hatch} from "../models/Hatch"
+import LZString from 'lz-string';
 
 
 const MapViewer: React.FC = () => {
@@ -121,24 +122,26 @@ const MapViewer: React.FC = () => {
             level: selectedLevel.floor,
             bombSites: selectedMap.bombSites,
             wallDestructions: dynamicWallDestructions,
-            wallReinforcements: dynamicWallReinforcement, // Adiciona os reforços de parede
-            hatches: dynamicHatch, // Adiciona os hatches
+            wallReinforcements: dynamicWallReinforcement,
+            hatches: dynamicHatch,
         };
 
-        const json = JSON.stringify(configuration, null, 2);
-        // Aqui você pode salvar o JSON em um arquivo ou em localStorage, por exemplo:
-        console.log(json);
+        const json = JSON.stringify(configuration);
+        const compressed = LZString.compressToEncodedURIComponent(json); // Compacta os dados
+        console.log(compressed); // Aqui você pode salvar o código comprimido em um arquivo ou em localStorage
     };
 
+
     const loadConfiguration = (data: string) => {
-        const configuration = JSON.parse(data);
+        const decompressed = LZString.decompressFromEncodedURIComponent(data); // Descompacta os dados
+        const configuration = JSON.parse(decompressed);
 
         // Atualizar o estado com a configuração carregada
         const map = allMaps.getAllMaps().find(m => m.name === configuration.map);
         if (map) {
             setSelectedMap(map);
             setSelectedLevel(map.getMapLevelByFloor(configuration.level));
-            setSelectedBombSite(map.bombSites[0]); // Você pode querer escolher um bomb site específico
+            setSelectedBombSite(map.bombSites[0]);
 
             const wallDestructions = configuration.wallDestructions.map((wd: any) =>
                 new WallDestruction(wd.x, wd.y, wd.floor, wd.direction, wd.type)
