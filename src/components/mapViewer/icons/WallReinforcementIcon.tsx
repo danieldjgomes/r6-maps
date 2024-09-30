@@ -1,8 +1,9 @@
 import React from 'react';
-import { FaRegArrowAltCircleUp } from 'react-icons/fa';
 import { WallDirection } from '../../models/WallDirection';
 import {WallReinforcement} from "../../models/WallReinforcement";
 import ReinforcementIconSVG from '../../../assets/icons/reinforcement.svg'
+import ReinforcementImage from '../../../assets/images/reinforcement_wall.jpeg'
+import Tooltip from "../Tooltip";
 
 interface WallReinforcementIconProps {
     wall: WallReinforcement
@@ -29,29 +30,25 @@ const WallReinforcementIcon: React.FC<WallReinforcementIconProps> = ({ wall, lev
     };
 
     return (
-        <div
-            className="wall-reinforcement-icon"
-            style={{
-                left: `${wall.x}%`,
-                top: `${wall.y}%`,
-                width: `${iconSize * 0.04}px`,
-                height: `${iconSize * 0.04}px`,
-                rotate: `${getRotation(wall.direction)}`,
-            }}
-        >
-            <div
-                className={"icon-items"}
-            >
+            <div className={"icon-items"}
+                 style={{
+                     left: `${wall.x}%`,
+                     top: `${wall.y}%`,
+                     position: 'absolute', // Ensure the icon is positioned correctly
+                     transformOrigin: 'center', // Ensure rotation is around the center
+                 }}>
+                <Tooltip iconSrc={ReinforcementImage} title={"Parede reforcada"} description={"São paredes que foram fortalecidas com materiais especiais para resistir a explosões e tiros, dificultando a destruição por parte dos atacantes e proporcionando uma defesa mais sólida para os defensores."}>
                 <img
                     src={ReinforcementIconSVG}
-                    height={`${iconSize / 4}px`}
-                    width={`${iconSize / 4}px`}
+                    height={`${iconSize / 2.7}px`}
+                    width={`${iconSize / 2.7}px`}
                     style={{
                         display: "block", // Removes any gaps caused by inline images
                     }}
                 />
+                </Tooltip>
+
             </div>
-        </div>
     );
 
 };

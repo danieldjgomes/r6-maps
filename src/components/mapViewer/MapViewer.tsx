@@ -42,7 +42,7 @@ const MapViewer: React.FC = () => {
             const rect = mapImageRef.current.getBoundingClientRect();
             const x = event.clientX - rect.left;
             const y = event.clientY - rect.top;
-            setMousePosition({ x, y });
+            setMousePosition({x, y});
         }
     };
 
@@ -88,7 +88,6 @@ const MapViewer: React.FC = () => {
             setIsPlacingItem(false);
         }
     };
-
 
 
     const handleAddFootHeightWallDestruction = () => {
@@ -178,11 +177,9 @@ const MapViewer: React.FC = () => {
 
     const displayedMap = selectedMap?.getMapLevelByFloor(selectedLevel?.floor.valueOf() as string);
 
-    // @ts-ignore
-    // @ts-ignore
     return (
         <div className="map-viewer-wrapper">
-            <div className="map-viewer-container" style={{ width: `${containerWidth}%` }}>
+            <div className="map-viewer-container" style={{width: `${containerWidth}%`}}>
                 <MapSelector
                     onSelectMap={setSelectedMap}
                     onSelectLevel={setSelectedLevel}
@@ -216,11 +213,11 @@ const MapViewer: React.FC = () => {
                                     }}
                                 >
                                     {itemPlacingType === 'head' && (
-                                    <WallDestructionIcon
-                                        wall={new WallDestruction(0, 0, selectedLevel.floor, itemDirection, WallDestructionType.HeadHeight)}
-                                        level={selectedLevel.floor}
-                                        iconSize={iconSize}
-                                    />
+                                        <WallDestructionIcon
+                                            wall={new WallDestruction(0, 0, selectedLevel.floor, itemDirection, WallDestructionType.HeadHeight)}
+                                            level={selectedLevel.floor}
+                                            iconSize={iconSize}
+                                        />
                                     )}
                                     {itemPlacingType === 'foot' && (
                                         <WallDestructionIcon
@@ -231,11 +228,11 @@ const MapViewer: React.FC = () => {
                                     )}
                                     {itemPlacingType === 'rotation' && (
                                         <WallDestructionIcon
-                                        wall={new WallDestruction(0, 0, selectedLevel.floor, itemDirection, WallDestructionType.Rotation)}
-                                        level={selectedLevel.floor}
-                                        iconSize={iconSize}
+                                            wall={new WallDestruction(0, 0, selectedLevel.floor, itemDirection, WallDestructionType.Rotation)}
+                                            level={selectedLevel.floor}
+                                            iconSize={iconSize}
                                         />
-                                        )}
+                                    )}
                                     {itemPlacingType === 'vault' && (
                                         <WallDestructionIcon
                                             wall={new WallDestruction(0, 0, selectedLevel.floor, itemDirection, WallDestructionType.Vault)}
@@ -253,16 +250,19 @@ const MapViewer: React.FC = () => {
                                     )}
 
                                     {itemPlacingType === 'hatch' && (
-                                            <HatchIcon
-                                                hatch={new Hatch(0, 0, selectedLevel.floor)}
-                                                level={selectedLevel.floor}
-                                                iconSize={iconSize}
-                                            />
-                                        )}
+                                        <HatchIcon
+                                            hatch={new Hatch(0, 0, selectedLevel.floor)}
+                                            level={selectedLevel.floor}
+                                            iconSize={iconSize}
+                                        />
+                                    )}
                                 </div>
                             )}
 
-                            <div className="icon-container" ref={iconContainerRef} >
+                            <div className="icon-container"
+                                style={{
+                                    pointerEvents: isPlacingItem ? "none" : "all",
+                                }} ref={iconContainerRef}>
                                 {selectedBombSite?.bombs.map((bomb, index) => (
                                     <BombIcon
                                         key={index}
@@ -282,14 +282,6 @@ const MapViewer: React.FC = () => {
                                     />
                                 ))}
 
-                                {selectedBombSite?.wallReinforcements.map((wall, index) => (
-                                    <WallReinforcementIcon
-                                        key={index}
-                                        wall={wall}
-                                        level={selectedLevel.floor}
-                                        iconSize={iconSize}
-                                    />
-                                ))}
 
                                 {dynamicWallDestructions.map((wall, index) => (
                                     <WallDestructionIcon
@@ -308,9 +300,6 @@ const MapViewer: React.FC = () => {
                                             iconSize={iconSize}
                                         />
                                     </>
-
-
-
                                 ))}
                             </div>
                         </>

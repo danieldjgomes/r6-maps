@@ -14,8 +14,6 @@
     width: 100%; /* A imagem se ajusta ao contêiner */
     height: 100%; /* Manter a proporção da imagem */
     display: block;
-    /*filter: brightness(0.7); !* Ajuste os valores conforme necessário *!*/
-    filter: brightness(1.1) saturate(1.5); /* Escurece e aumenta a saturação */
 
 }
 
@@ -44,7 +42,6 @@
 }
 
 .hatch-icon {
-    opacity: 90%;
     position: absolute;
     width: 30px;
     height: 30px;
@@ -52,52 +49,6 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    font-weight: bold;
-    transform: translate(-50%, -50%); /* Centralizar o ícone no ponto */
-}
-
-
-.wall-reinforcement-icon {
-    border: aliceblue 1px dot-dash  ;
-    opacity: 90%;
-    position: absolute;
-    width: 30px;
-    height: 30px;
-    background-color: #003cff;
-    color: white;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    font-weight: bold;
-    transform: translate(-50%, -50%); /* Centralizar o ícone no ponto */
-}
-
-.wall-rotation-icon {
-    opacity: 70%;
-    position: absolute;
-    width: 30px;
-    height: 30px;
-    background-color: #00ff2a;
-    color: white;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    font-weight: bold;
-    transform: translate(-50%, -50%); /* Centralizar o ícone no ponto */
-}
-
-
-.wall-destruction-icon {
-    opacity: 70%;
-    position: absolute;
-    width: 30px;
-    height: 30px;
-    background-color: #00ff2a;
-    color: white;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    font-weight: bold;
     transform: translate(-50%, -50%); /* Centralizar o ícone no ponto */
 }
 
@@ -109,7 +60,7 @@
     padding: 10px; /* Espaçamento interno */
     border-radius: 5px; /* Bordas arredondadas */
     box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2); /* Sombra */
-    z-index: 100; /* Para garantir que fique acima de outros elementos */
+    z-index: 10; /* Para garantir que fique acima de outros elementos */
 }
 
 body {
@@ -127,15 +78,15 @@ img:hover{
 }
 
 .icon-items {
-    border: 0.2em solid rgb(30, 152, 239);
+    border: 0.1em solid rgb(30, 152, 239);
     display: inline-block;
 }
 
 
-.icon-items:hover {
-    border: 0.2em solid rgb(245, 85, 13);
-    display: inline-block
-}
+/*.icon-items:hover {*/
+/*    border: 0.2em solid rgb(245, 85, 13);*/
+/*    display: inline-block*/
+/*}*/
 
 .control-panel {
     position: absolute;
@@ -145,7 +96,7 @@ img:hover{
     padding: 10px; /* Espaçamento interno */
     border-radius: 5px; /* Bordas arredon   dadas */
     box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2); /* Sombra */
-    z-index: 100; /* Para garantir que fique acima de outros elementos */
+    z-index: 10; /* Para garantir que fique acima de outros elementos */
     display: grid; /* Usando Grid */
     grid-template-columns: repeat(auto-fit, minmax(60px, 1fr)); /* Ajusta as colunas automaticamente */
     gap: 10px; /* Espaçamento entre os itens */
@@ -161,8 +112,4 @@ img:hover{
 .control-panel button {
     padding: 5px 10px; /* Ajuste o padding dos botões */
     cursor: pointer; /* Muda o cursor para indicar que é clicável */
-}
-
-.wall-reinforcement-icon {
-    position: relative; /* Garante que o tooltip seja posicionado relativo ao ícone */
 }
