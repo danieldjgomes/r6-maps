@@ -1,10 +1,10 @@
 import React from 'react';
-import ReinforcementIconSVG from '../assets/icons/reinforcement.svg'
-import FootHeightIconSVG from '../assets/icons/foot.svg'
-import HeadHeightIconSVG from '../assets/icons/head.svg'
-import VaultHeightIconSVG from '../assets/icons/vault.svg'
-import RotationIconSVG from '../assets/icons/rotation.svg'
-import HatchIconSVG from '../assets/icons/hatch.svg'
+import ReinforcementIconSVG from '../assets/icons/reinforcement.svg';
+import FootHeightIconSVG from '../assets/icons/foot.svg';
+import HeadHeightIconSVG from '../assets/icons/head.svg';
+import VaultHeightIconSVG from '../assets/icons/vault.svg';
+import RotationIconSVG from '../assets/icons/rotation.svg';
+import HatchIconSVG from '../assets/icons/hatch.svg';
 
 interface ControlPanelProps {
     containerWidth: number;
@@ -40,7 +40,7 @@ const ControlPanel: React.FC<ControlPanelProps> = ({
     };
 
     return (
-        <div className="control-panel" style={{ position: 'fixed', bottom: '20px', left: '20px' }}>
+        <div className="control-panel">
             <input
                 type="range"
                 min="85"
@@ -50,16 +50,14 @@ const ControlPanel: React.FC<ControlPanelProps> = ({
                 className="slider"
                 id="widthSlider"
             />
-
-            {/*<button onClick={handleAddWallDestruction}>Add Wall Destruction</button>*/}
-            <img src={RotationIconSVG} onClick={handleAddWallRotation}/>
-            <img src={VaultHeightIconSVG} onClick={handleAddWallVault}/>
-            <img src={ReinforcementIconSVG} onClick={handleAddWallReinforcement}/>
-            <img src={HatchIconSVG} onClick={handleAddHatchReinforcement}/>
-            <img src={FootHeightIconSVG} onClick={handleAddWallFootHeight}/>
-            <img src={HeadHeightIconSVG} onClick={handleAddWallHeadHeight}/>
-            <button onClick={saveConfiguration}>Save Configuration</button>  {/* Adicionado */}
-            <button onClick={handleLoadClick}>Load Configuration</button>  {/* Adicionado */}
+            <img src={RotationIconSVG} onClick={handleAddWallRotation} alt="Rotate Wall" />
+            <img src={VaultHeightIconSVG} onClick={handleAddWallVault} alt="Vault Height" />
+            <img src={ReinforcementIconSVG} onClick={handleAddWallReinforcement} alt="Wall Reinforcement" />
+            <img src={HatchIconSVG} onClick={handleAddHatchReinforcement} alt="Hatch Reinforcement" />
+            <img src={FootHeightIconSVG} onClick={handleAddWallFootHeight} alt="Foot Height" />
+            <img src={HeadHeightIconSVG} onClick={handleAddWallHeadHeight} alt="Head Height" />
+            <button onClick={saveConfiguration}>Save</button>  {/* Adicionado */}
+            <button onClick={handleLoadClick}>Load</button>  {/* Adicionado */}
         </div>
     );
 };

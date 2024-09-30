@@ -40,10 +40,7 @@ const WallReinforcementIcon: React.FC<WallReinforcementIconProps> = ({ wall, lev
             }}
         >
             <div
-                style={{
-                    border: "0.2em solid rgba(69, 171, 243, 1)", // Whitish border
-                    display: "inline-block", // Keeps the border wrapped around the image
-                }}
+                className={"icon-items"}
             >
                 <img
                     src={ReinforcementIconSVG}

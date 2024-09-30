@@ -14,7 +14,8 @@ import {WallDestruction} from "../models/WallDestruction";
 import {WallDestructionType} from "../models/WallDestructionType";
 import ControlPanel from '../../components/ControlPanel';
 import {WallReinforcement} from "../models/WallReinforcement";
-import {Hatch} from "../models/Hatch";
+import {Hatch} from "../models/Hatch"
+
 
 const MapViewer: React.FC = () => {
     const allMaps: AllMaps = new AllMaps();
@@ -177,6 +178,8 @@ const MapViewer: React.FC = () => {
 
     const displayedMap = selectedMap?.getMapLevelByFloor(selectedLevel?.floor.valueOf() as string);
 
+    // @ts-ignore
+    // @ts-ignore
     return (
         <div className="map-viewer-wrapper">
             <div className="map-viewer-container" style={{ width: `${containerWidth}%` }}>
@@ -241,23 +244,25 @@ const MapViewer: React.FC = () => {
                                         />
                                     )}
                                     {itemPlacingType === 'reinforcement' && (
+
                                         <WallReinforcementIcon
                                             wall={new WallReinforcement(0, 0, selectedLevel.floor, itemDirection)}
                                             level={selectedLevel.floor}
                                             iconSize={iconSize}
                                         />
                                     )}
+
                                     {itemPlacingType === 'hatch' && (
-                                        <HatchIcon
-                                            hatch={new Hatch(0, 0, selectedLevel.floor)}
-                                            level={selectedLevel.floor}
-                                            iconSize={iconSize}
-                                        />
-                                    )}
+                                            <HatchIcon
+                                                hatch={new Hatch(0, 0, selectedLevel.floor)}
+                                                level={selectedLevel.floor}
+                                                iconSize={iconSize}
+                                            />
+                                        )}
                                 </div>
                             )}
 
-                            <div className="icon-container" ref={iconContainerRef}>
+                            <div className="icon-container" ref={iconContainerRef} >
                                 {selectedBombSite?.bombs.map((bomb, index) => (
                                     <BombIcon
                                         key={index}
@@ -295,12 +300,17 @@ const MapViewer: React.FC = () => {
                                     />
                                 ))}
                                 {dynamicWallReinforcement.map((wall, index) => (
-                                    <WallReinforcementIcon
-                                        key={index}
-                                        wall={wall}
-                                        level={selectedLevel.floor}
-                                        iconSize={iconSize}
-                                    />
+                                    <>
+                                        <WallReinforcementIcon
+                                            key={index}
+                                            wall={wall}
+                                            level={selectedLevel.floor}
+                                            iconSize={iconSize}
+                                        />
+                                    </>
+
+
+
                                 ))}
                             </div>
                         </>
