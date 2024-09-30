@@ -162,6 +162,20 @@ const MapViewer: React.FC = () => {
 
 
     useEffect(() => {
+        const loadFromUrl = () => {
+            const urlPath = window.location.pathname.split('/');
+            const configData = urlPath[urlPath.length - 1]; // Pega a última parte da URL
+            if (configData) {
+                loadConfiguration(configData); // Carrega a configuração se houver dados
+            }
+        };
+
+        loadFromUrl(); // Chama a função para carregar a configuração da URL ao montar o componente
+    }, []); // A lista de dependências está vazia, portanto, essa execução só ocorrerá uma vez
+
+
+
+    useEffect(() => {
         const updateIconSize = () => {
             if (mapImageRef.current) {
                 const imageWidth = mapImageRef.current.offsetWidth;
