@@ -1,11 +1,11 @@
 import {Bomb} from "../Bomb";
 import {Hatch} from "./Hatch";
 import {WallReinforcement} from "./WallReinforcement";
-import {WallDestruction} from "./WallDestruction";
+import {SetupItem} from "./SetupItem";
 import {WallVault} from "./WallVault";
 
 export class BombSite {
-    constructor(bombs: Bomb[], name: string, id: string, hatches: Hatch[], wallReinforcements: WallReinforcement[], wallRotations: WallDestruction[]) {
+    constructor(bombs: Bomb[], name: string, id: string, hatches: Hatch[], wallReinforcements: WallReinforcement[], wallRotations: SetupItem[]) {
         this.bombs = bombs;
         this.name = name;
         this.id = id;
@@ -19,6 +19,6 @@ export class BombSite {
     id: string;
     hatches: Hatch[];
     wallReinforcements: WallReinforcement[];
-    wallDestructions: WallDestruction[];
+    wallDestructions: SetupItem[];
 
 }

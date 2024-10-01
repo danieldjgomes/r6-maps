@@ -28,7 +28,7 @@ const HatchIcon: React.FC<HatchIconProps> = ({ hatch, level, iconSize }) => {
                     border: "0.1em solid rgba(69, 171, 243, 1)", // Whitish border
                     display: "inline-block", // Keeps the border wrapped around the image
                 }}>
-                <Tooltip iconSrc={HatchImage} title={"Alcapao reforcado"}
+                <Tooltip imageSrc={HatchImage} title={"Alcapao reforcado"}
                          description={"São aberturas no teto que foi fortalecida para resistir a explosões, dificultando a destruição por parte dos atacantes e permitindo que os defensores tenham uma posição estratégica superior."}>
                 <img
                     src={HatchIconSVG}

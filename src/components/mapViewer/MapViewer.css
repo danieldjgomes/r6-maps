@@ -2,6 +2,7 @@
     position: relative;
     width: 87%;
     height: 100%;
+    margin: auto;
 }
 
 .map-container {
@@ -53,16 +54,16 @@
     transform: translate(-50%, -50%); /* Centralizar o ícone no ponto */
 }
 
-.control-panel {
-    position: absolute;
-    bottom: 10px; /* Espaçamento da parte inferior */
-    left: 10px;   /* Espaçamento da parte esquerda */
-    background-color: rgba(255, 255, 255, 0.8); /* Fundo semi-transparente */
-    padding: 10px; /* Espaçamento interno */
-    border-radius: 5px; /* Bordas arredondadas */
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2); /* Sombra */
-    z-index: 10; /* Para garantir que fique acima de outros elementos */
-}
+/*.control-panel {*/
+/*    position: absolute;*/
+/*    bottom: 10px; !* Espaçamento da parte inferior *!*/
+/*    left: 10px;   !* Espaçamento da parte esquerda *!*/
+/*    background-color: rgba(255, 255, 255, 0.8); !* Fundo semi-transparente *!*/
+/*    padding: 10px; !* Espaçamento interno *!*/
+/*    border-radius: 5px; !* Bordas arredondadas *!*/
+/*    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2); !* Sombra *!*/
+/*    z-index: 10; !* Para garantir que fique acima de outros elementos *!*/
+/*}*/
 
 body {
     user-select: none; /* Impede seleção de texto */
@@ -89,7 +90,8 @@ img, button, a {
 
 
 .control-panel {
-    position: absolute;
+    position: fixed;
+    /*position: absolute;*/
     bottom: 10px; /* Espaçamento da parte inferior */
     left: 10px;   /* Espaçamento da parte esquerda */
     background-color: rgba(255, 255, 255, 0.8); /* Fundo semi-transparente */
@@ -112,4 +114,19 @@ img, button, a {
 .control-panel button {
     padding: 5px 10px; /* Ajuste o padding dos botões */
     cursor: pointer; /* Muda o cursor para indicar que é clicável */
+}
+
+.icon-panel{
+    margin-left: 8vw;
+    margin-bottom: 1vh;
+}
+
+.persist-panel{
+    margin-left: 8vw;
+    margin-bottom: 15vh;
+}
+
+.slider-panel{
+    margin-left: 8vw;
+    margin-bottom: 85vh;
 }

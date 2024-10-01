@@ -2,13 +2,13 @@ import React, { useState, useRef, useEffect } from 'react';
 import './Tooltip.css';  // Estilos do tooltip separados em um arquivo CSS
 
 interface TooltipProps {
-    iconSrc: string;
+    imageSrc: string;
     title: string;
     description: string;
     children: React.ReactNode;  // Adicionando suporte a children
 }
 
-const Tooltip: React.FC<TooltipProps> = ({ iconSrc, title, description, children }) => {
+const Tooltip: React.FC<TooltipProps> = ({ imageSrc, title, description, children }) => {
     const [isHovered, setIsHovered] = useState(false);
     const [showBelow, setShowBelow] = useState(false);
     const tooltipRef = useRef<HTMLDivElement>(null);
@@ -44,7 +44,7 @@ const Tooltip: React.FC<TooltipProps> = ({ iconSrc, title, description, children
                     ref={tooltipRef}
                     className={`tooltip-box ${showBelow ? 'tooltip-below' : 'tooltip-above'}`}
                 >
-                    <img src={iconSrc} alt={title} className="tooltip-image" />
+                    <img src={imageSrc} alt={title} className="tooltip-image" />
                     <h3 className="tooltip-title">{title}</h3>
                     <p className="tooltip-description">{description}</p>
                 </div>

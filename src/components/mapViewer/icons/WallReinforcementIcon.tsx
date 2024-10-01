@@ -37,7 +37,7 @@ const WallReinforcementIcon: React.FC<WallReinforcementIconProps> = ({ wall, lev
                      position: 'absolute', // Ensure the icon is positioned correctly
                      transformOrigin: 'center', // Ensure rotation is around the center
                  }}>
-                <Tooltip iconSrc={ReinforcementImage} title={"Parede reforcada"} description={"São paredes que foram fortalecidas com materiais especiais para resistir a explosões e tiros, dificultando a destruição por parte dos atacantes e proporcionando uma defesa mais sólida para os defensores."}>
+                <Tooltip imageSrc={ReinforcementImage} title={"Parede reforcada"} description={"São paredes que foram fortalecidas com materiais especiais para resistir a explosões e tiros, dificultando a destruição por parte dos atacantes e proporcionando uma defesa mais sólida para os defensores."}>
                 <img
                     src={ReinforcementIconSVG}
                     height={`${iconSize / 2.7}px`}

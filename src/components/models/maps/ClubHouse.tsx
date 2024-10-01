@@ -9,10 +9,8 @@ import secondImage from '../../../assets/maps/r6-maps-clubhouse-blueprint-3.jpg'
 import roofImage from '../../../assets/maps/r6-maps-clubhouse-blueprint-4.jpg'
 import {Floor} from "../../Enums";
 import {Hatch} from "../Hatch";
-import {WallReinforcement} from "../WallReinforcement";
-import {WallDirection} from "../WallDirection";
-import {WallDestruction} from "../WallDestruction";
-import {WallDestructionType} from "../WallDestructionType";
+import {SetupItem} from "../SetupItem";
+import {SetupItemType} from "../SetupItemType";
 
 export class ClubHouse extends R6Map {
     constructor() {
@@ -34,22 +32,11 @@ export class ClubHouse extends R6Map {
         ]
 
         let arsenalChurch = new BombSite(arsenalChurchBombs, "Church and Arsenal Room", "AR", [
-                new Hatch(47.5, 46, Floor.FirstFloor),
-                new Hatch(56.5, 18.2, Floor.FirstFloor),
-                new Hatch(66, 43, Floor.FirstFloor),
+
             ],
             [
-                // new WallReinforcement(58.3, 49.8, Floor.Basement, WallDirection.E),
-                // new WallReinforcement(58.3, 45.8, Floor.Basement, WallDirection.E),
-                // new WallReinforcement(47.6, 35, Floor.Basement, WallDirection.W),
-                // new WallReinforcement(47.6, 31, Floor.Basement, WallDirection.W),
-                // new WallReinforcement(60.1, 37, Floor.Basement, WallDirection.S),
-                // new WallReinforcement(62, 37, Floor.Basement, WallDirection.S),
             ],
             [
-                new WallDestruction(58.3, 41.8, Floor.Basement, WallDirection.E, WallDestructionType.Rotation),
-                new WallDestruction(47, 41.8, Floor.Basement, WallDirection.E, WallDestructionType.HeadHeight),
-                new WallDestruction(60.3, 38, Floor.Basement, WallDirection.N, WallDestructionType.Rotation),
 
             ]
             )
