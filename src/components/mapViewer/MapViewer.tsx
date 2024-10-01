@@ -141,9 +141,21 @@ const MapViewer: React.FC = () => {
         const compressed = LZString.compressToEncodedURIComponent(json); // Compacta os dados
 
         console.log(json);
-        setConfigurationCode(`${window.location.href}${compressed}`); // Define o código de configuração para o estado
-        setIsWizardOpen(true); // Abre o wizard
+        generateURL(compressed)
+
     };
+
+    function generateURL(compressed: string) {
+        const xhr = new XMLHttpRequest();
+        xhr.open('GET', `https://ulvis.net/api.php?url=${"https://r6-maps-orcin.vercel.app/"}${compressed}&custom=${"r6-maps-" + Date.now()}&private=1`);
+        xhr.onload = function() {
+            if (xhr.status === 200) {
+                setConfigurationCode(xhr.responseText);
+                setIsWizardOpen(true); // Abre o wizard após a requisição ser concluída com sucesso
+            }
+        };
+        xhr.send();
+    }
 
 
     const loadConfiguration = (data: string) => {
