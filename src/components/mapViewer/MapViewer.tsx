@@ -31,6 +31,8 @@ const MapViewer: React.FC = () => {
     const [mousePosition, setMousePosition] = useState<{ x: number, y: number } | null>(null);
     const [itemDirection, setItemDirection] = useState<WallDirection>(WallDirection.N);
     const [isErasing, setIsErasing] = useState(false);
+    const [isWizardOpen, setIsWizardOpen] = useState(false);
+    const [configurationCode, setConfigurationCode] = useState('');
     const xAdjustment = -5;
     const yAdjustment = -15;
 
@@ -115,18 +117,34 @@ const MapViewer: React.FC = () => {
     };
 
 
-    const saveConfiguration = () => {
+    const handleSaveClick = () => {
+
         const configuration = {
             map: selectedMap.name,
             level: selectedLevel.floor,
-            bombSites: selectedMap.bombSites,
-            setup: setupItems,
+            bombSites: selectedMap.bombSites.map((site) => ({
+                ...site,
+                bombs: site.bombs.map((bomb) => ({
+                    ...bomb,
+                    x: parseFloat(bomb.x.toFixed(3)),
+                    y: parseFloat(bomb.y.toFixed(3)),
+                })),
+            })),
+            setup: setupItems.map((item) => ({
+                ...item,
+                x: parseFloat(item.x.toFixed(3)),
+                y: parseFloat(item.y.toFixed(3)),
+            })),
         };
 
         const json = JSON.stringify(configuration);
-         const compressed = LZString.compressToEncodedURIComponent(json); // Compacta os dados
-        console.log(compressed); // Aqui você pode salvar o código comprimido em um arquivo ou em localStorage
+        const compressed = LZString.compressToEncodedURIComponent(json); // Compacta os dados
+
+        console.log(json);
+        setConfigurationCode(`${window.location.href}${compressed}`); // Define o código de configuração para o estado
+        setIsWizardOpen(true); // Abre o wizard
     };
+
 
     const loadConfiguration = (data: string) => {
         try {
@@ -280,10 +298,29 @@ const MapViewer: React.FC = () => {
                 containerWidth={containerWidth}
                 setContainerWidth={setContainerWidth}
                 handleAddItemSetup={handleAddItemSetup}
-                saveConfiguration={saveConfiguration}
+                saveConfiguration={handleSaveClick}
                 loadConfiguration={loadConfiguration}
                 handleEraser={handleIconEraser}
             />
+
+            {isWizardOpen && (
+                <div className="wizard">
+                    <div className="wizard-content">
+                        <h2>Código de Configuração</h2>
+                        <textarea
+                            value={configurationCode}
+                            readOnly
+                            style={{ width: '100%', height: '100px' }} // Ajuste conforme necessário
+                        />
+
+
+                        <button onClick={() => navigator.clipboard.writeText(configurationCode)}>
+                            Copiar para a área de transferência
+                        </button>
+                        <button onClick={() => setIsWizardOpen(false)}>Fechar</button>
+                    </div>
+                </div>
+            )}
         </div>
     );
 };
