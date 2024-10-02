@@ -209,21 +209,22 @@ const MapViewer: React.FC = () => {
             const configData = urlPath[urlPath.length - 1]; // Pega a última parte da URL
             const cached = localStorage.getItem(`r6_${configData}`);
 
-            if(cached){
-                loadConfiguration(cached);
+            if (configData) {
+                if (cached) {
+                    loadConfiguration(cached);
+                } else {
+                    axios
+                        .get("https://sheetdb.io/api/v1/q840jlzdyqirx/search?id=" + configData)
+                        .then((response) => {
+                            let dataResponse = response.data[0];
+                            if (dataResponse.id) {
+                                localStorage.setItem(`r6_${dataResponse.id}`, dataResponse.code);
+                            }
+                            loadConfiguration(response.data[0].code)
+                        })
+                }
             }
 
-            else {
-                axios
-                    .get("https://sheetdb.io/api/v1/q840jlzdyqirx/search?id=" + configData)
-                    .then((response) => {
-                        let dataResponse = response.data[0];
-                        if(dataResponse.id){
-                            localStorage.setItem(`r6_${dataResponse.id}`, dataResponse.code);
-                        }
-                        loadConfiguration(response.data[0].code)
-                    })
-            }
         };
 
         loadFromUrl(); // Chama a função para carregar a configuração da URL ao montar o componente
@@ -343,12 +344,15 @@ const MapViewer: React.FC = () => {
                             style={{ width: '90%', height: '20%', cursor: 'pointer' }}>
                             {configurationCode} <FaRegCopy/>
                             </h3>
-                        <div>
-                            {isCopied && (
-                                   " Copiado com sucesso."
-                            )}
+                        <div style={{width: '100%', height: '100%', padding: '10px', position: 'relative'}}>
+                          <span style={{visibility: isCopied ? 'visible' : 'hidden'}}>
+                            Copiado com sucesso.
+                          </span>
                         </div>
-                        <button onClick={() => setIsWizardOpen(false)}>Fechar</button>
+                        <button onClick={() => {
+                            setIsWizardOpen(false);
+                            setIsCopied(false);
+                        }}>Fechar</button>
                     </div>
                 </div>
             )}
