@@ -54,20 +54,10 @@
     transform: translate(-50%, -50%); /* Centralizar o ícone no ponto */
 }
 
-/*.control-panel {*/
-/*    position: absolute;*/
-/*    bottom: 10px; !* Espaçamento da parte inferior *!*/
-/*    left: 10px;   !* Espaçamento da parte esquerda *!*/
-/*    background-color: rgba(255, 255, 255, 0.8); !* Fundo semi-transparente *!*/
-/*    padding: 10px; !* Espaçamento interno *!*/
-/*    border-radius: 5px; !* Bordas arredondadas *!*/
-/*    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2); !* Sombra *!*/
-/*    z-index: 10; !* Para garantir que fique acima de outros elementos *!*/
-/*}*/
-
 body {
     user-select: none; /* Impede seleção de texto */
 }
+
 img, button, a {
     -webkit-user-drag: none; /* Desabilita arrasto no Chrome e Safari */
     -moz-user-drag: none;    /* Desabilita arrasto no Firefox */
@@ -75,9 +65,6 @@ img, button, a {
     user-drag: none;         /* Padrão */
 }
 
-/*img:hover{*/
-/*    filter: blur();*/
-/*}*/
 .icon-items {
     border: 0.1em solid rgb(30, 152, 239);
     display: inline-block;
@@ -86,23 +73,6 @@ img, button, a {
 .icon-items-erasing {
     border: 0.1em solid rgb(245, 85, 13);
     display: inline-block;
-}
-
-
-.control-panel {
-    position: fixed;
-    /*position: absolute;*/
-    bottom: 10px; /* Espaçamento da parte inferior */
-    left: 10px;   /* Espaçamento da parte esquerda */
-    background-color: rgba(255, 255, 255, 0.8); /* Fundo semi-transparente */
-    padding: 10px; /* Espaçamento interno */
-    border-radius: 5px; /* Bordas arredon   dadas */
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2); /* Sombra */
-    z-index: 10; /* Para garantir que fique acima de outros elementos */
-    display: grid; /* Usando Grid */
-    grid-template-columns: repeat(auto-fit, minmax(60px, 1fr)); /* Ajusta as colunas automaticamente */
-    gap: 10px; /* Espaçamento entre os itens */
-    align-items: center; /* Alinhamento vertical */
 }
 
 .control-panel img {
@@ -116,20 +86,7 @@ img, button, a {
     cursor: pointer; /* Muda o cursor para indicar que é clicável */
 }
 
-.icon-panel{
-    margin-left: 8vw;
-    margin-bottom: 1vh;
-}
 
-.persist-panel{
-    margin-left: 8vw;
-    margin-bottom: 15vh;
-}
-
-.slider-panel{
-    margin-left: 8vw;
-    margin-bottom: 85vh;
-}
 
 .wizard {
     position: fixed;

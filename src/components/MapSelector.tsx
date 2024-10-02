@@ -19,10 +19,10 @@ const MapSelector: React.FC<MapSelectorProps> = ({ onSelectMap, onSelectLevel, a
     return (
         <div style={{
             opacity: '70%',
-            position: 'absolute',
+            position: 'fixed',
             zIndex: 10,
-            top: '20px',  // Aumentei o espaçamento do topo para uma aparência mais equilibrada
-            left: '20px', // Aumentei o espaçamento lateral para manter a simetria
+            top: '1.1vw',  // Aumentei o espaçamento do topo para uma aparência mais equilibrada
+            left: '8vw', // Aumentei o espaçamento lateral para manter a simetria
             backgroundColor: '#ffffff',
             borderRadius: '8px',  // Borda levemente mais suave
             padding: '15px',  // Aumentei o espaçamento interno para mais conforto visual
@@ -33,7 +33,6 @@ const MapSelector: React.FC<MapSelectorProps> = ({ onSelectMap, onSelectLevel, a
 
 
             <select onChange={(e) => onSelectMap(allMaps.getMapByName(e.target.value))}>
-                {/*<option value={selectedMap.levels[0].floor}>Selecione o Mapa</option>*/}
                 {allMaps.getAllMaps().map((map, index) => (
                     <option key={index} value={map.name}>
                         {map.name}

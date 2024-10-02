@@ -1,22 +1,21 @@
 import React from 'react';
-import ReinforcementIconSVG from '../assets/icons/reinforcement.svg';
-import FootHeightIconSVG from '../assets/icons/foot.svg';
-import HeadHeightIconSVG from '../assets/icons/head.svg';
-import VaultHeightIconSVG from '../assets/icons/vault.svg';
-import RotationIconSVG from '../assets/icons/rotation.svg';
-import HatchIconSVG from '../assets/icons/hatch.svg';
-import { SetupItemType } from "./models/SetupItemType";
+import ReinforcementIconSVG from '../../../assets/icons/reinforcement.svg';
+import FootHeightIconSVG from '../../../assets/icons/foot.svg';
+import HeadHeightIconSVG from '../../../assets/icons/head.svg';
+import VaultHeightIconSVG from '../../../assets/icons/vault.svg';
+import RotationIconSVG from '../../../assets/icons/rotation.svg';
+import HatchIconSVG from '../../../assets/icons/hatch.svg';
+import { SetupItemType } from "../../models/SetupItemType";
 import { CiEraser } from "react-icons/ci";
-import { FaRegSave } from "react-icons/fa";
-import { FaCloudUploadAlt } from "react-icons/fa";
+import { FaShare } from "react-icons/fa";
+import './ControlPanel.css'
 
 interface ControlPanelProps {
     containerWidth: number;
     setContainerWidth: (width: number) => void;
     handleEraser: () => void;
-    handleAddItemSetup: (Rotation: SetupItemType) => void;
+    handleAddItemSetup: (setupItemType: SetupItemType) => void;
     saveConfiguration: () => void;
-    loadConfiguration: (data: string) => void;
 }
 
 const ControlPanel: React.FC<ControlPanelProps> = ({
@@ -24,15 +23,9 @@ const ControlPanel: React.FC<ControlPanelProps> = ({
                                                        setContainerWidth,
                                                        handleAddItemSetup,
                                                        saveConfiguration,
-                                                       loadConfiguration,
                                                        handleEraser
                                                    }) => {
-    const handleLoadClick = () => {
-        const jsonData = prompt("Cole a configuração JSON aqui:");
-        if (jsonData) {
-            loadConfiguration(jsonData);
-        }
-    };
+
 
     return (
         <div>
@@ -45,8 +38,7 @@ const ControlPanel: React.FC<ControlPanelProps> = ({
                         gap: '10px', // Espaçamento entre os itens
                         justifyContent: 'center', // Centraliza os itens
                         width: '200px' // Defina uma largura fixa para controlar quantos itens cabem em cada linha
-                    }}
-                >
+                    }}>
                     <img
                         src={RotationIconSVG}
                         onClick={() => handleAddItemSetup(SetupItemType.Rotation)}
@@ -83,6 +75,7 @@ const ControlPanel: React.FC<ControlPanelProps> = ({
                         alt="Hatch Reinforcement"
                         style={{ width: '40px', height: '40px' }}
                     />
+                    <CiEraser onClick={handleEraser} style={{ width: "40px", height: "40px", cursor: "pointer" }} />
                 </div>
             </div>
 
@@ -97,10 +90,8 @@ const ControlPanel: React.FC<ControlPanelProps> = ({
                         id="widthSlider"
                     />
                 </div>
-                <div className="control-panel controls persist-panel" style={{ display: 'flex', flexDirection: 'row', alignItems: 'center' }}>
-                    <FaRegSave onClick={saveConfiguration} style={{ width: "40px", height: "40px", cursor: "pointer" }} />
-                    <FaCloudUploadAlt onClick={handleLoadClick} style={{ width: "40px", height: "40px", cursor: "pointer" }} />
-                    <CiEraser onClick={handleEraser} style={{ width: "40px", height: "40px", cursor: "pointer" }} />
+                <div className="control-panel  share-panel" style={{ display: 'flex', flexDirection: 'row', alignItems: 'center' }}>
+                    <FaShare  onClick={saveConfiguration} style={{ width: "30px", height: "30px", cursor: "pointer" }} />
                 </div>
             </div>
 

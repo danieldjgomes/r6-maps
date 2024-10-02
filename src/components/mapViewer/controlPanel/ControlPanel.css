@@ -1,0 +1,28 @@
+.control-panel {
+    position: fixed;
+    /*position: absolute;*/
+    background-color: rgba(255, 255, 255, 0.8); /* Fundo semi-transparente */
+    padding: 10px; /* Espaçamento interno */
+    border-radius: 5px; /* Bordas arredon   dadas */
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2); /* Sombra */
+    z-index: 10; /* Para garantir que fique acima de outros elementos */
+    display: grid; /* Usando Grid */
+    grid-template-columns: repeat(auto-fit, minmax(60px, 1fr)); /* Ajusta as colunas automaticamente */
+    gap: 10px; /* Espaçamento entre os itens */
+    align-items: center; /* Alinhamento vertical */
+}
+
+.icon-panel{
+    left: 8vw;
+    top: 85vh;
+}
+
+.share-panel{
+    left: 29vw;
+    top: 1.1vw;
+}
+
+.slider-panel{
+    left: 8vw;
+    top: 15vh;
+}

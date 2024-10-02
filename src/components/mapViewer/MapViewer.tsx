@@ -7,18 +7,16 @@ import {MapLevel} from "../models/MapLevel";
 import {BombSite} from "../models/BombSite";
 import {WallDirection} from "../models/WallDirection";
 import BombIcon from "./icons/BombIcon";
-import HatchIcon from "./icons/HatchIcon";
-import WallReinforcementIcon from "./icons/WallReinforcementIcon";
 import SetupItemIcon from "./icons/SetupItemIcon";
 import {SetupItem} from "../models/SetupItem";
 import {SetupItemType} from "../models/SetupItemType";
-import ControlPanel from '../../components/ControlPanel';
+import ControlPanel from './controlPanel/ControlPanel';
 import {WallReinforcement} from "../models/WallReinforcement";
 import {Hatch} from "../models/Hatch"
 import LZString from 'lz-string';
 import {FaRegCopy} from "react-icons/fa";
-import {FaCopy} from "react-icons/fa";
 import axios from "axios";
+import ShareWizard from "./ShareWizard/ShareWizard";
 
 
 const MapViewer: React.FC = () => {
@@ -35,7 +33,6 @@ const MapViewer: React.FC = () => {
     const [itemDirection, setItemDirection] = useState<WallDirection>(WallDirection.N);
     const [isErasing, setIsErasing] = useState(false);
     const [isWizardOpen, setIsWizardOpen] = useState(false);
-    const [isCopied, setIsCopied] = useState(false);
     const [configurationCode, setConfigurationCode] = useState('');
     const xAdjustment = -5;
     const yAdjustment = -15;
@@ -121,8 +118,12 @@ const MapViewer: React.FC = () => {
     };
 
 
-    const handleSaveClick = () => {
-
+    const handleShareClick = () => {
+        if(setupItems.length == 0){
+            setConfigurationCode(`${window.location.origin}`);
+            setIsWizardOpen(true);
+            return;
+        }
         const configuration = {
             map: selectedMap.name,
             level: selectedLevel.floor,
@@ -213,11 +214,14 @@ const MapViewer: React.FC = () => {
                     axios
                         .get("https://sheetdb.io/api/v1/q840jlzdyqirx/search?id=" + configData)
                         .then((response) => {
-                            let dataResponse = response.data[0];
-                            if (dataResponse.id) {
-                                localStorage.setItem(`r6_${dataResponse.id}`, dataResponse.code);
+                            if(response.data.length > 0){
+                                let dataResponse = response.data[0];
+                                if (dataResponse.id) {
+                                    localStorage.setItem(`r6_${dataResponse.id}`, dataResponse.code);
+                                }
+                                loadConfiguration(response.data[0].code)
                             }
-                            loadConfiguration(response.data[0].code)
+
                         })
                 }
             }
@@ -250,6 +254,7 @@ const MapViewer: React.FC = () => {
     return (
         <div className="map-viewer-wrapper">
             <div className="map-viewer-container" style={{width: `${containerWidth}%`}}>
+
                 <MapSelector
                     onSelectMap={setSelectedMap}
                     onSelectLevel={setSelectedLevel}
@@ -270,7 +275,6 @@ const MapViewer: React.FC = () => {
                                  alt={`Map view of ${selectedMap.name} - ${selectedLevel.floor}`}
                                  onMouseMove={handleMouseMove}
                                  onClick={handleMapClick}
-                                //onWheel={handleMouseRoll}
                             />
                             {isPlacingItem && mousePosition && (
                                 <div
@@ -312,7 +316,6 @@ const MapViewer: React.FC = () => {
                                         iconSize={iconSize}
                                         onClick={() => handleIconClick(wall)}
                                         isErasing={isErasing}
-
                                     />
                                 ))}
                             </div>
@@ -325,35 +328,11 @@ const MapViewer: React.FC = () => {
                 containerWidth={containerWidth}
                 setContainerWidth={setContainerWidth}
                 handleAddItemSetup={handleAddItemSetup}
-                saveConfiguration={handleSaveClick}
-                loadConfiguration={loadConfiguration}
+                saveConfiguration={handleShareClick}
                 handleEraser={handleIconEraser}
             />
 
-            {isWizardOpen && (
-                <div className="wizard">
-                    <div className="wizard-content">
-                        <h2>Share your setup</h2>
-                        <h3 onClick={() => {
-                            navigator.clipboard.writeText(configurationCode);
-                            setIsCopied(true);
-                        }}
-                            style={{width: '90%', height: '20%', cursor: 'pointer'}}>
-                            {configurationCode} <FaRegCopy/>
-                        </h3>
-                        <div style={{width: '100%', height: '100%', padding: '10px', position: 'relative'}}>
-                          <span style={{visibility: isCopied ? 'visible' : 'hidden'}}>
-                            Copiado com sucesso.
-                          </span>
-                        </div>
-                        <button onClick={() => {
-                            setIsWizardOpen(false);
-                            setIsCopied(false);
-                        }}>Fechar
-                        </button>
-                    </div>
-                </div>
-            )}
+            <ShareWizard isWizardOpen={isWizardOpen} configurationCode={configurationCode} closeWizard={() => setIsWizardOpen(false)}/>
         </div>
     );
 };
