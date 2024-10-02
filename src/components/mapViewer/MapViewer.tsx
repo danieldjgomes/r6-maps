@@ -16,10 +16,8 @@ import ControlPanel from '../../components/ControlPanel';
 import {WallReinforcement} from "../models/WallReinforcement";
 import {Hatch} from "../models/Hatch"
 import LZString from 'lz-string';
-import { FaRegCopy } from "react-icons/fa";
-import { FaCopy } from "react-icons/fa";
-
-
+import {FaRegCopy} from "react-icons/fa";
+import {FaCopy} from "react-icons/fa";
 import axios from "axios";
 
 
@@ -60,12 +58,12 @@ const MapViewer: React.FC = () => {
                 // Cancelar adição de item e exclusão
                 if (isPlacingItem)
                     setItemPlacingType(null)
-                    setIsPlacingItem(false);
-                }
-                if (isErasing) {
-                    setIsErasing(false);
-                }
+                setIsPlacingItem(false);
             }
+            if (isErasing) {
+                setIsErasing(false);
+            }
+        }
 
 
         window.addEventListener('keydown', handleKeyDown);
@@ -200,7 +198,6 @@ const MapViewer: React.FC = () => {
             // Ignorar erros e não aplicar nenhuma alteração
         }
     };
-
 
 
     useEffect(() => {
@@ -341,9 +338,9 @@ const MapViewer: React.FC = () => {
                             navigator.clipboard.writeText(configurationCode);
                             setIsCopied(true);
                         }}
-                            style={{ width: '90%', height: '20%', cursor: 'pointer' }}>
+                            style={{width: '90%', height: '20%', cursor: 'pointer'}}>
                             {configurationCode} <FaRegCopy/>
-                            </h3>
+                        </h3>
                         <div style={{width: '100%', height: '100%', padding: '10px', position: 'relative'}}>
                           <span style={{visibility: isCopied ? 'visible' : 'hidden'}}>
                             Copiado com sucesso.
@@ -352,7 +349,8 @@ const MapViewer: React.FC = () => {
                         <button onClick={() => {
                             setIsWizardOpen(false);
                             setIsCopied(false);
-                        }}>Fechar</button>
+                        }}>Fechar
+                        </button>
                     </div>
                 </div>
             )}
