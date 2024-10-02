@@ -16,6 +16,11 @@ import ControlPanel from '../../components/ControlPanel';
 import {WallReinforcement} from "../models/WallReinforcement";
 import {Hatch} from "../models/Hatch"
 import LZString from 'lz-string';
+import { FaRegCopy } from "react-icons/fa";
+import { FaCopy } from "react-icons/fa";
+
+
+import axios from "axios";
 
 
 const MapViewer: React.FC = () => {
@@ -32,6 +37,7 @@ const MapViewer: React.FC = () => {
     const [itemDirection, setItemDirection] = useState<WallDirection>(WallDirection.N);
     const [isErasing, setIsErasing] = useState(false);
     const [isWizardOpen, setIsWizardOpen] = useState(false);
+    const [isCopied, setIsCopied] = useState(false);
     const [configurationCode, setConfigurationCode] = useState('');
     const xAdjustment = -5;
     const yAdjustment = -15;
@@ -142,19 +148,16 @@ const MapViewer: React.FC = () => {
 
         console.log(json);
         generateURL(compressed)
-
     };
 
     function generateURL(compressed: string) {
-        const xhr = new XMLHttpRequest();
-        xhr.open('GET', `https://ulvis.net/api.php?url=${"https://r6-maps-orcin.vercel.app/"}${compressed}&custom=${"r6-maps-" + Date.now()}&private=1`);
-        xhr.onload = function() {
-            if (xhr.status === 200) {
-                setConfigurationCode(xhr.responseText);
+        axios
+            .post(`https://sheetdb.io/api/v1/q840jlzdyqirx?id=TIMESTAMP&code=${compressed}&return_values=true`)
+            .then((response) => {
+                localStorage.setItem(`r6_${response.data.data[0].id}`, compressed);
+                setConfigurationCode(`${window.location.origin}/${response.data.data[0].id}`);
                 setIsWizardOpen(true); // Abre o wizard após a requisição ser concluída com sucesso
-            }
-        };
-        xhr.send();
+            });
     }
 
 
@@ -204,8 +207,22 @@ const MapViewer: React.FC = () => {
         const loadFromUrl = () => {
             const urlPath = window.location.pathname.split('/');
             const configData = urlPath[urlPath.length - 1]; // Pega a última parte da URL
-            if (configData) {
-                loadConfiguration(configData); // Carrega a configuração se houver dados
+            const cached = localStorage.getItem(`r6_${configData}`);
+
+            if(cached){
+                loadConfiguration(cached);
+            }
+
+            else {
+                axios
+                    .get("https://sheetdb.io/api/v1/q840jlzdyqirx/search?id=" + configData)
+                    .then((response) => {
+                        let dataResponse = response.data[0];
+                        if(dataResponse.id){
+                            localStorage.setItem(`r6_${dataResponse.id}`, dataResponse.code);
+                        }
+                        loadConfiguration(response.data[0].code)
+                    })
             }
         };
 
@@ -318,17 +335,19 @@ const MapViewer: React.FC = () => {
             {isWizardOpen && (
                 <div className="wizard">
                     <div className="wizard-content">
-                        <h2>Código de Configuração</h2>
-                        <textarea
-                            value={configurationCode}
-                            readOnly
-                            style={{ width: '100%', height: '100px' }} // Ajuste conforme necessário
-                        />
-
-
-                        <button onClick={() => navigator.clipboard.writeText(configurationCode)}>
-                            Copiar para a área de transferência
-                        </button>
+                        <h2>Share your setup</h2>
+                        <h3 onClick={() => {
+                            navigator.clipboard.writeText(configurationCode);
+                            setIsCopied(true);
+                        }}
+                            style={{ width: '90%', height: '20%', cursor: 'pointer' }}>
+                            {configurationCode} <FaRegCopy/>
+                            </h3>
+                        <div>
+                            {isCopied && (
+                                   " Copiado com sucesso."
+                            )}
+                        </div>
                         <button onClick={() => setIsWizardOpen(false)}>Fechar</button>
                     </div>
                 </div>
