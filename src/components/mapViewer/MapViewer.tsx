@@ -232,6 +232,8 @@ const MapViewer: React.FC = () => {
     }, []); // A lista de dependências está vazia, portanto, essa execução só ocorrerá uma vez
 
 
+
+
     useEffect(() => {
         const updateIconSize = () => {
             if (mapImageRef.current) {

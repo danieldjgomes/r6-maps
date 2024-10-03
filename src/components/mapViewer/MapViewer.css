@@ -13,10 +13,9 @@
 
 .map-image {
     width: 100%; /* A imagem se ajusta ao contêiner */
-    height: 100%; /* Manter a proporção da imagem */
+    height: auto; /* Mantém a proporção correta da imagem */
     display: block;
     filter: brightness(1);
-
 }
 
 .icon-container {
@@ -25,14 +24,16 @@
     left: 0;
     width: 100%;
     height: 100%;
-    pointer-events: none; /* Para garantir que os ícones não interfiram com cliques */
+    pointer-events: none;
 }
 
-.bomb-icon {
-    opacity: 70%;
+.bomb-icon,
+.hatch-icon {
     position: absolute;
-    width: 30px;
-    height: 30px;
+    width: 2.5vw; /* Tamanho relativo à largura da viewport */
+    height: 2.5vw;
+    max-width: 30px; /* Limita o tamanho máximo */
+    max-height: 30px;
     background-color: red;
     color: white;
     display: flex;
@@ -40,29 +41,23 @@
     align-items: center;
     border-radius: 50%;
     font-weight: bold;
-    transform: translate(-50%, -50%); /* Centralizar o ícone no ponto */
+    opacity: 70%;
+    transform: translate(-50%, -50%); /* Centraliza no ponto */
 }
 
 .hatch-icon {
-    position: absolute;
-    width: 30px;
-    height: 30px;
-    color: white;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    transform: translate(-50%, -50%); /* Centralizar o ícone no ponto */
+    background-color: transparent;
 }
 
 body {
-    user-select: none; /* Impede seleção de texto */
+    user-select: none;
 }
 
 img, button, a {
-    -webkit-user-drag: none; /* Desabilita arrasto no Chrome e Safari */
-    -moz-user-drag: none;    /* Desabilita arrasto no Firefox */
-    -ms-user-drag: none;     /* Desabilita arrasto no IE */
-    user-drag: none;         /* Padrão */
+    -webkit-user-drag: none;
+    -moz-user-drag: none;
+    -ms-user-drag: none;
+    user-drag: none;
 }
 
 .icon-items {
@@ -76,17 +71,16 @@ img, button, a {
 }
 
 .control-panel img {
-    cursor: pointer; /* Muda o cursor para indicar que é clicável */
-    width: 40px; /* Ajuste o tamanho das imagens */
-    height: auto; /* Manter a proporção das imagens */
+    cursor: pointer;
+    width: 5vw;
+    max-width: 40px;
+    height: auto;
 }
 
 .control-panel button {
-    padding: 5px 10px; /* Ajuste o padding dos botões */
-    cursor: pointer; /* Muda o cursor para indicar que é clicável */
+    padding: 0.5rem 1rem;
+    cursor: pointer;
 }
-
-
 
 .wizard {
     position: fixed;
@@ -94,47 +88,44 @@ img, button, a {
     left: 0;
     right: 0;
     bottom: 0;
-    background-color: rgba(0, 0, 0, 0.75); /* Fundo mais escuro para foco */
+    background-color: rgba(0, 0, 0, 0.75);
     display: flex;
     justify-content: center;
     align-items: center;
     z-index: 1000;
-    backdrop-filter: blur(5px); /* Efeito de desfoque no fundo */
+    backdrop-filter: blur(5px);
 }
 
 .wizard-content {
-    background: #f9f9f9; /* Cor de fundo suave */
-    padding: 30px; /* Mais espaço para conteúdo */
-    border-radius: 12px; /* Bordas mais arredondadas */
-    box-shadow: 0px 10px 30px rgba(0, 0, 0, 0.2); /* Sombra suave */
-    width: 350px; /* Ajuste do tamanho */
-    max-width: 90%; /* Responsivo em telas menores */
-    /*animation: fadeIn 0.4s ease-out; !* Efeito de animação *!*/
-    text-align: center; /* Centralizar o texto */
+    background: #f9f9f9;
+    padding: 2rem;
+    border-radius: 12px;
+    box-shadow: 0px 10px 30px rgba(0, 0, 0, 0.2);
+    width: 90vw;
+    max-width: 350px;
+    text-align: center;
 }
 
 .wizard-content h2 {
     font-size: 1.5rem;
-    color: #333; /* Cor de título */
+    color: #333;
     margin-bottom: 20px;
 }
 
 .wizard-content h3 {
-    margin: auto auto 5px;
+    margin: 0 auto 5px;
     width: 20%;
     height: 40px;
     border: 2px solid #ddd;
     border-radius: 8px;
     padding: 10px;
-    resize: none; /* Desabilitar redimensionamento */
     font-family: 'Courier New', Courier, monospace;
     font-size: 0.9rem;
     color: #adacac;
     background-color: #ededed;
     outline: none;
-    transition: border-color 0.3s ease;
     text-align: center;
-
+    transition: border-color 0.3s ease;
 }
 
 .wizard-content button {
@@ -150,27 +141,27 @@ img, button, a {
 }
 
 .wizard-content button:hover {
-    background-color: #0056b3; /* Cor de hover */
+    background-color: #0056b3;
 }
 
 .wizard-content button:last-child {
-    background-color: #6c757d; /* Cor do botão de fechar */
+    background-color: #6c757d;
     margin-right: 0;
 }
 
 .wizard-content button:last-child:hover {
-    background-color: #5a6268; /* Cor de hover para fechar */
+    background-color: #5a6268;
 }
 
-/* Animação de fade-in */
-/*@keyframes fadeIn {*/
-/*    from {*/
-/*        opacity: 0;*/
-/*        transform: scale(0.9);*/
-/*    }*/
-/*    to {*/
-/*        opacity: 1;*/
-/*        transform: scale(1);*/
-/*    }*/
-/*}*/
+/* Responsividade para telas menores */
+@media screen and (max-width: 768px) {
+    .bomb-icon, .hatch-icon {
+        width: 5vw; /* Maior para telas menores */
+        height: 5vw;
+    }
 
+    .control-panel img {
+        width: 8vw;
+        max-width: 50px;
+    }
+}

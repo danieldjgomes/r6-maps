@@ -51,7 +51,10 @@ const MapSelector: React.FC<MapSelectorProps> = ({ onSelectMap, onSelectLevel, a
                 ))}
             </select>
             {/* Seletor de Bombsite */}
-            <select onChange={(e) => onSelectBombSite(selectedMap.getBombSiteByName(e.target.value))}>
+            <select onChange={(e) => {
+                onSelectBombSite(selectedMap.getBombSiteByName(e.target.value))
+                onSelectLevel(selectedMap.getMapLevelByFloor(selectedMap.getBombSiteByName(e.target.value).bombs[0].floor))
+            }}>
                 {selectedMap.bombSites.map((bombsite, index) => (
                     <option key={index} value={bombsite.name}>
                         {bombsite.name}

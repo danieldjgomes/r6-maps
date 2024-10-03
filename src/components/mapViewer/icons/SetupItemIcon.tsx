@@ -1,15 +1,7 @@
 import React from 'react';
 import {SetupItemDetails, SetupItemType} from '../../models/SetupItemType';
-import {WallDirection} from '../../models/WallDirection';
 import {SetupItem} from "../../models/SetupItem";
-import FootHeightIcon from "../../../assets/icons/foot.svg";
-import HeadHeightIcon from "../../../assets/icons/head.svg";
-import VaultIcon from "../../../assets/icons/vault.svg";
-import RotationIcon from "../../../assets/icons/rotation.svg";
-import RotationImage from "../../../assets/images/rotation_wall.png";
-import FootImage from "../../../assets/images/prone_wall.jpeg";
-import VaultImage from "../../../assets/images/vault_wall.jpeg";
-import SightImage from "../../../assets/images/sight_wall.jpeg";
+
 import Tooltip from "../Tooltip";
 
 interface SetupIconProps {
