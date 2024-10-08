@@ -14,7 +14,6 @@ import ControlPanel from './controlPanel/ControlPanel';
 import {WallReinforcement} from "../models/WallReinforcement";
 import {Hatch} from "../models/Hatch"
 import LZString from 'lz-string';
-import {FaRegCopy} from "react-icons/fa";
 import axios from "axios";
 import ShareWizard from "./ShareWizard/ShareWizard";
 
