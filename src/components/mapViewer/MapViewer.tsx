@@ -118,6 +118,8 @@ const MapViewer: React.FC = () => {
     };
 
 
+
+
     const handleShareClick = () => {
         if(setupItems.length == 0){
             setConfigurationCode(`${window.location.origin}`);
@@ -149,14 +151,27 @@ const MapViewer: React.FC = () => {
         generateURL(compressed)
     };
 
-    function generateURL(compressed: string) {
-        axios
-            .post(`https://sheetdb.io/api/v1/q840jlzdyqirx?id=TIMESTAMP&code=${compressed}&return_values=true`)
-            .then((response) => {
-                localStorage.setItem(`r6_${response.data.data[0].id}`, compressed);
-                setConfigurationCode(`${window.location.origin}/${response.data.data[0].id}`);
-                setIsWizardOpen(true); // Abre o wizard após a requisição ser concluída com sucesso
-            });
+    async function generateURL(compressed: string) {
+        const key = Date.now()
+        axios({
+            method: 'post',
+            url: `http://144.22.152.131:8080/set`,
+            data: {
+                key:  key,
+                value: compressed
+            }
+        }).then(() => {
+            setConfigurationCode(`${window.location.origin}/${key}`);
+            setIsWizardOpen(true);
+        })
+        // axios
+        //     .post(`http://144.22.152.131:8080/set`)
+        //
+        //     .then((response) => {
+        //         localStorage.setItem(`r6_${response.data.data[0].id}`, compressed);
+        //         setConfigurationCode(`${window.location.origin}/${response.data.data[0].id}`);
+        //         setIsWizardOpen(true); // Abre o wizard após a requisição ser concluída com sucesso
+        //     });
     }
 
 

@@ -8,6 +8,7 @@ import firstImage from '../../../assets/maps/r6-maps-clubhouse-blueprint-2.jpg'
 import secondImage from '../../../assets/maps/r6-maps-clubhouse-blueprint-3.jpg'
 import roofImage from '../../../assets/maps/r6-maps-clubhouse-blueprint-4.jpg'
 import {Floor} from "../../Enums";
+
 export class ClubHouse extends R6Map {
     constructor() {
 
@@ -23,6 +24,10 @@ export class ClubHouse extends R6Map {
             new Bomb(51, 44.7, BombType.A, Floor.SecondFloor),
             new Bomb(42, 41, BombType.B, Floor.SecondFloor)]
 
+        let cctvDinheiroBombs: Bomb[] = [
+            new Bomb(64.2, 44.3, BombType.A, Floor.SecondFloor),
+            new Bomb(66, 57.6, BombType.B, Floor.SecondFloor)]
+
 
         let maps: MapLevel[] = [
             new MapLevel(basementImage, Floor.Basement),
@@ -31,11 +36,12 @@ export class ClubHouse extends R6Map {
             new MapLevel(roofImage, Floor.Roof),
         ]
 
-        let arsenalChurch = new BombSite(arsenalChurchBombs, "Church and Arsenal Room");
+        let arsenalChurch = new BombSite(   arsenalChurchBombs, "Church and Arsenal Room");
         let barStage = new BombSite(barStageBombs, "Bar and Stage")
         let gymbedrom = new BombSite(gymBedroomBombs, "Gym and Bedroom")
+        let cctv = new BombSite(cctvDinheiroBombs, "CCTV e Dinheiro")
 
 
-        super("Club House", "CH", [arsenalChurch, barStage, gymbedrom], maps);
+        super("Club House", "CH", [arsenalChurch, barStage, gymbedrom, cctv], maps);
     }
 }
