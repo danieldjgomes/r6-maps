@@ -226,7 +226,7 @@ const MapViewer: React.FC = () => {
                     loadConfiguration(cached);
                 } else {
                     axios
-                        .get("https://kv-api.r6-planner.top/get?key" + configData)
+                        .get("https://kv-api.r6-planner.top/get?key=" + configData)
                             .then((response) => {
 
                                 loadConfiguration(response.data.value)
