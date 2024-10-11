@@ -154,7 +154,7 @@ const MapViewer: React.FC = () => {
         const key = Date.now()
         axios({
             method: 'post',
-            url: `http://144.22.152.131:8080/set`,
+            url: `https://kv-api.r6-planner.top/set`,
             data: {
                 key:  key,
                 value: compressed
@@ -226,15 +226,10 @@ const MapViewer: React.FC = () => {
                     loadConfiguration(cached);
                 } else {
                     axios
-                        .get("https://sheetdb.io/api/v1/q840jlzdyqirx/search?id=" + configData)
-                        .then((response) => {
-                            if(response.data.length > 0){
-                                let dataResponse = response.data[0];
-                                if (dataResponse.id) {
-                                    localStorage.setItem(`r6_${dataResponse.id}`, dataResponse.code);
-                                }
-                                loadConfiguration(response.data[0].code)
-                            }
+                        .get("https://kv-api.r6-planner.top/get?key" + configData)
+                            .then((response) => {
+
+                                loadConfiguration(response.data.value)
 
                         })
                 }
