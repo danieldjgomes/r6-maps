@@ -151,26 +151,16 @@ const MapViewer: React.FC = () => {
     };
 
     async function generateURL(compressed: string) {
-        const key = Date.now()
         axios({
             method: 'post',
-            url: `https://kv-api.r6-planner.top/set`,
+            url: `https://kv-api.r6-planner.top/key`,
             data: {
-                key:  key,
                 value: compressed
             }
-        }).then(() => {
-            setConfigurationCode(`${window.location.origin}/${key}`);
+        }).then((response) => {
+            setConfigurationCode(`${window.location.origin}/${response.data.key}`);
             setIsWizardOpen(true);
-        })
-        // axios
-        //     .post(`http://144.22.152.131:8080/set`)
-        //
-        //     .then((response) => {
-        //         localStorage.setItem(`r6_${response.data.data[0].id}`, compressed);
-        //         setConfigurationCode(`${window.location.origin}/${response.data.data[0].id}`);
-        //         setIsWizardOpen(true); // Abre o wizard após a requisição ser concluída com sucesso
-        //     });
+        });
     }
 
 
@@ -188,23 +178,19 @@ const MapViewer: React.FC = () => {
                 setSelectedMap(map);
                 setSelectedLevel(map.getMapLevelByFloor(configuration.level));
 
-                // Configurar bombSites (se necessário)
                 const bombSites = configuration.bombSites.map((site: any) => ({
                     ...site,
                     bombs: site.bombs.map((bomb: any) => ({
-                        ...bomb
+                        ...bomb,
+                        x: parseFloat(bomb.x.toFixed(3)), // Garantir precisão de 3 casas decimais
+                        y: parseFloat(bomb.y.toFixed(3)),
                     })),
-                    hatches: site.hatches.map((hatch: any) => new Hatch(hatch.x, hatch.y, hatch.floor)),
-                    wallReinforcements: site.wallReinforcements.map((wr: any) =>
-                        new WallReinforcement(wr.x, wr.y, wr.floor, wr.direction)),
-                    wallDestructions: site.wallDestructions.map((wd: any) =>
-                        new SetupItem(wd.x, wd.y, wd.floor, wd.type)),
                 }));
                 setSelectedBombSite(bombSites[0]);
 
                 // Carregar os itens de configuração (setup)
                 const setupItems = configuration.setup.map((setup: any) =>
-                    new SetupItem(setup.x, setup.y, setup.floor, setup.type)
+                    new SetupItem(parseFloat(setup.x.toFixed(3)), parseFloat(setup.y.toFixed(3)), setup.floor, setup.type)
                 );
                 setSetupItems(setupItems);
             }
@@ -219,20 +205,16 @@ const MapViewer: React.FC = () => {
         const loadFromUrl = () => {
             const urlPath = window.location.pathname.split('/');
             const configData = urlPath[urlPath.length - 1]; // Pega a última parte da URL
-            const cached = localStorage.getItem(`r6_${configData}`);
 
             if (configData) {
-                if (cached) {
-                    loadConfiguration(cached);
-                } else {
                     axios
-                        .get("https://kv-api.r6-planner.top/get?key=" + configData)
+                        .get("https://kv-api.r6-planner.top/key/" + configData)
                             .then((response) => {
 
                                 loadConfiguration(response.data.value)
 
                         })
-                }
+
             }
 
         };
