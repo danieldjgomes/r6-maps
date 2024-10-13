@@ -1,6 +1,6 @@
 import React, {useEffect, useRef, useState} from 'react';
 import './MapViewer.css';
-import MapSelector from '../MapSelector';
+import TopController from '../TopController';
 import {R6Map} from "../models/R6Map";
 import {AllMaps} from "../models/AllMaps";
 import {MapLevel} from "../models/MapLevel";
@@ -176,7 +176,7 @@ const MapViewer: React.FC = () => {
             if (map) {
                 // Atualizar o mapa e nível selecionados
                 setSelectedMap(map);
-                setSelectedLevel(map.getMapLevelByFloor(configuration.level));
+                setSelectedLevel(map.levels[0]);
 
                 const bombSites = configuration.bombSites.map((site: any) => ({
                     ...site,
@@ -187,6 +187,7 @@ const MapViewer: React.FC = () => {
                     })),
                 }));
                 setSelectedBombSite(bombSites[0]);
+
 
                 // Carregar os itens de configuração (setup)
                 const setupItems = configuration.setup.map((setup: any) =>
@@ -246,17 +247,21 @@ const MapViewer: React.FC = () => {
 
     return (
         <div className="map-viewer-wrapper">
-            <div className="map-viewer-container" style={{width: `${containerWidth}%`}}>
 
-                <MapSelector
-                    onSelectMap={setSelectedMap}
-                    onSelectLevel={setSelectedLevel}
-                    onSelectBombSite={setSelectedBombSite}
-                    allMaps={allMaps}
-                    selectedLevel={selectedLevel}
-                    selectedMap={selectedMap}
-                    selectedBombSite={selectedBombSite}
-                />
+            <TopController
+                onSelectMap={setSelectedMap}
+                onSelectLevel={setSelectedLevel}
+                onSelectBombSite={setSelectedBombSite}
+                allMaps={allMaps}
+                selectedLevel={selectedLevel}
+                selectedMap={selectedMap}
+                selectedBombSite={selectedBombSite}
+                saveConfiguration={handleShareClick}
+                setContainerWidth={setContainerWidth}
+                containerWidth={containerWidth}
+            />
+            <div className="map-viewer-container" style={{width: `${containerWidth}%`,  transform: `matrix(${containerWidth/100}, 0, 0, ${containerWidth/100}, 0, 0)`, transformOrigin: 'center'}}>
+
 
                 <div className="map-container">
                     {displayedMap && (

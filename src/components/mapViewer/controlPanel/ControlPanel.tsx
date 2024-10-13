@@ -9,6 +9,7 @@ import { SetupItemType } from "../../models/SetupItemType";
 import { CiEraser } from "react-icons/ci";
 import { FaShare } from "react-icons/fa";
 import './ControlPanel.css'
+import useIsLandscape from "../../../useIsLandScape";
 
 interface ControlPanelProps {
     containerWidth: number;
@@ -26,10 +27,14 @@ const ControlPanel: React.FC<ControlPanelProps> = ({
                                                        handleEraser
                                                    }) => {
 
+    const isLandscape = useIsLandscape(); // Usa o hook para verificar se está em landscape
+
+
 
     return (
         <div>
-            <div className="control-panel icon-panel" style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
+
+            {isLandscape && <div className="control-panel icon-panel" style={{display: 'flex', flexDirection: 'column', gap: '10px'}}>
                 <div
                     className="setup-items"
                     style={{
@@ -43,56 +48,42 @@ const ControlPanel: React.FC<ControlPanelProps> = ({
                         src={RotationIconSVG}
                         onClick={() => handleAddItemSetup(SetupItemType.Rotation)}
                         alt="Rotate Wall"
-                        style={{ width: '40px', height: '40px' }} // Ajuste o tamanho dos ícones se necessário
+                        style={{width: '40px', height: '40px'}} // Ajuste o tamanho dos ícones se necessário
                     />
                     <img
                         src={VaultHeightIconSVG}
                         onClick={() => handleAddItemSetup(SetupItemType.Vault)}
                         alt="Vault Height"
-                        style={{ width: '40px', height: '40px' }}
+                        style={{width: '40px', height: '40px'}}
                     />
                     <img
                         src={FootHeightIconSVG}
                         onClick={() => handleAddItemSetup(SetupItemType.FootHeight)}
                         alt="Foot Height"
-                        style={{ width: '40px', height: '40px' }}
+                        style={{width: '40px', height: '40px'}}
                     />
                     <img
                         src={HeadHeightIconSVG}
                         onClick={() => handleAddItemSetup(SetupItemType.HeadHeight)}
                         alt="Head Height"
-                        style={{ width: '40px', height: '40px' }}
+                        style={{width: '40px', height: '40px'}}
                     />
                     <img
                         src={ReinforcementIconSVG}
                         onClick={() => handleAddItemSetup(SetupItemType.ReinforcementWall)}
                         alt="Wall Reinforcement"
-                        style={{ width: '40px', height: '40px' }}
+                        style={{width: '40px', height: '40px'}}
                     />
                     <img
                         src={HatchIconSVG}
                         onClick={() => handleAddItemSetup(SetupItemType.ReinforcementHatch)}
                         alt="Hatch Reinforcement"
-                        style={{ width: '40px', height: '40px' }}
+                        style={{width: '40px', height: '40px'}}
                     />
-                    <CiEraser onClick={handleEraser} style={{ width: "40px", height: "40px", cursor: "pointer" }} />
+                    <CiEraser onClick={handleEraser} style={{width: "40px", height: "40px", cursor: "pointer"}}/>
                 </div>
-            </div>
+            </div>}
 
-            <div className="control-panel slider-panel" style={{ display: 'flex', flexDirection: 'column', alignItems: 'center'}}>
-                    <input
-                        type="range"
-                        min="85"
-                        max="200"
-                        value={containerWidth}
-                        onChange={(e) => setContainerWidth(parseInt(e.target.value))}
-                        className="slider"
-                        id="widthSlider"
-                    />
-                </div>
-                <div className="control-panel  share-panel" style={{ display: 'flex', flexDirection: 'row', alignItems: 'center' }}>
-                    <FaShare  onClick={saveConfiguration} style={{ width: "30px", height: "30px", cursor: "pointer" }} />
-                </div>
             </div>
 
     );
