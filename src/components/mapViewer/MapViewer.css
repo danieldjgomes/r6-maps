@@ -6,6 +6,10 @@
     transform: matrix(0.5, 0, 0, 0.5, 0, 0);
 }
 
+body{
+    overflow: hidden;
+}
+
 .map-container {
     position: relative;
     display: inline-block;

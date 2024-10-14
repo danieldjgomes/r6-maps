@@ -11,12 +11,9 @@ import SetupItemIcon from "./icons/SetupItemIcon";
 import {SetupItem} from "../models/SetupItem";
 import {SetupItemType} from "../models/SetupItemType";
 import ControlPanel from './controlPanel/ControlPanel';
-import {WallReinforcement} from "../models/WallReinforcement";
-import {Hatch} from "../models/Hatch"
 import LZString from 'lz-string';
 import axios from "axios";
 import ShareWizard from "./ShareWizard/ShareWizard";
-import CoordinateDisplay from "./CoordinateDisplay";
 
 
 const MapViewer: React.FC = () => {
@@ -32,10 +29,17 @@ const MapViewer: React.FC = () => {
     const [mousePosition, setMousePosition] = useState<{ x: number, y: number } | null>(null);
     const [itemDirection, setItemDirection] = useState<WallDirection>(WallDirection.N);
     const [isErasing, setIsErasing] = useState(false);
+    const [mouseOverMap, setMouseOverMap] = useState(false);
     const [isWizardOpen, setIsWizardOpen] = useState(false);
     const [configurationCode, setConfigurationCode] = useState('');
     const xAdjustment = -5;
     const yAdjustment = -15;
+
+    const [dragging, setDragging] = useState(false);
+    const [dragStart, setDragStart] = useState<{ x: number, y: number } | null>(null);
+    const [dragOffset, setDragOffset] = useState<{ x: number, y: number }>({ x: 0, y: 0 });
+    const [imagePosition, setImagePosition] = useState<{ x: number, y: number }>({ x: 0, y: 0 });
+
 
     const mapImageRef = useRef<HTMLImageElement>(null);
     const iconContainerRef = useRef<HTMLDivElement>(null);
@@ -46,8 +50,45 @@ const MapViewer: React.FC = () => {
             const x = event.clientX - rect.left;
             const y = event.clientY - rect.top;
             setMousePosition({x, y});
+
+            if (dragging && dragStart) {
+                const dx = event.clientX - dragStart.x;
+                const dy = event.clientY - dragStart.y;
+                setImagePosition({ x: dragOffset.x + dx, y: dragOffset.y + dy });
+            }
+            console.log(`x: ${x} y: ${y}`)
         }
     };
+
+    const handleMouseDown = (event: React.MouseEvent<HTMLImageElement>) => {
+        console.log("clicked, status: " + dragging)
+        setDragging(true);
+        setDragStart({ x: event.clientX, y: event.clientY });
+    };
+
+    const handleMouseUp = () => {
+        setDragging(false);
+        setDragOffset(imagePosition);
+        setDragStart(null);
+    };
+
+    useEffect(() => {
+        const updateIconSize = () => {
+            if (mapImageRef.current) {
+                const imageWidth = mapImageRef.current.offsetWidth;
+                const newSize = Math.max(imageWidth * 0.05, 20);
+                setIconSize(newSize);
+            }
+        };
+
+        window.addEventListener('resize', updateIconSize);
+        updateIconSize();
+
+        return () => {
+            window.removeEventListener('resize', updateIconSize);
+        };
+    }, [containerWidth]);
+
 
     useEffect(() => {
         const handleKeyDown = (event: KeyboardEvent) => {
@@ -72,11 +113,11 @@ const MapViewer: React.FC = () => {
 
 
     const handleMouseRoll = (event: React.WheelEvent<HTMLImageElement>) => {
-        if (isPlacingItem) {
+        if (mouseOverMap) {
             if (event.deltaY < 0) {
-                setItemDirection(WallDirection.getNext(itemDirection));
+                setContainerWidth(containerWidth + containerWidth/10)
             } else {
-                setItemDirection(WallDirection.getPrevious(itemDirection));
+                setContainerWidth(containerWidth - containerWidth/10)
             }
         }
     };
@@ -247,7 +288,7 @@ const MapViewer: React.FC = () => {
     const displayedMap = selectedMap?.getMapLevelByFloor(selectedLevel?.floor.valueOf() as string);
 
     return (
-        <div className="map-viewer-wrapper">
+        <div className="map-viewer-wrapper" >
             <TopController
                 onSelectMap={setSelectedMap}
                 onSelectLevel={setSelectedLevel}
@@ -260,7 +301,15 @@ const MapViewer: React.FC = () => {
                 setContainerWidth={setContainerWidth}
                 containerWidth={containerWidth}
             />
-            <div className="map-viewer-container" style={{width: `${containerWidth}%`,  transform: `matrix(${containerWidth/100}, 0, 0, ${containerWidth/100}, 0, 0)`, transformOrigin: 'center'}}>
+            <div className="map-viewer-container"
+                 onMouseMove={handleMouseMove}
+                 onMouseDown={handleMouseDown}
+                 onMouseUp={handleMouseUp}
+                 onMouseLeave={handleMouseUp}
+                 onMouseOver={() => setMouseOverMap(true)}
+                 onMouseOut={() => setMouseOverMap(false)}
+                 onWheel={handleMouseRoll}
+                 style={{width: `${containerWidth}%`,  transform: `matrix(${containerWidth/100}, 0, 0, ${containerWidth/100},  ${imagePosition.x}, ${imagePosition.y})`, transformOrigin: 'center', cursor: mouseOverMap ? "move" : "auto"}}>
 
 
                 <div className="map-container">
@@ -271,7 +320,6 @@ const MapViewer: React.FC = () => {
                                  className="map-image"
                                  ref={mapImageRef}
                                  alt={`Map view of ${selectedMap.name} - ${selectedLevel.floor}`}
-                                 onMouseMove={handleMouseMove}
                                  onClick={handleMapClick}
                             />
                             {isPlacingItem && mousePosition && (
