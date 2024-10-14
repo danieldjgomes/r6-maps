@@ -5,36 +5,29 @@ import HeadHeightIconSVG from '../../../assets/icons/head.svg';
 import VaultHeightIconSVG from '../../../assets/icons/vault.svg';
 import RotationIconSVG from '../../../assets/icons/rotation.svg';
 import HatchIconSVG from '../../../assets/icons/hatch.svg';
-import { SetupItemType } from "../../models/SetupItemType";
-import { CiEraser } from "react-icons/ci";
-import { FaShare } from "react-icons/fa";
+import {SetupItemType} from "../../models/SetupItemType";
+import {CiEraser} from "react-icons/ci";
 import './ControlPanel.css'
 import useIsLandscape from "../../../useIsLandScape";
 
 interface ControlPanelProps {
-    containerWidth: number;
-    setContainerWidth: (width: number) => void;
     handleEraser: () => void;
     handleAddItemSetup: (setupItemType: SetupItemType) => void;
-    saveConfiguration: () => void;
 }
 
 const ControlPanel: React.FC<ControlPanelProps> = ({
-                                                       containerWidth,
-                                                       setContainerWidth,
                                                        handleAddItemSetup,
-                                                       saveConfiguration,
                                                        handleEraser
                                                    }) => {
 
     const isLandscape = useIsLandscape(); // Usa o hook para verificar se está em landscape
 
 
-
     return (
         <div>
 
-            {isLandscape && <div className="control-panel icon-panel" style={{display: 'flex', flexDirection: 'column', gap: '10px'}}>
+            {isLandscape && <div className="control-panel icon-panel"
+                                 style={{display: 'flex', flexDirection: 'column', gap: '10px'}}>
                 <div
                     className="setup-items"
                     style={{
@@ -84,7 +77,7 @@ const ControlPanel: React.FC<ControlPanelProps> = ({
                 </div>
             </div>}
 
-            </div>
+        </div>
 
     );
 };

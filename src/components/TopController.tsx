@@ -1,11 +1,10 @@
 import React from 'react';
-import { MapNames, Floor } from './Enums';
-import { R6Map } from "./models/R6Map";
-import { AllMaps } from "./models/AllMaps";
-import { MapLevel } from "./models/MapLevel";
-import { BombSite } from "./models/BombSite";
+import {R6Map} from "./models/R6Map";
+import {AllMaps} from "./models/AllMaps";
+import {MapLevel} from "./models/MapLevel";
+import {BombSite} from "./models/BombSite";
 import './mapSelector.css';
-import { FaShareFromSquare } from "react-icons/fa6";
+import {FaShareFromSquare} from "react-icons/fa6";
 
 interface MapSelectorProps {
     allMaps: AllMaps;
@@ -21,7 +20,16 @@ interface MapSelectorProps {
     onSelectBombSite: (bombSite: BombSite) => void;
 }
 
-const TopController: React.FC<MapSelectorProps> = ({ onSelectMap, onSelectLevel, allMaps, selectedMap, selectedLevel, onSelectBombSite, saveConfiguration, containerWidth, setContainerWidth }) => {
+const TopController: React.FC<MapSelectorProps> = ({
+                                                       onSelectMap,
+                                                       onSelectLevel,
+                                                       allMaps,
+                                                       selectedMap,
+                                                       onSelectBombSite,
+                                                       saveConfiguration,
+                                                       containerWidth,
+                                                       setContainerWidth
+                                                   }) => {
     return (
         <div
             style={{
@@ -43,7 +51,7 @@ const TopController: React.FC<MapSelectorProps> = ({ onSelectMap, onSelectLevel,
                     padding: '0 10px',  // Padding horizontal para espaçamento
                 }}
             >
-                <div className="map-selector-container" style={{ display: 'flex', alignItems: 'center' }}>
+                <div className="map-selector-container" style={{display: 'flex', alignItems: 'center'}}>
                     <select onChange={(e) => onSelectMap(allMaps.getMapByName(e.target.value))}>
                         {allMaps.getAllMaps().map((map, index) => (
                             <option key={index} value={map.name}>
@@ -77,7 +85,7 @@ const TopController: React.FC<MapSelectorProps> = ({ onSelectMap, onSelectLevel,
                 </div>
 
                 <div
-                     style={{display: 'flex', flexDirection: 'column', alignItems: 'center'}}>
+                    style={{display: 'flex', flexDirection: 'column', alignItems: 'center'}}>
                     <input
                         type="range"
                         min="50"

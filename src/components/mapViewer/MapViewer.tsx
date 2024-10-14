@@ -16,6 +16,7 @@ import {Hatch} from "../models/Hatch"
 import LZString from 'lz-string';
 import axios from "axios";
 import ShareWizard from "./ShareWizard/ShareWizard";
+import CoordinateDisplay from "./CoordinateDisplay";
 
 
 const MapViewer: React.FC = () => {
@@ -247,7 +248,6 @@ const MapViewer: React.FC = () => {
 
     return (
         <div className="map-viewer-wrapper">
-
             <TopController
                 onSelectMap={setSelectedMap}
                 onSelectLevel={setSelectedLevel}
@@ -278,8 +278,8 @@ const MapViewer: React.FC = () => {
                                 <div
                                     style={{
                                         position: 'absolute',
-                                        top: `${mousePosition.y + yAdjustment}px`,
-                                        left: `${mousePosition.x + xAdjustment}px`,
+                                        top: `${mousePosition.y}px`,
+                                        left: `${mousePosition.x}px`,
                                         transform: 'translate(-50%, -50%)',
                                         pointerEvents: 'none',
                                     }}
@@ -323,10 +323,7 @@ const MapViewer: React.FC = () => {
             </div>
 
             <ControlPanel
-                containerWidth={containerWidth}
-                setContainerWidth={setContainerWidth}
                 handleAddItemSetup={handleAddItemSetup}
-                saveConfiguration={handleShareClick}
                 handleEraser={handleIconEraser}
             />
 
