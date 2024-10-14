@@ -84,18 +84,7 @@ const TopController: React.FC<MapSelectorProps> = ({
                     </select>
                 </div>
 
-                <div
-                    style={{display: 'flex', flexDirection: 'column', alignItems: 'center'}}>
-                    <input
-                        type="range"
-                        min="50"
-                        max="200"
-                        value={containerWidth}
-                        onChange={(e) => setContainerWidth(parseInt(e.target.value))}
-                        className="slider"
-                        id="widthSlider"
-                    />
-                </div>
+
 
                 <FaShareFromSquare
                     color={"#E0E1DD"}
