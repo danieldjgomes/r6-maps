@@ -115,9 +115,9 @@ const MapViewer: React.FC = () => {
     const handleMouseRoll = (event: React.WheelEvent<HTMLImageElement>) => {
         if (mouseOverMap) {
             if (event.deltaY < 0) {
-                setContainerWidth(containerWidth + containerWidth/10)
+                setContainerWidth(Math.min(containerWidth + containerWidth/10,200))
             } else {
-                setContainerWidth(containerWidth - containerWidth/10)
+                setContainerWidth(Math.max(containerWidth - containerWidth/10,50))
             }
         }
     };
