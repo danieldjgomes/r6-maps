@@ -5,15 +5,14 @@ import {R6Map} from "../models/R6Map";
 import {AllMaps} from "../models/AllMaps";
 import {MapLevel} from "../models/MapLevel";
 import {BombSite} from "../models/BombSite";
-import {WallDirection} from "../models/WallDirection";
-import BombIcon from "./icons/BombIcon";
 import SetupItemIcon from "./icons/SetupItemIcon";
 import {SetupItem} from "../models/SetupItem";
 import {SetupItemType} from "../models/SetupItemType";
 import ControlPanel from './controlPanel/ControlPanel';
-import LZString from 'lz-string';
-import axios from "axios";
 import ShareWizard from "./ShareWizard/ShareWizard";
+import {ApiService} from "./ApiService";
+import {ZippingService} from "./ZippingService";
+import MapIcons from "./MapIcons";
 
 
 const MapViewer: React.FC = () => {
@@ -27,22 +26,23 @@ const MapViewer: React.FC = () => {
     const [isPlacingItem, setIsPlacingItem] = useState(false);
     const [itemPlacingType, setItemPlacingType] = useState<SetupItemType | null>();
     const [mousePosition, setMousePosition] = useState<{ x: number, y: number } | null>(null);
-    const [itemDirection, setItemDirection] = useState<WallDirection>(WallDirection.N);
     const [isErasing, setIsErasing] = useState(false);
     const [mouseOverMap, setMouseOverMap] = useState(false);
     const [isWizardOpen, setIsWizardOpen] = useState(false);
     const [configurationCode, setConfigurationCode] = useState('');
     const xAdjustment = -5;
     const yAdjustment = -15;
+    const apiService = new ApiService();
+    const zippingSevice = new ZippingService()
+
 
     const [dragging, setDragging] = useState(false);
     const [dragStart, setDragStart] = useState<{ x: number, y: number } | null>(null);
-    const [dragOffset, setDragOffset] = useState<{ x: number, y: number }>({ x: 0, y: 0 });
-    const [imagePosition, setImagePosition] = useState<{ x: number, y: number }>({ x: 0, y: 0 });
+    const [dragOffset, setDragOffset] = useState<{ x: number, y: number }>({x: 0, y: 0});
+    const [imagePosition, setImagePosition] = useState<{ x: number, y: number }>({x: 0, y: 80});
 
 
     const mapImageRef = useRef<HTMLImageElement>(null);
-    const iconContainerRef = useRef<HTMLDivElement>(null);
 
     const handleMouseMove = (event: React.MouseEvent<HTMLImageElement>) => {
         if (mapImageRef.current) {
@@ -54,7 +54,7 @@ const MapViewer: React.FC = () => {
             if (dragging && dragStart) {
                 const dx = event.clientX - dragStart.x;
                 const dy = event.clientY - dragStart.y;
-                setImagePosition({ x: dragOffset.x + dx, y: dragOffset.y + dy });
+                setImagePosition({x: dragOffset.x + dx, y: dragOffset.y + dy});
             }
             console.log(`x: ${x} y: ${y}`)
         }
@@ -63,7 +63,7 @@ const MapViewer: React.FC = () => {
     const handleMouseDown = (event: React.MouseEvent<HTMLImageElement>) => {
         console.log("clicked, status: " + dragging)
         setDragging(true);
-        setDragStart({ x: event.clientX, y: event.clientY });
+        setDragStart({x: event.clientX, y: event.clientY});
     };
 
     const handleMouseUp = () => {
@@ -88,7 +88,6 @@ const MapViewer: React.FC = () => {
             window.removeEventListener('resize', updateIconSize);
         };
     }, [containerWidth]);
-
 
     useEffect(() => {
         const handleKeyDown = (event: KeyboardEvent) => {
@@ -115,9 +114,9 @@ const MapViewer: React.FC = () => {
     const handleMouseRoll = (event: React.WheelEvent<HTMLImageElement>) => {
         if (mouseOverMap) {
             if (event.deltaY < 0) {
-                setContainerWidth(Math.min(containerWidth + containerWidth/10,200))
+                setContainerWidth(Math.min(containerWidth + containerWidth / 10, 200))
             } else {
-                setContainerWidth(Math.max(containerWidth - containerWidth/10,50))
+                setContainerWidth(Math.max(containerWidth - containerWidth / 10, 50))
             }
         }
     };
@@ -140,78 +139,38 @@ const MapViewer: React.FC = () => {
         }
     };
 
-
     const handleAddItemSetup = (item: SetupItemType) => {
         setItemPlacingType(item)
         setIsPlacingItem(true);
     };
 
-    const handleIconClick = (erasingWall: SetupItem) => {
-        if (isErasing) {
-            if (erasingWall instanceof SetupItem) {
-                setSetupItems((prev) => prev.filter(wall => wall !== erasingWall));
-            }
-
-        }
-    }
     const handleIconEraser = () => {
         setIsErasing(!isErasing)
     };
 
 
-
-
     const handleShareClick = () => {
-        if(setupItems.length == 0){
+        if (setupItems.length == 0) {
             setConfigurationCode(`${window.location.origin}`);
             setIsWizardOpen(true);
             return;
         }
-        const configuration = {
-            map: selectedMap.name,
-            level: selectedLevel.floor,
-            bombSites: selectedMap.bombSites.map((site) => ({
-                ...site,
-                bombs: site.bombs.map((bomb) => ({
-                    ...bomb,
-                    x: parseFloat(bomb.x.toFixed(3)),
-                    y: parseFloat(bomb.y.toFixed(3)),
-                })),
-            })),
-            setup: setupItems.map((item) => ({
-                ...item,
-                x: parseFloat(item.x.toFixed(3)),
-                y: parseFloat(item.y.toFixed(3)),
-            })),
-        };
-
-        const json = JSON.stringify(configuration);
-        const compressed = LZString.compressToEncodedURIComponent(json); // Compacta os dados
-
-        console.log(json);
-        generateURL(compressed)
+        const compressed = zippingSevice.compress(selectedMap, setupItems)
+        buildConfigurationCode(compressed).then(() => setIsWizardOpen(true))
     };
 
-    async function generateURL(compressed: string) {
-        axios({
-            method: 'post',
-            url: `https://kv-api.r6-planner.top/key`,
-            data: {
-                value: compressed
-            }
-        }).then((response) => {
-            setConfigurationCode(`${window.location.origin}/${response.data.key}`);
-            setIsWizardOpen(true);
-        });
+    async function buildConfigurationCode(compressed: string) {
+        apiService.saveSetupByCompressedData(compressed)
+            .then((id) => {
+                setConfigurationCode(`${window.location.origin}/${id}`);
+            })
     }
 
 
     const loadConfiguration = (data: string) => {
         try {
-            const decompressed = LZString.decompressFromEncodedURIComponent(data); // Descompacta os dados
-            if (!decompressed) throw new Error("Decompression failed");
 
-            const configuration = JSON.parse(decompressed);
+            const configuration = JSON.parse(zippingSevice.decompress(data));
 
             // Carregar o mapa com base na configuração
             const map = allMaps.getAllMaps().find(m => m.name === configuration.map);
@@ -247,59 +206,30 @@ const MapViewer: React.FC = () => {
     useEffect(() => {
         const loadFromUrl = () => {
             const urlPath = window.location.pathname.split('/');
-            const configData = urlPath[urlPath.length - 1]; // Pega a última parte da URL
-
-            if (configData) {
-                    axios
-                        .get("https://kv-api.r6-planner.top/key/" + configData)
-                            .then((response) => {
-
-                                loadConfiguration(response.data.value)
-
-                        })
-
-            }
-
-        };
-
-        loadFromUrl(); // Chama a função para carregar a configuração da URL ao montar o componente
-    }, []); // A lista de dependências está vazia, portanto, essa execução só ocorrerá uma vez
-
-
-
-
-    useEffect(() => {
-        const updateIconSize = () => {
-            if (mapImageRef.current) {
-                const imageWidth = mapImageRef.current.offsetWidth;
-                const newSize = Math.max(imageWidth * 0.05, 20);
-                setIconSize(newSize);
+            const setupId = urlPath[urlPath.length - 1]; //
+            if (setupId) {
+                apiService.getSetupDataById(setupId)
+                    .then((response: string) => {
+                        loadConfiguration(response)
+                    })
             }
         };
+        loadFromUrl();
+    }, []);
 
-        window.addEventListener('resize', updateIconSize);
-        updateIconSize();
-
-        return () => {
-            window.removeEventListener('resize', updateIconSize);
-        };
-    }, [containerWidth]);
 
     const displayedMap = selectedMap?.getMapLevelByFloor(selectedLevel?.floor.valueOf() as string);
 
     return (
-        <div className="map-viewer-wrapper" >
+        <div className="map-viewer-wrapper">
             <TopController
                 onSelectMap={setSelectedMap}
                 onSelectLevel={setSelectedLevel}
                 onSelectBombSite={setSelectedBombSite}
-                allMaps={allMaps}
                 selectedLevel={selectedLevel}
                 selectedMap={selectedMap}
                 selectedBombSite={selectedBombSite}
-                saveConfiguration={handleShareClick}
-                setContainerWidth={setContainerWidth}
-                containerWidth={containerWidth}
+                shareConfiguration={handleShareClick}
             />
             <div className="map-viewer-container"
                  onMouseMove={handleMouseMove}
@@ -309,12 +239,19 @@ const MapViewer: React.FC = () => {
                  onMouseOver={() => setMouseOverMap(true)}
                  onMouseOut={() => setMouseOverMap(false)}
                  onWheel={handleMouseRoll}
-                 style={{width: `${containerWidth}%`,  transform: `matrix(${containerWidth/100}, 0, 0, ${containerWidth/100},  ${imagePosition.x}, ${imagePosition.y})`, transformOrigin: 'center', cursor: mouseOverMap ? "move" : "auto"}}>
+                 style={{
+                     width: `${containerWidth}%`,
+                     transform: `matrix(${containerWidth / 100}, 0, 0, ${containerWidth / 100},  ${imagePosition.x}, ${imagePosition.y})`,
+                     transformOrigin: 'center',
+                     cursor: mouseOverMap ? "move" : "auto",
+                 }}>
 
 
                 <div className="map-container">
                     {displayedMap && (
                         <>
+                            {/*<MapInteraction src={displayedMap.image} onMapClick={handleMapClick} containerWidth={containerWidth} setContainerWidth={setContainerWidth} />*/}
+
                             <img style={{filter: isErasing ? 'brightness(0.5)' : 'none'}}
                                  src={displayedMap.image}
                                  className="map-image"
@@ -340,41 +277,15 @@ const MapViewer: React.FC = () => {
                                 </div>
                             )}
 
-                            <div className="icon-container"
-                                 style={{
-                                     pointerEvents: isPlacingItem ? "none" : "all",
-                                 }} ref={iconContainerRef}>
-                                {selectedBombSite?.bombs.map((bomb, index) => (
-                                    <BombIcon
-                                        key={index}
-                                        bomb={bomb}
-                                        index={index}
-                                        level={selectedLevel.floor}
-                                        iconSize={iconSize}
-                                    />
-                                ))}
-
-                                {setupItems.map((wall, index) => (
-                                    <SetupItemIcon
-                                        key={index}
-                                        wall={wall}
-                                        level={selectedLevel.floor}
-                                        iconSize={iconSize}
-                                        onClick={() => handleIconClick(wall)}
-                                        isErasing={isErasing}
-                                    />
-                                ))}
-                            </div>
+                            <MapIcons bombSites={selectedMap.bombSites} setupItems={setupItems} iconSize={iconSize}
+                                      isErasing={isErasing} isPlacingItem={isPlacingItem} selectedLevel={selectedLevel}
+                                      setSetupItems={setSetupItems} setIsErasing={setIsErasing}/>
                         </>
                     )}
                 </div>
             </div>
 
-            <ControlPanel
-                handleAddItemSetup={handleAddItemSetup}
-                handleEraser={handleIconEraser}
-            />
-
+            <ControlPanel handleAddItemSetup={handleAddItemSetup} handleEraser={handleIconEraser}/>
             <ShareWizard isWizardOpen={isWizardOpen} configurationCode={configurationCode} closeWizard={() => setIsWizardOpen(false)}/>
         </div>
     );

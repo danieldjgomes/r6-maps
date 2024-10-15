@@ -7,14 +7,10 @@ import './mapSelector.css';
 import {FaShareFromSquare} from "react-icons/fa6";
 
 interface MapSelectorProps {
-    allMaps: AllMaps;
     selectedMap: R6Map;
     selectedLevel: MapLevel;
     selectedBombSite: BombSite;
-    saveConfiguration: () => void;
-    containerWidth: number;
-    setContainerWidth: (width: number) => void;
-
+    shareConfiguration: () => void;
     onSelectMap: (currentMap: R6Map) => void;
     onSelectLevel: (mapLevel: MapLevel) => void;
     onSelectBombSite: (bombSite: BombSite) => void;
@@ -23,13 +19,12 @@ interface MapSelectorProps {
 const TopController: React.FC<MapSelectorProps> = ({
                                                        onSelectMap,
                                                        onSelectLevel,
-                                                       allMaps,
                                                        selectedMap,
                                                        onSelectBombSite,
-                                                       saveConfiguration,
-                                                       containerWidth,
-                                                       setContainerWidth
+                                                       shareConfiguration,
                                                    }) => {
+
+    const allMaps = new AllMaps()
     return (
         <div
             style={{
@@ -74,8 +69,7 @@ const TopController: React.FC<MapSelectorProps> = ({
                         onChange={(e) => {
                             onSelectBombSite(selectedMap.getBombSiteByName(e.target.value));
                             onSelectLevel(selectedMap.getMapLevelByFloor(selectedMap.getBombSiteByName(e.target.value).bombs[0].floor));
-                        }}
-                    >
+                        }}>
                         {selectedMap.bombSites.map((bombsite, index) => (
                             <option key={index} value={bombsite.name}>
                                 {bombsite.name}
@@ -85,10 +79,9 @@ const TopController: React.FC<MapSelectorProps> = ({
                 </div>
 
 
-
                 <FaShareFromSquare
                     color={"#E0E1DD"}
-                    onClick={saveConfiguration}
+                    onClick={shareConfiguration}
                     style={{
                         width: "25px",
                         height: "25px",

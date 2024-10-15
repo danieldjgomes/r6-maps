@@ -1,16 +1,17 @@
 import React from 'react';
 import { BombSite } from '../../models/BombSite';
 import {Bomb} from "../../Bomb";
+import {MapLevel} from "../../models/MapLevel";
 
 interface BombIconProps {
     bomb: Bomb;
     index: number;
-    level: string;
+    level: MapLevel;
     iconSize: number;
 }
 
 const BombIcon: React.FC<BombIconProps> = ({ bomb, index, level, iconSize }) => {
-    if (bomb.floor !== level) return null;
+    if (bomb.floor.valueOf() !== level.floor.valueOf()) return null;
 
     return (
         <div
