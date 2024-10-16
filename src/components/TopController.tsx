@@ -7,7 +7,8 @@ import './mapSelector.css';
 import {FaShareFromSquare} from "react-icons/fa6";
 import OperatorsPanel from "./mapViewer/controlPanel/OperatorsPanel";
 import {DefenseSetupItemType} from "./models/DefenseSetupItemType";
-import ControlPanel from "./mapViewer/controlPanel/ControlPanel";
+import { BrowserView, MobileView, isBrowser, isMobile } from 'react-device-detect';
+
 
 interface MapSelectorProps {
     selectedMap: R6Map;
@@ -52,7 +53,9 @@ const TopController: React.FC<MapSelectorProps> = ({
                     padding: '0 10px',  // Padding horizontal para espaçamento
                 }}
             >
+                {isBrowser &&
                 <OperatorsPanel handleAddItemSetup={handleAddItemSetup} handleEraser={handleEraser}/>
+                }
                 <div className="map-selector-container" style={{display: 'flex', alignItems: 'center'}}>
                     <select onChange={(e) => onSelectMap(allMaps.getMapByName(e.target.value))}>
                         {allMaps.getAllMaps().map((map, index) => (

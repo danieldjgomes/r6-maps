@@ -14,7 +14,14 @@
     outline: none; /* Remove o contorno padrão ao focar */
     transition: border-color 0.3s ease; /* Suaviza a transição do foco */
     margin-right: 10px; /* Adiciona espaço entre os selects */
+    align-items: center;
 
+}
+
+@media (max-width: 768px) {
+    .map-selector-container select {
+        font-size: 2vw;
+    }
 }
 
 .map-selector-container select:focus {
