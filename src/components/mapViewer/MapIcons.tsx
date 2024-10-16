@@ -1,16 +1,16 @@
 import React from 'react';
 import BombIcon from './icons/BombIcon';
 import SetupItemIcon from './icons/SetupItemIcon';
-import {SetupItem} from '../models/SetupItem';
+import {SetupItemMap} from '../models/SetupItemMap';
 import {BombSite} from '../models/BombSite';
 import {MapLevel} from '../models/MapLevel';
 
 interface MapIconsProps {
     bombSites: BombSite[];
-    setupItems: SetupItem[];
+    setupItems: SetupItemMap[];
     iconSize: number;
     isPlacingItem: boolean;
-    setSetupItems: (item: SetupItem[]) => void;
+    setSetupItems: (item: SetupItemMap[]) => void;
     isErasing: boolean;
     setIsErasing: (isErasing: boolean) => void;
     selectedLevel: MapLevel;
@@ -26,7 +26,7 @@ const MapIcons: React.FC<MapIconsProps> = ({
                                                setSetupItems,
                                                setIsErasing
                                            }) => {
-    const handleIconClick = (erasingWall: SetupItem) => {
+    const handleIconClick = (erasingWall: SetupItemMap) => {
         if (isErasing) {
             setSetupItems(setupItems.filter(wall => wall !== erasingWall));
         }
@@ -63,6 +63,7 @@ const MapIcons: React.FC<MapIconsProps> = ({
                     level={selectedLevel.floor.valueOf()}
                 />
             ))}
+
         </div>
     );
 };

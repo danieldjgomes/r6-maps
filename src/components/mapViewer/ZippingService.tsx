@@ -1,10 +1,10 @@
 import LZString from "lz-string";
 import {R6Map} from "../models/R6Map";
-import {SetupItem} from "../models/SetupItem";
+import {SetupItemMap} from "../models/SetupItemMap";
 
 export class ZippingService {
 
-    compress(selectedMap: R6Map, setupItems: SetupItem[]): string {
+    compress(selectedMap: R6Map, setupItems: SetupItemMap[]): string {
         const configuration = {
             map: selectedMap.name,
             bombSites: selectedMap.bombSites.map((site) => ({

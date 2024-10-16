@@ -11,7 +11,7 @@ import ReinforcementHatchImage from '../../assets/images/reinforcement_hatch.jpe
 import ReinforcementWallImage from '../../assets/images/reinforcement_wall.jpeg';
 import ReinforcementIcon from '../../assets/icons/reinforcement.svg';
 
-export enum SetupItemType {
+export enum DefenseSetupItemType {
     Rotation,
     HeadHeight,
     FootHeight,
@@ -31,43 +31,43 @@ interface SetupItemInfo {
     };
 }
 
-export const SetupItemDetails: { [key in SetupItemType]: SetupItemInfo } = {
-    [SetupItemType.Rotation]: {
+export const SetupItemDetails: { [key in DefenseSetupItemType]: SetupItemInfo } = {
+    [DefenseSetupItemType.Rotation]: {
         title: "Rotation",
         description: "A rotation point for maneuvering between sections.",
         sourceImage: RotationImage,
         sourceIcon: RotationIcon,
         size: { width: 2.7, height: 2.7 }
     },
-    [SetupItemType.HeadHeight]: {
+    [DefenseSetupItemType.HeadHeight]: {
         title: "Head Height Hole",
         description: "A hole that is as high as a person's head, useful for shooting.",
         sourceImage: HeadHeightImage,
         sourceIcon: HeadHeightIcon,
         size: { width: 2.7, height: 2.7 }
     },
-    [SetupItemType.FootHeight]: {
+    [DefenseSetupItemType.FootHeight]: {
         title: "Foot Height Hole",
         description: "A hole that is low to the ground, ideal for foot-level shots.",
         sourceImage: FootHeightImage,
         sourceIcon: FootHeightIcon,
         size: { width: 2.7, height: 2.7 }
     },
-    [SetupItemType.Vault]: {
+    [DefenseSetupItemType.Vault]: {
         title: "Vault",
         description: "A vaultable area to quickly pass between locations.",
         sourceImage: VaultImage,
         sourceIcon: VaultIcon,
         size: { width: 2.7, height: 2.7 }
     },
-    [SetupItemType.ReinforcementWall]: {
+    [DefenseSetupItemType.ReinforcementWall]: {
         title: "Reinforced Wall",
         description: "A reinforced wall providing additional protection.",
         sourceImage: ReinforcementWallImage,
         sourceIcon: ReinforcementIcon,
         size: { width: 2.7, height: 2.7 }
     },
-    [SetupItemType.ReinforcementHatch]: {
+    [DefenseSetupItemType.ReinforcementHatch]: {
         title: "Reinforced Hatch",
         description: "A reinforced hatch offering protection from vertical attacks.",
         sourceImage: ReinforcementHatchImage,

@@ -1,11 +1,11 @@
 import React from 'react';
-import {SetupItemDetails, SetupItemType} from '../../models/SetupItemType';
-import {SetupItem} from "../../models/SetupItem";
+import {SetupItemDetails, DefenseSetupItemType} from '../../models/DefenseSetupItemType';
+import {SetupItemMap} from "../../models/SetupItemMap";
 
 import Tooltip from "../Tooltip";
 
 interface SetupIconProps {
-    wall: SetupItem
+    wall: SetupItemMap
     level: string;
     iconSize: number;
     onClick?: () => void

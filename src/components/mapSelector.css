@@ -44,7 +44,7 @@
 .color-range-0{
     color: #0D1B2A;
 }
-.color-range--1{
+.color-range-1{
     background-color: #1B263B;
 }
 .color-range--2{
@@ -55,4 +55,48 @@
 }
 .color-range-4{
     background-color: #E0E1DD;
+}
+
+.hamburger-btn {
+    position: relative;
+    left: 10px;
+    background-color: #0D1B2A;
+    color: #E0E1DD;
+    padding: 10px;
+    border: none;
+    cursor: pointer;
+    z-index: 101;
+    border-radius: 8px;
+    transition: background-color 0.3s ease;
+
+}
+.hamburger-btn:hover{
+    background-color: #415A77;
+
+}
+
+.control-panel.operator-panel {
+    display: flex;
+    overflow-y: auto;
+    border: none;
+    opacity: 80%;
+    align-content: flex-start;
+    margin-top: auto;
+
+}
+
+.control-panel.operator-panel.open {
+    left: 0;
+    visibility: visible;
+}
+
+.operator-panel-title{
+    width: 100%;
+    color: #E0E1DD;
+    font-size: 18px;
+    font-weight: bold;
+    text-align: center;
+    margin-top: 50px;
+    padding: 10px;
+
 }

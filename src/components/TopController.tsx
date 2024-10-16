@@ -5,6 +5,9 @@ import {MapLevel} from "./models/MapLevel";
 import {BombSite} from "./models/BombSite";
 import './mapSelector.css';
 import {FaShareFromSquare} from "react-icons/fa6";
+import OperatorsPanel from "./mapViewer/controlPanel/OperatorsPanel";
+import {DefenseSetupItemType} from "./models/DefenseSetupItemType";
+import ControlPanel from "./mapViewer/controlPanel/ControlPanel";
 
 interface MapSelectorProps {
     selectedMap: R6Map;
@@ -14,6 +17,8 @@ interface MapSelectorProps {
     onSelectMap: (currentMap: R6Map) => void;
     onSelectLevel: (mapLevel: MapLevel) => void;
     onSelectBombSite: (bombSite: BombSite) => void;
+    handleEraser: () => void;
+    handleAddItemSetup: (setupItemType: DefenseSetupItemType) => void;
 }
 
 const TopController: React.FC<MapSelectorProps> = ({
@@ -22,6 +27,7 @@ const TopController: React.FC<MapSelectorProps> = ({
                                                        selectedMap,
                                                        onSelectBombSite,
                                                        shareConfiguration,
+                                                       handleEraser, handleAddItemSetup
                                                    }) => {
 
     const allMaps = new AllMaps()
@@ -46,6 +52,7 @@ const TopController: React.FC<MapSelectorProps> = ({
                     padding: '0 10px',  // Padding horizontal para espaçamento
                 }}
             >
+                <OperatorsPanel handleAddItemSetup={handleAddItemSetup} handleEraser={handleEraser}/>
                 <div className="map-selector-container" style={{display: 'flex', alignItems: 'center'}}>
                     <select onChange={(e) => onSelectMap(allMaps.getMapByName(e.target.value))}>
                         {allMaps.getAllMaps().map((map, index) => (

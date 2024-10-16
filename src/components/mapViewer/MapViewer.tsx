@@ -6,8 +6,8 @@ import {AllMaps} from "../models/AllMaps";
 import {MapLevel} from "../models/MapLevel";
 import {BombSite} from "../models/BombSite";
 import SetupItemIcon from "./icons/SetupItemIcon";
-import {SetupItem} from "../models/SetupItem";
-import {SetupItemType} from "../models/SetupItemType";
+import {SetupItemMap} from "../models/SetupItemMap";
+import {DefenseSetupItemType} from "../models/DefenseSetupItemType";
 import ControlPanel from './controlPanel/ControlPanel';
 import ShareWizard from "./ShareWizard/ShareWizard";
 import {ApiService} from "./ApiService";
@@ -22,15 +22,15 @@ const MapViewer: React.FC = () => {
     const [selectedBombSite, setSelectedBombSite] = useState<BombSite>(allMaps.getAllMaps()[0].bombSites[0]);
     const [iconSize, setIconSize] = useState(30);
     const [containerWidth, setContainerWidth] = useState(85);
-    const [setupItems, setSetupItems] = useState<SetupItem[]>([]);
+    const [setupItems, setSetupItems] = useState<SetupItemMap[]>([]);
     const [isPlacingItem, setIsPlacingItem] = useState(false);
-    const [itemPlacingType, setItemPlacingType] = useState<SetupItemType | null>();
+    const [itemPlacingType, setItemPlacingType] = useState<DefenseSetupItemType | null>();
     const [mousePosition, setMousePosition] = useState<{ x: number, y: number } | null>(null);
     const [isErasing, setIsErasing] = useState(false);
     const [mouseOverMap, setMouseOverMap] = useState(false);
     const [isWizardOpen, setIsWizardOpen] = useState(false);
     const [configurationCode, setConfigurationCode] = useState('');
-    const xAdjustment = -5;
+    const xAdjustment = -12;
     const yAdjustment = -15;
     const apiService = new ApiService();
     const zippingSevice = new ZippingService()
@@ -86,6 +86,7 @@ const MapViewer: React.FC = () => {
 
         return () => {
             window.removeEventListener('resize', updateIconSize);
+            window.removeEventListener('resize', updateIconSize);
         };
     }, [containerWidth]);
 
@@ -131,7 +132,7 @@ const MapViewer: React.FC = () => {
             const floor = selectedLevel.floor;
 
             if (itemPlacingType !== null) {
-                setSetupItems([...setupItems, new SetupItem(adjustedX, adjustedY, floor, itemPlacingType)]);
+                setSetupItems([...setupItems, new SetupItemMap(adjustedX, adjustedY, floor, itemPlacingType)]);
             }
 
             setItemPlacingType(null);
@@ -139,7 +140,7 @@ const MapViewer: React.FC = () => {
         }
     };
 
-    const handleAddItemSetup = (item: SetupItemType) => {
+    const handleAddItemSetup = (item: DefenseSetupItemType) => {
         setItemPlacingType(item)
         setIsPlacingItem(true);
     };
@@ -192,7 +193,7 @@ const MapViewer: React.FC = () => {
 
                 // Carregar os itens de configuração (setup)
                 const setupItems = configuration.setup.map((setup: any) =>
-                    new SetupItem(parseFloat(setup.x.toFixed(3)), parseFloat(setup.y.toFixed(3)), setup.floor, setup.type)
+                    new SetupItemMap(parseFloat(setup.x.toFixed(3)), parseFloat(setup.y.toFixed(3)), setup.floor, setup.type)
                 );
                 setSetupItems(setupItems);
             }
@@ -201,6 +202,18 @@ const MapViewer: React.FC = () => {
             // Ignorar erros e não aplicar nenhuma alteração
         }
     };
+
+    const getMousePointer = () => {
+        if(mouseOverMap){
+            if(isErasing || isPlacingItem){
+                return "crosshair"
+            }
+            else{
+                return "move"
+            }
+        }
+        return "none";
+    }
 
 
     useEffect(() => {
@@ -230,6 +243,8 @@ const MapViewer: React.FC = () => {
                 selectedMap={selectedMap}
                 selectedBombSite={selectedBombSite}
                 shareConfiguration={handleShareClick}
+                handleAddItemSetup={handleAddItemSetup}
+                handleEraser={handleIconEraser}
             />
             <div className="map-viewer-container"
                  onMouseMove={handleMouseMove}
@@ -243,7 +258,7 @@ const MapViewer: React.FC = () => {
                      width: `${containerWidth}%`,
                      transform: `matrix(${containerWidth / 100}, 0, 0, ${containerWidth / 100},  ${imagePosition.x}, ${imagePosition.y})`,
                      transformOrigin: 'center',
-                     cursor: mouseOverMap ? "move" : "auto",
+                     cursor: getMousePointer(),
                  }}>
 
 
@@ -259,23 +274,6 @@ const MapViewer: React.FC = () => {
                                  alt={`Map view of ${selectedMap.name} - ${selectedLevel.floor}`}
                                  onClick={handleMapClick}
                             />
-                            {isPlacingItem && mousePosition && (
-                                <div
-                                    style={{
-                                        position: 'absolute',
-                                        top: `${mousePosition.y}px`,
-                                        left: `${mousePosition.x}px`,
-                                        transform: 'translate(-50%, -50%)',
-                                        pointerEvents: 'none',
-                                    }}
-                                >
-                                    <SetupItemIcon
-                                        wall={new SetupItem(0, 0, selectedLevel.floor, itemPlacingType)}
-                                        level={selectedLevel.floor}
-                                        iconSize={iconSize}
-                                    />
-                                </div>
-                            )}
 
                             <MapIcons bombSites={selectedMap.bombSites} setupItems={setupItems} iconSize={iconSize}
                                       isErasing={isErasing} isPlacingItem={isPlacingItem} selectedLevel={selectedLevel}
@@ -285,7 +283,7 @@ const MapViewer: React.FC = () => {
                 </div>
             </div>
 
-            <ControlPanel handleAddItemSetup={handleAddItemSetup} handleEraser={handleIconEraser}/>
+            {/*<ControlPanel handleAddItemSetup={handleAddItemSetup} handleEraser={handleIconEraser}/>*/}
             <ShareWizard isWizardOpen={isWizardOpen} configurationCode={configurationCode} closeWizard={() => setIsWizardOpen(false)}/>
         </div>
     );
