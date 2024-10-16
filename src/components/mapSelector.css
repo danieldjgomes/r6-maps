@@ -100,3 +100,26 @@
     padding: 10px;
 
 }
+
+@media (max-width: 768px) {
+    .top-controller-content {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .map-selector-container {
+        flex-direction: column;
+        width: 100%;
+        gap: 5px; /* Less gap on smaller screens */
+    }
+
+    select {
+        width: 80%; /* Ensure selectors take full width on mobile */
+        margin-bottom: 10px;
+    }
+
+    .share-icon {
+        align-self: center; /* Center the icon on smaller screens */
+        height: 100%;
+    }
+}

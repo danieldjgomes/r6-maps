@@ -90,8 +90,8 @@ const TopController: React.FC<MapSelectorProps> = ({
                     color={"#E0E1DD"}
                     onClick={shareConfiguration}
                     style={{
-                        width: "25px",
-                        height: "25px",
+                        minWidth: "25px",
+                        minHeight: "25px",
                         cursor: "pointer",
                         marginRight: '5px',  // Empurra o botão para o lado direito
                         alignSelf: 'center',  // Alinha verticalmente ao centro
