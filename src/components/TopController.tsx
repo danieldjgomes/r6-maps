@@ -102,7 +102,6 @@ const TopController: React.FC<MapSelectorProps> = ({
                         minWidth: "25px",
                         minHeight: "25px",
                         cursor: "pointer",
-                        marginRight: 'auto',  // Empurra o botão para o lado direito
                         alignSelf: 'center',  // Alinha verticalmente ao centro
                     }}
                 />
