@@ -283,13 +283,6 @@ const MapViewer: React.FC = () => {
                     )}
                 </div>
             </div>
-            {!isBrowser &&
-
-                <div style={{opacity: '80%', zIndex: '101', position: "fixed", top: '50vh', left: '30vw', font: '14px', color: "yellowgreen", padding: '30px', width: '60%'}}>
-                    Read only mode.
-                </div>
-
-            }
             <ShareWizard isWizardOpen={isWizardOpen} configurationCode={configurationCode} closeWizard={() => setIsWizardOpen(false)}/>
         </div>
     );

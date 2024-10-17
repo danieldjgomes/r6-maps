@@ -115,9 +115,14 @@
     }
 
     .map-selector-container {
+        margin-right: auto;
         flex-direction: column;
-        width: 100%;
-        gap: 5px; /* Less gap on smaller screens */
+        display: flex;
+        flex-direction: row;
+        flex-wrap: wrap;
+        align-content: flex-end;
+        justify-content: space-between;
+        align-items: center;
     }
 
     select {

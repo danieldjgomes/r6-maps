@@ -88,7 +88,13 @@ const TopController: React.FC<MapSelectorProps> = ({
                     </select>
                 </div>
 
+                {!isBrowser &&
 
+                    <div style={{opacity: '80%', zIndex: '101', position: "fixed", bottom: '1vh', left: '1vw', font: '10px', fontStyle: 'oblique', color: "yellowgreen", padding: '30px', width: '80%'}}>
+                        Mobile devices access read-only version.
+                    </div>
+
+                }
                 <FaShareFromSquare
                     color={"#E0E1DD"}
                     onClick={shareConfiguration}
@@ -96,7 +102,7 @@ const TopController: React.FC<MapSelectorProps> = ({
                         minWidth: "25px",
                         minHeight: "25px",
                         cursor: "pointer",
-                        marginRight: '5px',  // Empurra o botão para o lado direito
+                        marginRight: 'auto',  // Empurra o botão para o lado direito
                         alignSelf: 'center',  // Alinha verticalmente ao centro
                     }}
                 />
