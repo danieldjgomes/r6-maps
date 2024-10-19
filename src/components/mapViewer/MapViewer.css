@@ -35,8 +35,8 @@ body{
 .bomb-icon,
 .hatch-icon {
     position: absolute;
-    width: 2.5vw; /* Tamanho relativo à largura da viewport */
-    height: 2.5vw;
+    width: 25px; /* Maior para telas menores */
+    height: 25px;
     max-width: 30px; /* Limita o tamanho máximo */
     max-height: 30px;
     background-color: red;
@@ -161,8 +161,8 @@ img, button, a {
 /* Responsividade para telas menores */
 @media screen and (max-width: 768px) {
     .bomb-icon, .hatch-icon {
-        width: 5vw; /* Maior para telas menores */
-        height: 5vw;
+        width: 25px; /* Maior para telas menores */
+        height: 25px;
     }
 
     .control-panel img {

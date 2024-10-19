@@ -5,24 +5,24 @@ import {SetupItemMap} from "../../models/SetupItemMap";
 import Tooltip from "../Tooltip";
 
 interface SetupIconProps {
-    wall: SetupItemMap
+    item: SetupItemMap
     level: string;
     iconSize: number;
     onClick?: () => void
     isErasing?: boolean
 }
 
-const SetupItemIcon: React.FC<SetupIconProps> = ({wall, level, iconSize, onClick,isErasing = false }) => {
-    if (wall.floor !== level) return null;
+const SetupItemIcon: React.FC<SetupIconProps> = ({item, level, iconSize, onClick,isErasing = false }) => {
+    if (item.floor !== level) return null;
     // @ts-ignore
-    const itemDetails = SetupItemDetails[wall.type];
+    const itemDetails = SetupItemDetails[item.type];
 
 
     return (
         <div  onClick={onClick}  className={`${isErasing ? "icon-items-erasing" : "icon-items"}`}
              style={{
-                 left: `${wall.x}%`,
-                 top: `${wall.y}%`,
+                 left: `${item.x}%`,
+                 top: `${item.y}%`,
                  position: 'absolute', // Ensure the icon is positioned correctly
                  transformOrigin: 'center', // Ensure rotation is around the center
              }}>

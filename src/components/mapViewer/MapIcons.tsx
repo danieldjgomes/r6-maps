@@ -56,7 +56,7 @@ const MapIcons: React.FC<MapIconsProps> = ({
             {setupItems.map((item, index) => (
                 <SetupItemIcon
                     key={`setupItem-${index}`}  // Ensure unique key
-                    wall={item}
+                    item={item}
                     iconSize={iconSize}
                     onClick={() => handleIconClick(item)}
                     isErasing={isErasing}
