@@ -93,7 +93,6 @@ export class R6PlannerOperator {
     }
 
     static getAllOperators(): R6PlannerOperator[] {
-        console.log(r6operators.jager.id)
         return [
             new R6PlannerOperator(sentry, r6operators.sentry),
             new R6PlannerOperator(mute, r6operators.mute),

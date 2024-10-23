@@ -30,7 +30,7 @@ export enum DefenseSetupItemType {
     Rook = "Rook",
     Kapkan = "Kapkan",
     Tachanka = "Tachanka",
-    Jager = "Jäger",
+    Jäger = "Jäger",
     Bandit = "Bandit",
     Frost = "Frost",
     Valkyrie = "Valkyrie",
@@ -56,8 +56,8 @@ export enum DefenseSetupItemType {
     Azami = "Azami",
     Solis = "Solis",
     Fenrir = "Fenrir",
-    Tubarao = "Tubarao",
-    Skopos = "Skopos"
+    Tubarão = "Tubarão",
+    Skopós = "Skopós"
 }
 
 // Define a interface para as informações dos itens

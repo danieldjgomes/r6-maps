@@ -75,7 +75,13 @@ const OperatorsPanel: React.FC<OperatorsPanelProps> = ({
                         {column.map((op: R6PlannerOperator) => (
                             <>
                                 <img
-                                    onClick={() => handleAddItemSetup(DefenseSetupItemType[op.operator.id as keyof typeof DefenseSetupItemType])}
+                                    onClick={
+                                    () => {
+                                        console.log(op.operator.name)
+                                        handleAddItemSetup(DefenseSetupItemType[op.operator.name as keyof typeof DefenseSetupItemType])
+
+                                    }
+                                }
                                     key={op.operator.name}
                                     src={op.source}
                                     style={{

@@ -54,12 +54,11 @@ const MapViewer: React.FC = () => {
                 const dy = event.clientY - dragStart.y;
                 setImagePosition({x: dragOffset.x + dx, y: dragOffset.y + dy});
             }
-            console.log(`x: ${x} y: ${y}`)
+            // console.log(`x: ${x} y: ${y}`)
         }
     };
 
     const handleMouseDown = (event: React.MouseEvent<HTMLImageElement>) => {
-        console.log("clicked, status: " + dragging)
         setDragging(true);
         setDragStart({x: event.clientX, y: event.clientY});
     };
