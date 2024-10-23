@@ -5,15 +5,12 @@ import {R6Map} from "../models/R6Map";
 import {AllMaps} from "../models/AllMaps";
 import {MapLevel} from "../models/MapLevel";
 import {BombSite} from "../models/BombSite";
-import SetupItemIcon from "./icons/SetupItemIcon";
 import {SetupItemMap} from "../models/SetupItemMap";
 import {DefenseSetupItemType} from "../models/DefenseSetupItemType";
-import ControlPanel from './controlPanel/ControlPanel';
 import ShareWizard from "./ShareWizard/ShareWizard";
 import {ApiService} from "./ApiService";
 import {ZippingService} from "./ZippingService";
 import MapIcons from "./MapIcons";
-import {isBrowser, isMobile} from "react-device-detect";
 
 
 const MapViewer: React.FC = () => {

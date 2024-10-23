@@ -66,12 +66,14 @@ img, button, a {
 }
 
 .icon-items {
-    border: 0.1em solid rgb(30, 152, 239);
+    outline: 20px solid rgb(30, 152, 239, 70%);
+    outline-offset: -18px;
     display: inline-block;
 }
 
 .icon-items-erasing {
-    border: 0.1em solid rgb(245, 85, 13);
+    outline: 20px solid rgb(245, 85, 13, 70%);
+    outline-offset: -18px;
     display: inline-block;
 }
 

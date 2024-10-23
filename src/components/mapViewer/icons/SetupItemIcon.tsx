@@ -1,5 +1,5 @@
 import React from 'react';
-import {SetupItemDetails, DefenseSetupItemType} from '../../models/DefenseSetupItemType';
+import {SetupItemDetails, DefenseSetupItemType, SetupItemManager} from '../../models/DefenseSetupItemType';
 import {SetupItemMap} from "../../models/SetupItemMap";
 
 import Tooltip from "../Tooltip";
@@ -15,7 +15,11 @@ interface SetupIconProps {
 const SetupItemIcon: React.FC<SetupIconProps> = ({item, level, iconSize, onClick,isErasing = false }) => {
     if (item.floor !== level) return null;
     // @ts-ignore
-    const itemDetails = SetupItemDetails[item.type];
+    console.log(item.type)
+    // @ts-ignore
+    const itemDetails = SetupItemManager.getSetupItemByName(item.type)
+
+    console.log(itemDetails)
 
 
     return (

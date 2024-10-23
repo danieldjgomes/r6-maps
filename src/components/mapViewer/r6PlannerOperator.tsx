@@ -79,49 +79,59 @@ import ying from '../../assets/r6operators-icons-2.10.0/ying.svg';
 import zero from '../../assets/r6operators-icons-2.10.0/zero.svg';
 import zofia from '../../assets/r6operators-icons-2.10.0/zofia.svg';
 import aruni from '../../assets/r6operators-icons-2.10.0/aruni.svg';
+import r6operators, {Operator} from "r6operators"
 
-export class Operator {
-    constructor(public source: string) {}
 
-    static getAllOperators(): Operator[] {
+export class R6PlannerOperator {
+    source: string;
+    operator: Operator;
+
+    constructor(source: string, operator: Operator) {
+        this.source = source
+        this.operator = operator
+
+    }
+
+    static getAllOperators(): R6PlannerOperator[] {
+        console.log(r6operators.jager.id)
         return [
-            new Operator(sentry),
-            new Operator(mute),
-            new Operator(smoke),
-            new Operator(castle),
-            new Operator(pulse),
-            new Operator(doc),
-            new Operator(rook),
-            new Operator(kapkan),
-            new Operator(tachanka),
-            new Operator(jager),
-            new Operator(bandit),
-            new Operator(frost),
-            new Operator(valkyrie),
-            new Operator(caveira),
-            new Operator(echo),
-            new Operator(mira),
-            new Operator(lesion),
-            new Operator(ela),
-            new Operator(vigil),
-            new Operator(maestro),
-            new Operator(alibi),
-            new Operator(clash),
-            new Operator(kaid),
-            new Operator(mozzie),
-            new Operator(warden),
-            new Operator(goyo),
-            new Operator(wamai),
-            new Operator(oryx),
-            new Operator(melusi),
-            new Operator(aruni),
-            new Operator(thunderbird),
-            new Operator(thorn),
-            new Operator(azami),
-            new Operator(solis),
-            new Operator(fenrir),
-            new Operator(tubarao),
-            new Operator(skopos),
+            new R6PlannerOperator(sentry, r6operators.sentry),
+            new R6PlannerOperator(mute, r6operators.mute),
+            new R6PlannerOperator(smoke, r6operators.smoke),
+            new R6PlannerOperator(castle, r6operators.castle),
+            new R6PlannerOperator(pulse, r6operators.pulse),
+            new R6PlannerOperator(doc, r6operators.doc),
+            new R6PlannerOperator(rook, r6operators.rook),
+            new R6PlannerOperator(kapkan, r6operators.kapkan),
+            new R6PlannerOperator(tachanka, r6operators.tachanka),
+            new R6PlannerOperator(jager, r6operators.jager),
+            new R6PlannerOperator(bandit, r6operators.bandit),
+            new R6PlannerOperator(frost, r6operators.frost),
+            new R6PlannerOperator(valkyrie, r6operators.valkyrie),
+            new R6PlannerOperator(caveira, r6operators.caveira),
+            new R6PlannerOperator(echo, r6operators.echo),
+            new R6PlannerOperator(mira, r6operators.mira),
+            new R6PlannerOperator(lesion, r6operators.lesion),
+            new R6PlannerOperator(ela, r6operators.ela),
+            new R6PlannerOperator(vigil, r6operators.vigil),
+            new R6PlannerOperator(maestro, r6operators.maestro),
+            new R6PlannerOperator(alibi, r6operators.alibi),
+            new R6PlannerOperator(clash, r6operators.clash),
+            new R6PlannerOperator(kaid, r6operators.kaid),
+            new R6PlannerOperator(mozzie, r6operators.mozzie),
+            new R6PlannerOperator(warden, r6operators.warden),
+            new R6PlannerOperator(goyo, r6operators.goyo),
+            new R6PlannerOperator(wamai, r6operators.wamai),
+            new R6PlannerOperator(oryx, r6operators.oryx),
+            new R6PlannerOperator(melusi, r6operators.melusi),
+            new R6PlannerOperator(aruni, r6operators.aruni),
+            new R6PlannerOperator(thunderbird, r6operators.thunderbird),
+            new R6PlannerOperator(thorn, r6operators.thorn),
+            new R6PlannerOperator(azami, r6operators.azami),
+            new R6PlannerOperator(solis, r6operators.solis),
+            new R6PlannerOperator(fenrir, r6operators.fenrir),
+            new R6PlannerOperator(tubarao, r6operators.tubarao),
+            new R6PlannerOperator(skopos, r6operators.skopos),
             // new Operator(montagne),
             // new Operator(ace),
             // new Operator(amaru),

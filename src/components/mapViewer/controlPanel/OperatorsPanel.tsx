@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import {Operator} from "../operator";
+import {R6PlannerOperator} from "../r6PlannerOperator";
 import ControlPanel from "./ControlPanel";
 import {DefenseSetupItemType} from "../../models/DefenseSetupItemType"; // Adjust the import path as needed
 
@@ -14,7 +14,7 @@ const OperatorsPanel: React.FC<OperatorsPanelProps> = ({
                     handleAddItemSetup
                                                        }) => {
     const [isOpen, setIsOpen] = useState(false); // Control panel visibility
-    const operators = Operator.getAllOperators();
+    const operators = R6PlannerOperator.getAllOperators();
     const columns = 6;
 
     // Create an array of columns
@@ -71,19 +71,19 @@ const OperatorsPanel: React.FC<OperatorsPanelProps> = ({
                              justifyContent: 'center',
                              height: `${maxColumnHeight * 50}px`,
                              minHeight: '100px',
-                             opacity: '20%'
                          }}>
-                        {column.map((op, index) => (
+                        {column.map((op: R6PlannerOperator) => (
                             <>
                                 <img
-                                    key={index}
+                                    onClick={() => handleAddItemSetup(DefenseSetupItemType[op.operator.id as keyof typeof DefenseSetupItemType])}
+                                    key={op.operator.name}
                                     src={op.source}
                                     style={{
                                         width: '50px',
                                         height: '50px',
                                         objectFit: 'contain',
                                     }}
-                                    alt={`Operator ${index}`}
+                                    alt={`Operator ${op.operator.name}`}
                                 />
                             </>
 
