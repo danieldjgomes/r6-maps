@@ -135,7 +135,7 @@ export class SetupItemManager {
         if (operatorData) {
             return {
                 title: operatorData.operator.name,
-                description: operatorData.operator.bio?.birthplace || "No bio available",
+                description: operatorData.operator.bio?.real_name || "No bio available",
                 sourceImage: undefined,
                 sourceIcon: operatorData.source || '',
                 size: { ...defaultSize }
@@ -155,6 +155,7 @@ export class SetupItemManager {
     // Static function to get operator data by name
     static getOperatorDataByName(name: string): R6PlannerOperator | undefined {
         const operators = R6PlannerOperator.getAllOperators();
+        console.log(operators)
 
         if (!operators || operators.length === 0) {
             console.error("Operator data not loaded or empty");
