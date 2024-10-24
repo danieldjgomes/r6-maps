@@ -6,24 +6,14 @@ import {AllMaps} from "../models/AllMaps";
 import {MapLevel} from "../models/MapLevel";
 import {BombSite} from "../models/BombSite";
 import {SetupItemMap} from "../models/SetupItemMap";
-import {DefenseSetupItemType} from "../models/DefenseSetupItemType";
 import {ApiService} from "./ApiService";
 import {ZippingService} from "./ZippingService";
 import MapIcons from "./MapIcons";
-
-// Define an interface for interaction states
-interface InteractionState {
-    isPlacingItem: boolean;
-    isErasing: boolean;
-    mouseOverMap: boolean;
-    dragging: boolean;
-    itemPlacingType: DefenseSetupItemType | null;
-}
+import {InteractionState} from "./InteractionState";
 
 const MapViewer: React.FC = () => {
     const allMaps: AllMaps = new AllMaps();
 
-    // Combined interaction state
     const [interactionState, setInteractionState] = useState<InteractionState>({
         isPlacingItem: false,
         isErasing: false,
