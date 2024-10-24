@@ -77,7 +77,7 @@ const OperatorsPanel: React.FC<OperatorsPanelProps> = ({
                                 <img
                                     onClick={
                                     () => {
-                                        console.log(op.operator.name)
+                                        console.log(op.operator)
                                         handleAddItemSetup(DefenseSetupItemType[op.operator.name as keyof typeof DefenseSetupItemType])
 
                                     }
