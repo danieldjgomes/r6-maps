@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import {R6Map} from "./models/R6Map";
 import {AllMaps} from "./models/AllMaps";
 import {MapLevel} from "./models/MapLevel";
@@ -8,13 +8,17 @@ import {FaShareFromSquare} from "react-icons/fa6";
 import OperatorsPanel from "./mapViewer/controlPanel/OperatorsPanel";
 import {DefenseSetupItemType} from "./models/DefenseSetupItemType";
 import { BrowserView, MobileView, isBrowser, isMobile } from 'react-device-detect';
+import {SetupItem, SetupItemMap} from "./models/SetupItemMap";
+import ShareWizard from "./mapViewer/ShareWizard/ShareWizard";
+import {ApiService} from "../components/mapViewer/ApiService";
+import {ZippingService} from"../components/mapViewer/ZippingService";
 
 
 interface MapSelectorProps {
+    setupItems: SetupItemMap[]
     selectedMap: R6Map;
     selectedLevel: MapLevel;
     selectedBombSite: BombSite;
-    shareConfiguration: () => void;
     onSelectMap: (currentMap: R6Map) => void;
     onSelectLevel: (mapLevel: MapLevel) => void;
     onSelectBombSite: (bombSite: BombSite) => void;
@@ -23,16 +27,41 @@ interface MapSelectorProps {
 }
 
 const TopController: React.FC<MapSelectorProps> = ({
+                                                       setupItems,
                                                        onSelectMap,
                                                        onSelectLevel,
                                                        selectedMap,
                                                        onSelectBombSite,
-                                                       shareConfiguration,
+
                                                        handleEraser, handleAddItemSetup
                                                    }) => {
 
+    const [configurationCode, setConfigurationCode] = useState('');
+    const [isWizardOpen, setIsWizardOpen] = useState(false);
+    const apiService = new ApiService();
+    const zippingSevice = new ZippingService()
+
+
+    const handleShareClick = () => {
+        if (setupItems.length == 0) {
+            setConfigurationCode(`${window.location.origin}`);
+            setIsWizardOpen(true);
+            return;
+        }
+        const compressed = zippingSevice.compress(selectedMap, setupItems)
+        buildConfigurationCode(compressed).then(() => setIsWizardOpen(true))
+    };
+
+    async function buildConfigurationCode(compressed: string) {
+        apiService.saveSetupByCompressedData(compressed)
+            .then((id) => {
+                setConfigurationCode(`${window.location.origin}/${id}`);
+            })
+    }
+
     const allMaps = new AllMaps()
     return (
+        <>
         <div
             style={{
                 position: 'fixed',  // Fica fixado na tela
@@ -97,7 +126,7 @@ const TopController: React.FC<MapSelectorProps> = ({
                 }
                 <FaShareFromSquare
                     color={"#E0E1DD"}
-                    onClick={shareConfiguration}
+                    onClick={handleShareClick}
                     style={{
                         minWidth: "25px",
                         minHeight: "25px",
@@ -107,6 +136,9 @@ const TopController: React.FC<MapSelectorProps> = ({
                 />
             </div>
         </div>
+            <ShareWizard isWizardOpen={isWizardOpen} configurationCode={configurationCode}
+                         closeWizard={() => setIsWizardOpen(false)}/>
+            </>
     );
 };
 
