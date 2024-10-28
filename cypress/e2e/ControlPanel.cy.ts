@@ -34,4 +34,60 @@ describe('ControlPanel Component', () => {
     cy.contains('Defense Operators').should('exist'); // Ajuste conforme necessário
     cy.contains('Map Preparations').should('exist'); // Ajuste conforme necessário
   });
+
+  it('adds an operator icon to the map', () => {
+    // Abre o painel
+    cy.get('button.hamburger-btn').click();
+
+    // Seleciona o operador no painel de operadores e clica para adicionar ao mapa
+    cy.get('.operator-icon').eq(1).click(); // Ajuste conforme necessário para selecionar o operador correto
+
+    // Verifica se o ícone foi adicionado ao mapa
+    cy.get('.map-container').should('exist');
+    cy.get('button.hamburger-btn').click();
+    cy.get('.control-panel').should('not.have.class', 'open');
+
+    // Clica em uma coordenada específica do mapa para adicionar o ícone
+    cy.get('.map-container').click(500, 200); // Ajuste as coordenadas conforme necessário
+    cy.get('.map-container').click(); // Clica novamente para garantir que o ícone seja adicionado
+
+    // Verifica se o ícone foi adicionado ao mapa
+    cy.get('.icon-items').first().should('exist');
+
+  });
+
+  it('displays tooltip with operator details on icon hover', () => {
+    // Abre o painel
+    cy.get('button.hamburger-btn').click();
+
+    // Seleciona o operador no painel de operadores e clica para adicionar ao mapa
+    cy.get('.operator-icon').eq(1).click(); // Ajuste conforme necessário para selecionar o operador correto
+
+    // Verifica se o ícone foi adicionado ao mapa
+    cy.get('.map-container').should('exist');
+    cy.get('button.hamburger-btn').click();
+    cy.get('.control-panel').should('not.have.class', 'open');
+
+    // Clica em uma coordenada específica do mapa para adicionar o ícone
+    cy.get('.map-container').click(500, 200); // Ajuste as coordenadas conforme necessário
+    cy.get('.map-container').click(); // Clica novamente para garantir que o ícone seja adicionado
+
+    // HOVER no ícone e verificar a classe do contêiner de tooltip
+    cy.get('.icon-items').first().trigger('mouseover'); // Simula o hover
+
+    // Verifica se o tooltip está presente
+    cy.get('.tooltip-container')
+        .should('exist') // Verifica se o tooltip está presente
+        .within(() => { // Dentro do contêiner do tooltip, verifique o título e a descrição
+          cy.get('h3.tooltip-title')
+              .should('exist') // Verifica se o título existe
+              .and('have.text', 'Rook'); // Verifica se o texto do título está correto
+
+          cy.get('p.tooltip-description')
+              .should('exist') // Verifica se a descrição existe
+              .and('have.text', 'Julien Nizan'); // Verifica se o texto da descrição está correto
+        });
+  });
+
+
 });

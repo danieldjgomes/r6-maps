@@ -42,7 +42,7 @@ const OperatorsPanel: React.FC<OperatorsPanelProps> = ({
                      }}>
                     {column.map((op: R6PlannerOperator) => (
                         <>
-                            <img
+                            <img className={"operator-icon"}
                                 onClick={
                                     () => {
                                         console.log(op.operator)
