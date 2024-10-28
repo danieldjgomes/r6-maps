@@ -14,11 +14,10 @@ interface ControlPanelProps {
     handleAddItemSetup: (setupItemType: DefenseSetupItemType) => void;
 }
 
-const ControlPanel: React.FC<ControlPanelProps> = ({
-                                                       handleAddItemSetup,
-                                                       handleEraser
-                                                   }) => {
-
+const MapPreparationPanel: React.FC<ControlPanelProps> = ({
+                                                              handleAddItemSetup,
+                                                              handleEraser
+                                                          }) => {
 
     return (
         <div>
@@ -82,4 +81,4 @@ const ControlPanel: React.FC<ControlPanelProps> = ({
     );
 };
 
-export default ControlPanel;
+export default MapPreparationPanel;

@@ -1,6 +1,6 @@
 import React, {useState} from 'react';
 import {R6PlannerOperator} from "../r6PlannerOperator";
-import ControlPanel from "./ControlPanel";
+import MapPreparationPanel from "./MapPreparationPanel";
 import {DefenseSetupItemType} from "../../models/DefenseSetupItemType"; // Adjust the import path as needed
 
 
@@ -108,7 +108,7 @@ const OperatorsPanel: React.FC<OperatorsPanelProps> = ({
                     Map preparations
                 </div>
 
-                <ControlPanel handleEraser={handleEraser} handleAddItemSetup={handleAddItemSetup}/>
+                <MapPreparationPanel handleEraser={handleEraser} handleAddItemSetup={handleAddItemSetup}/>
 
             </div>
         </>

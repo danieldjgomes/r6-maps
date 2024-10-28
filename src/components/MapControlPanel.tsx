@@ -12,6 +12,7 @@ import {SetupItem, SetupItemMap} from "./models/SetupItemMap";
 import ShareWizard from "./mapViewer/ShareWizard/ShareWizard";
 import {ApiService} from "../components/mapViewer/ApiService";
 import {ZippingService} from"../components/mapViewer/ZippingService";
+import MapPreparationPanel from "./mapViewer/controlPanel/MapPreparationPanel";
 
 
 interface MapSelectorProps {
@@ -26,7 +27,7 @@ interface MapSelectorProps {
     handleAddItemSetup: (setupItemType: DefenseSetupItemType) => void;
 }
 
-const TopController: React.FC<MapSelectorProps> = ({
+const MapControlPanel: React.FC<MapSelectorProps> = ({
                                                        setupItems,
                                                        onSelectMap,
                                                        onSelectLevel,
@@ -83,7 +84,10 @@ const TopController: React.FC<MapSelectorProps> = ({
                 }}
             >
                 {isBrowser &&
-                <OperatorsPanel handleAddItemSetup={handleAddItemSetup} handleEraser={handleEraser}/>
+                    <>
+                        <OperatorsPanel handleAddItemSetup={handleAddItemSetup} handleEraser={handleEraser}/>
+                    </>
+
                 }
                 <div className="map-selector-container" style={{display: 'flex', alignItems: 'center'}}>
                     <select onChange={(e) => onSelectMap(allMaps.getMapByName(e.target.value))}>
@@ -142,4 +146,4 @@ const TopController: React.FC<MapSelectorProps> = ({
     );
 };
 
-export default TopController;
+export default MapControlPanel;

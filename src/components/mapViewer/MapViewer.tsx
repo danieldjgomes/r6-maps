@@ -1,6 +1,6 @@
 import React, {useEffect, useRef, useState} from 'react';
 import './MapViewer.css';
-import TopController from '../TopController';
+import MapControlPanel from '../MapControlPanel';
 import {R6Map} from "../models/R6Map";
 import {AllMaps} from "../models/AllMaps";
 import {MapLevel} from "../models/MapLevel";
@@ -190,7 +190,7 @@ const MapViewer: React.FC = () => {
 
     return (
         <div className="map-viewer-wrapper">
-            <TopController
+            <MapControlPanel
                 onSelectMap={setActiveMap}
                 onSelectLevel={setActiveLevel}
                 onSelectBombSite={setActiveBombSite}
