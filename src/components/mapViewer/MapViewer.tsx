@@ -22,15 +22,15 @@ const MapViewer: React.FC = () => {
         itemPlacingType: null
     });
 
-    const [selectedMap, setSelectedMap] = useState<R6Map>(allMaps.getAllMaps()[0]);
-    const [selectedLevel, setSelectedLevel] = useState<MapLevel>(allMaps.getAllMaps()[0].levels[0]);
-    const [selectedBombSite, setSelectedBombSite] = useState<BombSite>(allMaps.getAllMaps()[0].bombSites[0]);
+    const [activeMap, setActiveMap] = useState<R6Map>(allMaps.getAllMaps()[0]);
+    const [activeLevel, setActiveLevel] = useState<MapLevel>(allMaps.getAllMaps()[0].levels[0]);
+    const [activeBombSite, setActiveBombSite] = useState<BombSite>(allMaps.getAllMaps()[0].bombSites[0]);
     const [iconSize, setIconSize] = useState(30);
     const [containerWidth, setContainerWidth] = useState(85);
     const [setupItems, setSetupItems] = useState<SetupItemMap[]>([]);
     const [mousePosition, setMousePosition] = useState<{ x: number, y: number } | null>(null);
     const [dragStart, setDragStart] = useState<{ x: number, y: number } | null>(null);
-    const [dragOffset, setDragOffset] = useState<{ x: number, y: number }>({x: 0, y: 0});
+    const [imageDragOffset, setImageDragOffset] = useState<{ x: number, y: number }>({x: 0, y: 0});
     const [imagePosition, setImagePosition] = useState<{ x: number, y: number }>({x: 0, y: 80});
     const apiService = new ApiService();
     const zippingService = new ZippingService()
@@ -38,7 +38,7 @@ const MapViewer: React.FC = () => {
     const yAdjustment = -15;
 
     const mapImageRef = useRef<HTMLImageElement>(null);
-    const displayedMap = selectedMap?.getMapLevelByFloor(selectedLevel?.floor.valueOf() as string);
+    const displayedMap = activeMap?.getMapLevelByFloor(activeLevel?.floor.valueOf() as string);
 
 
     useEffect(() => {
@@ -63,8 +63,8 @@ const MapViewer: React.FC = () => {
 
             const map = allMaps.getAllMaps().find(m => m.name === configuration.map);
             if (map) {
-                setSelectedMap(map);
-                setSelectedLevel(map.levels[0]);
+                setActiveMap(map);
+                setActiveLevel(map.levels[0]);
 
                 const bombSites = configuration.bombSites.map((site: any) => ({
                     ...site,
@@ -74,7 +74,7 @@ const MapViewer: React.FC = () => {
                         y: parseFloat(bomb.y.toFixed(3)),
                     })),
                 }));
-                setSelectedBombSite(bombSites[0]);
+                setActiveBombSite(bombSites[0]);
 
 
                 const setupItems = configuration.setup.map((setup: any) =>
@@ -98,7 +98,7 @@ const MapViewer: React.FC = () => {
             if (interactionState.dragging && dragStart) {
                 const dx = event.clientX - dragStart.x;
                 const dy = event.clientY - dragStart.y;
-                setImagePosition({x: dragOffset.x + dx, y: dragOffset.y + dy});
+                setImagePosition({x: imageDragOffset .x + dx, y: imageDragOffset .y + dy});
             }
         }
     };
@@ -110,7 +110,7 @@ const MapViewer: React.FC = () => {
 
     const handleMouseUp = () => {
         setInteractionState({...interactionState, dragging: false});
-        setDragOffset(imagePosition);
+        setImageDragOffset (imagePosition);
         setDragStart(null);
     };
 
@@ -176,7 +176,7 @@ const MapViewer: React.FC = () => {
             const rect = mapImageRef.current.getBoundingClientRect();
             const adjustedX = (mousePosition.x + xAdjustment) * 100 / rect.width;
             const adjustedY = (mousePosition.y + yAdjustment) * 100 / rect.height;
-            const floor = selectedLevel.floor;
+            const floor = activeLevel.floor;
 
             if (interactionState.isPlacingItem !== null) {
                 setSetupItems([...setupItems, new SetupItemMap(adjustedX, adjustedY, floor, interactionState.itemPlacingType)]);
@@ -191,12 +191,12 @@ const MapViewer: React.FC = () => {
     return (
         <div className="map-viewer-wrapper">
             <TopController
-                onSelectMap={setSelectedMap}
-                onSelectLevel={setSelectedLevel}
-                onSelectBombSite={setSelectedBombSite}
-                selectedLevel={selectedLevel}
-                selectedMap={selectedMap}
-                selectedBombSite={selectedBombSite}
+                onSelectMap={setActiveMap}
+                onSelectLevel={setActiveLevel}
+                onSelectBombSite={setActiveBombSite}
+                selectedLevel={activeLevel}
+                selectedMap={activeMap}
+                selectedBombSite={activeBombSite}
                 handleAddItemSetup={(item) => setInteractionState({
                     ...interactionState,
                     itemPlacingType: item,
@@ -227,15 +227,15 @@ const MapViewer: React.FC = () => {
                                  src={displayedMap.image}
                                  className="map-image"
                                  ref={mapImageRef}
-                                 alt={`Map view of ${selectedMap.name} - ${selectedLevel.floor}`}
+                                 alt={`Map view of ${activeMap.name} - ${activeLevel.floor}`}
                                  onClick={handleMapClick}
                             />
 
-                            <MapIcons bombSites={selectedMap.bombSites}
+                            <MapIcons bombSites={activeMap.bombSites}
                                       setupItems={setupItems}
                                       iconSize={iconSize}
                                       interactionState={interactionState}
-                                      selectedLevel={selectedLevel}
+                                      selectedLevel={activeLevel}
                                       setSetupItems={setSetupItems}
                                       setIsErasing={(value) => setInteractionState({
                                           ...interactionState,
