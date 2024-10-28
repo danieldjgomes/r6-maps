@@ -22,7 +22,11 @@ const MapPreparationPanel: React.FC<ControlPanelProps> = ({
     return (
         <div>
 
-            {<div>
+            <div className={"operator-panel-title"}>
+                Map preparations
+            </div>
+
+            <div>
                 <div
                     className="setup-items"
                     style={{
@@ -74,7 +78,7 @@ const MapPreparationPanel: React.FC<ControlPanelProps> = ({
                 </div>
 
             </div>
-            }
+
 
         </div>
 

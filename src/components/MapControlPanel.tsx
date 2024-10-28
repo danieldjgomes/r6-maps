@@ -5,7 +5,7 @@ import {MapLevel} from "./models/MapLevel";
 import {BombSite} from "./models/BombSite";
 import './mapSelector.css';
 import {FaShareFromSquare} from "react-icons/fa6";
-import OperatorsPanel from "./mapViewer/controlPanel/OperatorsPanel";
+import ControlPanel from "./mapViewer/controlPanel/ControlPanel";
 import {DefenseSetupItemType} from "./models/DefenseSetupItemType";
 import { BrowserView, MobileView, isBrowser, isMobile } from 'react-device-detect';
 import {SetupItem, SetupItemMap} from "./models/SetupItemMap";
@@ -85,7 +85,7 @@ const MapControlPanel: React.FC<MapSelectorProps> = ({
             >
                 {isBrowser &&
                     <>
-                        <OperatorsPanel handleAddItemSetup={handleAddItemSetup} handleEraser={handleEraser}/>
+                        <ControlPanel handleAddItemSetup={handleAddItemSetup} handleEraser={handleEraser}/>
                     </>
 
                 }
