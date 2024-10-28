@@ -23,7 +23,7 @@ const MapPreparationPanel: React.FC<ControlPanelProps> = ({
         <div>
 
             <div className={"operator-panel-title"}>
-                Map preparations
+                Map Preparations
             </div>
 
             <div>
