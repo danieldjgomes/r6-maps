@@ -61,10 +61,8 @@ const MapViewer: React.FC = () => {
 
             const configuration = JSON.parse(zippingService.decompress(data));
 
-            // Carregar o mapa com base na configuração
             const map = allMaps.getAllMaps().find(m => m.name === configuration.map);
             if (map) {
-                // Atualizar o mapa e nível selecionados
                 setSelectedMap(map);
                 setSelectedLevel(map.levels[0]);
 
@@ -79,7 +77,6 @@ const MapViewer: React.FC = () => {
                 setSelectedBombSite(bombSites[0]);
 
 
-                // Carregar os itens de configuração (setup)
                 const setupItems = configuration.setup.map((setup: any) =>
                     new SetupItemMap(parseFloat(setup.x.toFixed(3)), parseFloat(setup.y.toFixed(3)), setup.floor, setup.type)
                 );
@@ -87,12 +84,10 @@ const MapViewer: React.FC = () => {
             }
         } catch (error) {
             console.error("Failed to load configuration:", error);
-            // Ignorar erros e não aplicar nenhuma alteração
         }
     };
 
 
-    // Adjust interactionState handlers
     const handleMouseMove = (event: React.MouseEvent<HTMLImageElement>) => {
         if (mapImageRef.current) {
             const rect = mapImageRef.current.getBoundingClientRect();
@@ -155,7 +150,6 @@ const MapViewer: React.FC = () => {
         };
     }, [interactionState]);
 
-    // 2. **Improved Zoom Handling:**
     const handleMouseRoll = (event: React.WheelEvent<HTMLImageElement>) => {
         if (interactionState.mouseOverMap) {
             if (event.deltaY < 0) {
@@ -240,8 +234,7 @@ const MapViewer: React.FC = () => {
                             <MapIcons bombSites={selectedMap.bombSites}
                                       setupItems={setupItems}
                                       iconSize={iconSize}
-                                      isErasing={interactionState.isErasing}
-                                      isPlacingItem={interactionState.isPlacingItem}
+                                      interactionState={interactionState}
                                       selectedLevel={selectedLevel}
                                       setSetupItems={setSetupItems}
                                       setIsErasing={(value) => setInteractionState({

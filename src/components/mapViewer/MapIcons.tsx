@@ -4,30 +4,29 @@ import SetupItemIcon from './icons/SetupItemIcon';
 import {SetupItemMap} from '../models/SetupItemMap';
 import {BombSite} from '../models/BombSite';
 import {MapLevel} from '../models/MapLevel';
+import {InteractionState} from "./InteractionState";
 
 interface MapIconsProps {
     bombSites: BombSite[];
     setupItems: SetupItemMap[];
     iconSize: number;
-    isPlacingItem: boolean;
     setSetupItems: (item: SetupItemMap[]) => void;
-    isErasing: boolean;
     setIsErasing: (isErasing: boolean) => void;
     selectedLevel: MapLevel;
+    interactionState: InteractionState;
 }
 
 const MapIcons: React.FC<MapIconsProps> = ({
                                                bombSites,
                                                setupItems,
                                                iconSize,
-                                               isErasing,
                                                selectedLevel,
-                                               isPlacingItem,
                                                setSetupItems,
+                                               interactionState,
                                                setIsErasing
                                            }) => {
     const handleIconClick = (erasingWall: SetupItemMap) => {
-        if (isErasing) {
+        if (interactionState.isErasing) {
             setSetupItems(setupItems.filter(wall => wall !== erasingWall));
         }
         if (setupItems.length < 1) {
@@ -39,7 +38,7 @@ const MapIcons: React.FC<MapIconsProps> = ({
         <div
             className="icon-container"
             style={{
-                pointerEvents: isPlacingItem ? 'none' : 'all'
+                pointerEvents: interactionState.isPlacingItem ? 'none' : 'all'
             }}
         >
             {bombSites.map((bombsite) =>
@@ -59,7 +58,7 @@ const MapIcons: React.FC<MapIconsProps> = ({
                     item={item}
                     iconSize={iconSize}
                     onClick={() => handleIconClick(item)}
-                    isErasing={isErasing}
+                    isErasing={interactionState.isErasing}
                     level={selectedLevel.floor.valueOf()}
                 />
             ))}
