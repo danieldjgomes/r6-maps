@@ -9,16 +9,12 @@ import {DefenseSetupItemType} from "../../models/DefenseSetupItemType";
 import {CiEraser} from "react-icons/ci";
 import './ControlPanel.css'
 
-interface ControlPanelProps {
+interface MapPreparationPanelProps {
     handleEraser: () => void;
     handleAddItemSetup: (setupItemType: DefenseSetupItemType) => void;
 }
 
-const MapPreparationPanel: React.FC<ControlPanelProps> = ({
-                                                              handleAddItemSetup,
-                                                              handleEraser
-                                                          }) => {
-
+const MapPreparationPanel: React.FC<MapPreparationPanelProps> = ({handleAddItemSetup, handleEraser}) => {
     return (
         <div>
 
@@ -28,58 +24,17 @@ const MapPreparationPanel: React.FC<ControlPanelProps> = ({
 
             <div>
                 <div
-                    className="setup-items"
-                    style={{
-                        display: 'flex',
-                        flexWrap: 'wrap', // Permite que os itens envolvam para a próxima linha
-                        gap: '10px', // Espaçamento entre os itens
-                        justifyContent: 'center', // Centraliza os itens
-                        width: '200px' // Defina uma largura fixa para controlar quantos itens cabem em cada linha
-                    }}>
-                    <img
-                        src={RotationIconSVG}
-                        onClick={() => handleAddItemSetup(DefenseSetupItemType.Rotation)}
-                        alt="Rotate Wall"
-                        style={{width: '35px', height: '35px'}} // Ajuste o tamanho dos ícones se necessário
-                    />
-                    <img
-                        src={VaultHeightIconSVG}
-                        onClick={() => handleAddItemSetup(DefenseSetupItemType.Vault)}
-                        alt="Vault Height"
-                        style={{width: '35px', height: '35px'}}
-                    />
-                    <img
-                        src={FootHeightIconSVG}
-                        onClick={() => handleAddItemSetup(DefenseSetupItemType.FootHeight)}
-                        alt="Foot Height"
-                        style={{width: '35px', height: '35px'}}
-                    />
-                    <img
-                        src={HeadHeightIconSVG}
-                        onClick={() => handleAddItemSetup(DefenseSetupItemType.HeadHeight)}
-                        alt="Head Height"
-                        style={{width: '35px', height: '35px'}}
-                    />
-                    <img
-                        src={ReinforcementIconSVG}
-                        onClick={() => handleAddItemSetup(DefenseSetupItemType.ReinforcementWall)}
-                        alt="Wall Reinforcement"
-                        style={{width: '35px', height: '35px'}}
-                    />
-                    <img
-                        src={HatchIconSVG}
-                        onClick={() => handleAddItemSetup(DefenseSetupItemType.ReinforcementHatch)}
-                        alt="Hatch Reinforcement"
-                        style={{width: '35px', height: '35px'}}
-                    />
-
+                    className="setup-items">
+                    <img src={RotationIconSVG} onClick={() => handleAddItemSetup(DefenseSetupItemType.Rotation)} alt="Rotate Wall"/>
+                    <img src={VaultHeightIconSVG} onClick={() => handleAddItemSetup(DefenseSetupItemType.Vault)} alt="Vault Height"/>
+                    <img src={FootHeightIconSVG} onClick={() => handleAddItemSetup(DefenseSetupItemType.FootHeight)} alt="Foot Height"/>
+                    <img src={HeadHeightIconSVG} onClick={() => handleAddItemSetup(DefenseSetupItemType.HeadHeight)} alt="Head Height"/>
+                    <img src={ReinforcementIconSVG} onClick={() => handleAddItemSetup(DefenseSetupItemType.ReinforcementWall)} alt="Wall Reinforcement"/>
+                    <img src={HatchIconSVG} onClick={() => handleAddItemSetup(DefenseSetupItemType.ReinforcementHatch)} alt="Hatch Reinforcement"/>
                     <CiEraser color={"#E0E1DD"} onClick={handleEraser}
                               style={{width: "35px", height: "35px", cursor: "pointer", backgroundColor: "#23262B"}}/>
                 </div>
-
             </div>
-
-
         </div>
 
     );

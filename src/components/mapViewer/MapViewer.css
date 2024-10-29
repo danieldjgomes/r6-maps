@@ -77,18 +77,6 @@ img, button, a {
     display: inline-block;
 }
 
-.control-panel img {
-    cursor: pointer;
-    width: 5vw;
-    max-width: 40px;
-    height: auto;
-}
-
-.control-panel button {
-    padding: 0.5rem 1rem;
-    cursor: pointer;
-}
-
 .wizard {
     position: fixed;
     top: 0;
@@ -167,10 +155,6 @@ img, button, a {
         height: 25px;
     }
 
-    .control-panel img {
-        width: 8vw;
-        max-width: 50px;
-    }
 
     .map-viewer-container{
         margin-top: 15vw;
