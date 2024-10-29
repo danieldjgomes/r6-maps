@@ -1,26 +1,21 @@
 import {DefenseSetupItemType} from "../../models/DefenseSetupItemType";
-import React, {useState} from 'react';
+import React from 'react';
 import {R6PlannerOperator} from "../r6PlannerOperator";
+import './ControlPanel.css'
 
 interface OperatorsPanelProps {
     handleEraser: () => void;
     handleAddItemSetup: (setupItemType: DefenseSetupItemType) => void;
 }
 
-const OperatorsPanel: React.FC<OperatorsPanelProps> = ({
-                                                           handleEraser,
-                                                           handleAddItemSetup
-                                                       }) => {
-    const [isOpen, setIsOpen] = useState(false);
+const OperatorsPanel: React.FC<OperatorsPanelProps> = ({handleAddItemSetup}) => {
     const operators = R6PlannerOperator.getAllOperators();
     const columns = 6;
 
-    // Create an array of columns
     const columnsArr = Array.from({length: columns}, (_, colIndex) =>
         operators.filter((_, index) => index % columns === colIndex)
     );
 
-    // Find the maximum number of operators in any column
     const maxColumnHeight = Math.max(...columnsArr.map(column => column.length));
 
     return (
@@ -30,34 +25,26 @@ const OperatorsPanel: React.FC<OperatorsPanelProps> = ({
             </div>
 
             {columnsArr.map((column, colIndex) => (
-                <div key={colIndex}
-                     style={{
-                         display: 'flex',
-                         flexDirection: 'column',
-                         alignItems: 'center',
-                         gap: '5px',
-                         justifyContent: 'center',
-                         height: `${maxColumnHeight * 50}px`,
-                         minHeight: '100px',
-                     }}>
+                <div key={colIndex}  className={"operator-icon-container"}
+                     style={{height: `${maxColumnHeight * 50}px`}}>
                     {column.map((op: R6PlannerOperator) => (
                         <>
                             <img className={"operator-icon"}
-                                onClick={
-                                    () => {
-                                        console.log(op.operator)
-                                        handleAddItemSetup(DefenseSetupItemType[op.operator.name as keyof typeof DefenseSetupItemType])
+                                 onClick={
+                                     () => {
+                                         console.log(op.operator)
+                                         handleAddItemSetup(DefenseSetupItemType[op.operator.name as keyof typeof DefenseSetupItemType])
 
-                                    }
-                                }
-                                key={op.operator.name}
-                                src={op.source}
-                                style={{
-                                    width: '50px',
-                                    height: '50px',
-                                    objectFit: 'contain',
-                                }}
-                                alt={`Operator ${op.operator.name}`}
+                                     }
+                                 }
+                                 key={op.operator.name}
+                                 src={op.source}
+                                 style={{
+                                     width: '50px',
+                                     height: '50px',
+                                     objectFit: 'contain',
+                                 }}
+                                 alt={`Operator ${op.operator.name}`}
                             />
                         </>
 

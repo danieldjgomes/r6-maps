@@ -95,7 +95,7 @@ const MapViewer: React.FC = () => {
             const y = event.clientY - rect.top;
             setMousePosition({x, y});
 
-            if (interactionState.dragging && dragStart) {
+            if (interactionState.dragging && dragStart &&!interactionState.isPlacingItem) {
                 const dx = event.clientX - dragStart.x;
                 const dy = event.clientY - dragStart.y;
                 setImagePosition({x: imageDragOffset .x + dx, y: imageDragOffset .y + dy});
