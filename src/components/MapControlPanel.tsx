@@ -5,14 +5,14 @@ import {MapLevel} from "./models/MapLevel";
 import {BombSite} from "./models/BombSite";
 import './mapSelector.css';
 import {FaShareFromSquare} from "react-icons/fa6";
-import ControlPanel from "./mapViewer/controlPanel/ControlPanel";
+import ControlPanel from "./ControlPanel/ControlPanel";
 import {DefenseSetupItemType} from "./models/DefenseSetupItemType";
 import { BrowserView, MobileView, isBrowser, isMobile } from 'react-device-detect';
 import {SetupItem, SetupItemMap} from "./models/SetupItemMap";
 import ShareWizard from "./mapViewer/ShareWizard/ShareWizard";
 import {ApiService} from "../components/mapViewer/ApiService";
 import {ZippingService} from"../components/mapViewer/ZippingService";
-import MapPreparationPanel from "./mapViewer/controlPanel/MapPreparationPanel";
+import MapPreparationPanel from "./ControlPanel/MapPreparationPanel";
 
 
 interface MapSelectorProps {

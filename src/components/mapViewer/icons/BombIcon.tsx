@@ -1,5 +1,4 @@
 import React from 'react';
-import { BombSite } from '../../models/BombSite';
 import {Bomb} from "../../Bomb";
 import {MapLevel} from "../../models/MapLevel";
 

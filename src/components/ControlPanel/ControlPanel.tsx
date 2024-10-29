@@ -1,7 +1,7 @@
 import React, {useState} from 'react';
-import MapPreparationPanel from "./MapPreparationPanel";
-import {DefenseSetupItemType} from "../../models/DefenseSetupItemType";
-import OperatorPanel from "./OperatorPanel";
+import MapPreparationPanel from "../ControlPanel/MapPreparationPanel";
+import {DefenseSetupItemType} from "../models/DefenseSetupItemType";
+import OperatorPanel from "../ControlPanel/OperatorPanel";
 import './ControlPanel.css'
 
 

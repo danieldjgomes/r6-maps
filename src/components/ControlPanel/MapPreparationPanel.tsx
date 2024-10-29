@@ -1,11 +1,11 @@
 import React from 'react';
-import ReinforcementIconSVG from '../../../assets/icons/reinforcement.svg';
-import FootHeightIconSVG from '../../../assets/icons/foot.svg';
-import HeadHeightIconSVG from '../../../assets/icons/head.svg';
-import VaultHeightIconSVG from '../../../assets/icons/vault.svg';
-import RotationIconSVG from '../../../assets/icons/rotation.svg';
-import HatchIconSVG from '../../../assets/icons/hatch.svg';
-import {DefenseSetupItemType} from "../../models/DefenseSetupItemType";
+import ReinforcementIconSVG from '../../assets/icons/reinforcement.svg';
+import FootHeightIconSVG from '../../assets/icons/foot.svg';
+import HeadHeightIconSVG from '../../assets/icons/head.svg';
+import VaultHeightIconSVG from '../../assets/icons/vault.svg';
+import RotationIconSVG from '../../assets/icons/rotation.svg';
+import HatchIconSVG from '../../assets/icons/hatch.svg';
+import {DefenseSetupItemType} from "../models/DefenseSetupItemType";
 import {CiEraser} from "react-icons/ci";
 import './ControlPanel.css'
 
