@@ -35,10 +35,8 @@ const Tooltip: React.FC<TooltipProps> = ({ imageSrc, title, description, childre
             onMouseEnter={() => setIsHovered(true)}
             onMouseLeave={() => setIsHovered(false)}
         >
-            {/* Renderizando o ícone ou qualquer outro children */}
             {children}
 
-            {/* Tooltip visível apenas quando hover */}
             {isHovered && (
                 <div
                     ref={tooltipRef}

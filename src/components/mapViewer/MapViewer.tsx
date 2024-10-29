@@ -1,6 +1,6 @@
 import React, {useEffect, useRef, useState} from 'react';
 import './MapViewer.css';
-import MapControlPanel from '../MapControlPanel';
+import HeaderControlPanel from '../ControlPanel/HeaderControlPanel';
 import {R6Map} from "../models/R6Map";
 import {AllMaps} from "../models/AllMaps";
 import {MapLevel} from "../models/MapLevel";
@@ -9,8 +9,8 @@ import {SetupItemMap} from "../models/SetupItemMap";
 import {ApiService} from "./ApiService";
 import {ZippingService} from "./ZippingService";
 import MapIcons from "./MapIcons";
-import {InteractionState} from "../state/InteractionState";
-import {useInteraction} from "../state/InteractionContext";
+import {InteractionState} from "../State/InteractionState";
+import {useInteraction} from "../State/InteractionContext";
 
 const MapViewer: React.FC = () => {
     const allMaps: AllMaps = new AllMaps();
@@ -184,7 +184,7 @@ const MapViewer: React.FC = () => {
 
     return (
         <div className="map-viewer-wrapper">
-            <MapControlPanel
+            <HeaderControlPanel
                 onSelectMap={setActiveMap}
                 onSelectLevel={setActiveLevel}
                 onSelectBombSite={setActiveBombSite}
@@ -225,6 +225,7 @@ const MapViewer: React.FC = () => {
                                       interactionState={interactionState}
                                       selectedLevel={activeLevel}
                                       setSetupItems={setSetupItems}
+                                      activeBombSite={activeBombSite}
                                       setIsErasing={(value) => setInteractionState({
                                           ...interactionState,
                                           isPlacingItem: false,

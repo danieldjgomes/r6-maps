@@ -1,4 +1,4 @@
-import {Floor} from "../Enums";
+import {Floor} from "./Enums";
 
 export class MapLevel {
     constructor(image: string, floor: Floor) {

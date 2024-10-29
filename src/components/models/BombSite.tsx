@@ -1,4 +1,4 @@
-import {Bomb} from "../Bomb";
+import {Bomb} from "./Bomb";
 
 export class BombSite {
     constructor(bombs: Bomb[], name: string) {

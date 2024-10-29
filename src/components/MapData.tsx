@@ -4,7 +4,7 @@ import ClubhouseFirstFloor from '../assets/maps/r6-maps-clubhouse-blueprint-2.jp
 import ClubhouseSecondFloor from '../assets/maps/r6-maps-clubhouse-blueprint-4.jpg';
 // Adicione mais importações conforme necessário
 
-import { MapNames, Floor } from './Enums';
+import { MapNames, Floor } from './models/Enums';
 
 // Interface para definir o tipo do mapa
 interface Map {

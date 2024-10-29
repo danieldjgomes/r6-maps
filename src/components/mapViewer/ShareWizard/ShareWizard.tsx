@@ -1,5 +1,6 @@
 import React, {useState} from "react";
 import {FaRegCopy} from "react-icons/fa";
+import './ShareWizard.css'
 
 interface ShareWizardProps {
     isWizardOpen: boolean;

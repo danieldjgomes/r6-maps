@@ -4,7 +4,7 @@ import SetupItemIcon from './icons/SetupItemIcon';
 import {SetupItemMap} from '../models/SetupItemMap';
 import {BombSite} from '../models/BombSite';
 import {MapLevel} from '../models/MapLevel';
-import {InteractionState} from "../state/InteractionState";
+import {InteractionState} from "../State/InteractionState";
 
 interface MapIconsProps {
     bombSites: BombSite[];
@@ -14,6 +14,7 @@ interface MapIconsProps {
     setIsErasing: (isErasing: boolean) => void;
     selectedLevel: MapLevel;
     interactionState: InteractionState;
+    activeBombSite: BombSite;
 }
 
 const MapIcons: React.FC<MapIconsProps> = ({
@@ -23,7 +24,8 @@ const MapIcons: React.FC<MapIconsProps> = ({
                                                selectedLevel,
                                                setSetupItems,
                                                interactionState,
-                                               setIsErasing
+                                               setIsErasing,
+                                               activeBombSite
                                            }) => {
     const handleIconClick = (erasingWall: SetupItemMap) => {
         if (interactionState.isErasing) {
@@ -41,17 +43,16 @@ const MapIcons: React.FC<MapIconsProps> = ({
                 pointerEvents: interactionState.isPlacingItem ? 'none' : 'all'
             }}
         >
-            {bombSites.map((bombsite) =>
-                bombsite.bombs.map((bomb, index) => (
-                    <BombIcon
-                        key={`bomb-${index}`}  // Ensure unique key
-                        index={index}
-                        bomb={bomb}
-                        iconSize={iconSize}
-                        level={selectedLevel}
-                    />
-                ))
-            )}
+            {activeBombSite.bombs.map((bomb, index) => (
+                <BombIcon
+                    key={`bomb-${index}`}
+                    index={index}
+                    bomb={bomb}
+                    iconSize={iconSize}
+                    level={selectedLevel}
+                />
+            ))}
+
             {setupItems.map((item, index) => (
                 <SetupItemIcon
                     key={`setupItem-${index}`}  // Ensure unique key

@@ -1,5 +1,5 @@
 import React from 'react';
-import {Bomb} from "../../Bomb";
+import {Bomb} from "../../models/Bomb";
 import {MapLevel} from "../../models/MapLevel";
 
 interface BombIconProps {

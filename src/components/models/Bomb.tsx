@@ -1,4 +1,4 @@
-import {BombType} from "./models/BombType";
+import {BombType} from "./BombType";
 import {Floor} from "./Enums";
 
 export class Bomb {

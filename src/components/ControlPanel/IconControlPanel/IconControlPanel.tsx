@@ -1,7 +1,8 @@
 import React, {useState} from 'react';
-import MapPreparationPanel from "./innerPanel/MapPreparationPanel";
-import OperatorPanel from "./innerPanel/OperatorPanel";
+import MapPreparationPanel from "../IconControlPanel/innerPanel/MapPreparationPanel"
+import OperatorPanel from "../IconControlPanel/innerPanel/OperatorPanel"
 import './ControlPanel.css'
+import {isBrowser} from 'react-device-detect';
 
 
 const IconControlPanel = () => {
@@ -11,7 +12,7 @@ const IconControlPanel = () => {
         setIsOpen(!isOpen);
     };
 
-    return (
+    return isBrowser ? (
         <>
             <button onClick={togglePanel} className="hamburger-btn">
                 {isOpen ? "✖" : "☰"}
@@ -21,7 +22,7 @@ const IconControlPanel = () => {
                 <MapPreparationPanel/>
             </div>
         </>
-    );
+    ) : <></>;
 };
 
 export default IconControlPanel;

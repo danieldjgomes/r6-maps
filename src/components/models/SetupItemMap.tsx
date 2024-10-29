@@ -1,6 +1,5 @@
-import {Floor} from "../Enums";
+import {Floor} from "./Enums";
 import {DefenseSetupItemType} from "./DefenseSetupItemType";
-import {R6PlannerOperator} from "../mapViewer/r6PlannerOperator";
 
 
 export class SetupItem {
@@ -21,13 +20,4 @@ export class SetupItemMap extends SetupItem{
         this.type = type;
     }
     type: DefenseSetupItemType | null | undefined
-}
-
-
-export class SetupItemOperator extends SetupItem{
-    constructor(x: number, y: number, floor: Floor, operator : R6PlannerOperator ) {
-        super(x,y,floor)
-        this.operator = operator;
-    }
-    operator : R6PlannerOperator
 }

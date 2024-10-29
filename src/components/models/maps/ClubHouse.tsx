@@ -1,13 +1,13 @@
 import {R6Map} from "../R6Map";
 import {BombSite} from "../BombSite";
 import {MapLevel} from "../MapLevel";
-import {Bomb} from "../../Bomb";
+import {Bomb} from "../Bomb";
 import {BombType} from "../BombType";
 import basementImage from '../../../assets/maps/r6-maps-clubhouse-blueprint-1.jpeg'
 import firstImage from '../../../assets/maps/r6-maps-clubhouse-blueprint-2.jpg'
 import secondImage from '../../../assets/maps/r6-maps-clubhouse-blueprint-3.jpg'
 import roofImage from '../../../assets/maps/r6-maps-clubhouse-blueprint-4.jpg'
-import {Floor} from "../../Enums";
+import {Floor} from "../Enums";
 
 export class ClubHouse extends R6Map {
     constructor() {

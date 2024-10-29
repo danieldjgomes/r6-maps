@@ -1,6 +1,5 @@
 import {BombSite} from "./BombSite";
 import {MapLevel} from "./MapLevel";
-import {Floor} from "../Enums";
 
 export class R6Map {
 

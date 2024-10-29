@@ -1,22 +1,4 @@
-.map-selector-container{
-    padding: 10px;
-    margin-left: 10px;
-}
 
-.map-selector-container select{
-    font-family: 'Roboto', sans-serif; /* Definir uma fonte moderna */
-    color: black; /* Texto preto */
-    background-color: white; /* Fundo branco */
-    font-weight: bold; /* Texto em negrito */
-    padding: 5px; /* Padding para o conforto visual */
-    border: 1px solid #ccc; /* Cor da borda */
-    font-size: 14px; /* Define o tamanho da fonte */
-    outline: none; /* Remove o contorno padrão ao focar */
-    transition: border-color 0.3s ease; /* Suaviza a transição do foco */
-    margin-right: 10px; /* Adiciona espaço entre os selects */
-    align-items: center;
-
-}
 
 @media (max-width: 768px) {
     .map-selector-container select {
