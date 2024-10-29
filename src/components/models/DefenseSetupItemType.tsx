@@ -155,7 +155,7 @@ export class SetupItemManager {
     // Static function to get operator data by name
     static getOperatorDataByName(name: string): R6PlannerOperator | undefined {
         const operators = R6PlannerOperator.getAllOperators();
-        console.log(operators)
+        // console.log(operators)
 
         if (!operators || operators.length === 0) {
             console.error("Operator data not loaded or empty");

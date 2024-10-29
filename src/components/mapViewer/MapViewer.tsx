@@ -222,7 +222,6 @@ const MapViewer: React.FC = () => {
                             <MapIcons bombSites={activeMap.bombSites}
                                       setupItems={setupItems}
                                       iconSize={iconSize}
-                                      interactionState={interactionState}
                                       selectedLevel={activeLevel}
                                       setSetupItems={setSetupItems}
                                       activeBombSite={activeBombSite}

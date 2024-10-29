@@ -4,7 +4,7 @@ import SetupItemIcon from './icons/SetupItemIcon';
 import {SetupItemMap} from '../models/SetupItemMap';
 import {BombSite} from '../models/BombSite';
 import {MapLevel} from '../models/MapLevel';
-import {InteractionState} from "../State/InteractionState";
+import {useInteraction} from "../State/InteractionContext";
 
 interface MapIconsProps {
     bombSites: BombSite[];
@@ -13,7 +13,6 @@ interface MapIconsProps {
     setSetupItems: (item: SetupItemMap[]) => void;
     setIsErasing: (isErasing: boolean) => void;
     selectedLevel: MapLevel;
-    interactionState: InteractionState;
     activeBombSite: BombSite;
 }
 
@@ -23,16 +22,18 @@ const MapIcons: React.FC<MapIconsProps> = ({
                                                iconSize,
                                                selectedLevel,
                                                setSetupItems,
-                                               interactionState,
                                                setIsErasing,
                                                activeBombSite
                                            }) => {
+    const { interactionState, setInteractionState } = useInteraction();
+
+
     const handleIconClick = (erasingWall: SetupItemMap) => {
         if (interactionState.isErasing) {
             setSetupItems(setupItems.filter(wall => wall !== erasingWall));
-        }
-        if (setupItems.length < 1) {
-            setIsErasing(false)
+            if (setupItems.length <= 1){
+                setInteractionState({...interactionState, isErasing: false})
+            }
         }
     };
 
