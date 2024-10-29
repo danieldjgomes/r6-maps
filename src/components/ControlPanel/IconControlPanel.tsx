@@ -1,14 +1,10 @@
 import React, {useState} from 'react';
-import MapPreparationPanel from "../ControlPanel/MapPreparationPanel";
-import OperatorPanel from "../ControlPanel/OperatorPanel";
+import MapPreparationPanel from "./innerPanel/MapPreparationPanel";
+import OperatorPanel from "./innerPanel/OperatorPanel";
 import './ControlPanel.css'
 
 
-interface ControlPanelProps {
-    handleEraser: () => void;
-}
-
-const ControlPanel: React.FC<ControlPanelProps> = ({handleEraser}) => {
+const IconControlPanel = () => {
     const [isOpen, setIsOpen] = useState(false);
 
     const togglePanel = () => {
@@ -20,13 +16,12 @@ const ControlPanel: React.FC<ControlPanelProps> = ({handleEraser}) => {
             <button onClick={togglePanel} className="hamburger-btn">
                 {isOpen ? "✖" : "☰"}
             </button>
-
             <div className={`control-panel fixed-sidebar ${isOpen ? 'open' : ''}`}>
-                <OperatorPanel handleEraser={handleEraser}/>
-                <MapPreparationPanel handleEraser={handleEraser}/>
+                <OperatorPanel/>
+                <MapPreparationPanel/>
             </div>
         </>
     );
 };
 
-export default ControlPanel;
+export default IconControlPanel;

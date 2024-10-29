@@ -191,12 +191,6 @@ const MapViewer: React.FC = () => {
                 selectedLevel={activeLevel}
                 selectedMap={activeMap}
                 selectedBombSite={activeBombSite}
-                handleAddItemSetup={(item) => setInteractionState({
-                    ...interactionState,
-                    itemPlacingType: item,
-                    isPlacingItem: true
-                })}
-                handleEraser={() => setInteractionState({...interactionState, isErasing: !interactionState.isErasing})}
                 setupItems={setupItems}
             />
 

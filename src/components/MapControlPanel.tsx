@@ -5,14 +5,12 @@ import {MapLevel} from "./models/MapLevel";
 import {BombSite} from "./models/BombSite";
 import './mapSelector.css';
 import {FaShareFromSquare} from "react-icons/fa6";
-import ControlPanel from "./ControlPanel/ControlPanel";
-import {DefenseSetupItemType} from "./models/DefenseSetupItemType";
+import IconControlPanel from "./ControlPanel/IconControlPanel";
 import {BrowserView, MobileView, isBrowser, isMobile} from 'react-device-detect';
-import {SetupItem, SetupItemMap} from "./models/SetupItemMap";
+import {SetupItemMap} from "./models/SetupItemMap";
 import ShareWizard from "./mapViewer/ShareWizard/ShareWizard";
 import {ApiService} from "../components/mapViewer/ApiService";
 import {ZippingService} from "../components/mapViewer/ZippingService";
-import MapPreparationPanel from "./ControlPanel/MapPreparationPanel";
 import {useInteraction} from "./state/InteractionContext";
 
 
@@ -24,8 +22,6 @@ interface MapSelectorProps {
     onSelectMap: (currentMap: R6Map) => void;
     onSelectLevel: (mapLevel: MapLevel) => void;
     onSelectBombSite: (bombSite: BombSite) => void;
-    handleEraser: () => void;
-    handleAddItemSetup: (setupItemType: DefenseSetupItemType) => void;
 }
 
 const MapControlPanel: React.FC<MapSelectorProps> = ({
@@ -34,12 +30,12 @@ const MapControlPanel: React.FC<MapSelectorProps> = ({
                                                          onSelectLevel,
                                                          selectedMap,
                                                          onSelectBombSite,
-                                                         handleEraser,
                                                      }) => {
     const [configurationCode, setConfigurationCode] = useState('');
     const [isWizardOpen, setIsWizardOpen] = useState(false);
     const apiService = new ApiService();
     const zippingSevice = new ZippingService()
+    const {interactionState, setInteractionState} = useInteraction();
 
 
     const handleShareClick = () => {
@@ -82,7 +78,7 @@ const MapControlPanel: React.FC<MapSelectorProps> = ({
                         padding: '0 10px',  // Padding horizontal para espaçamento
                     }}
                 >
-                    {isBrowser && <ControlPanel handleEraser={handleEraser}/>}
+                    {isBrowser && <IconControlPanel/>}
 
                     <div className="map-selector-container" style={{display: 'flex', alignItems: 'center'}}>
                         <select onChange={(e) => onSelectMap(allMaps.getMapByName(e.target.value))}>

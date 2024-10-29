@@ -1,14 +1,11 @@
-import {DefenseSetupItemType} from "../models/DefenseSetupItemType";
+import {DefenseSetupItemType} from "../../models/DefenseSetupItemType";
 import React from 'react';
-import {R6PlannerOperator} from "../mapViewer/r6PlannerOperator";
-import './ControlPanel.css'
-import {useInteraction} from "../state/InteractionContext";
+import {R6PlannerOperator} from "../../mapViewer/r6PlannerOperator";
+import '../ControlPanel.css'
+import {useInteraction} from "../../state/InteractionContext";
 
-interface OperatorsPanelProps {
-    handleEraser: () => void;
-}
 
-const OperatorsPanel: React.FC<OperatorsPanelProps> = () => {
+const OperatorsPanel = () => {
     const operators = R6PlannerOperator.getAllOperators();
     const columns = 6;
     const { interactionState, setInteractionState } = useInteraction();
