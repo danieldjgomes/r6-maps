@@ -10,10 +10,7 @@ interface ControlPanelProps {
     handleAddItemSetup: (setupItemType: DefenseSetupItemType) => void;
 }
 
-const ControlPanel: React.FC<ControlPanelProps> = ({
-                                                       handleEraser,
-                                                       handleAddItemSetup
-                                                   }) => {
+const ControlPanel: React.FC<ControlPanelProps> = ({handleEraser, handleAddItemSetup}) => {
     const [isOpen, setIsOpen] = useState(false);
 
     const togglePanel = () => {
@@ -26,10 +23,7 @@ const ControlPanel: React.FC<ControlPanelProps> = ({
                 {isOpen ? "✖" : "☰"}
             </button>
 
-
-            <div
-                className={`control-panel fixed-sidebar ${isOpen ? 'open' : ''}`}
-            >
+            <div className={`control-panel fixed-sidebar ${isOpen ? 'open' : ''}`}>
                 <OperatorPanel handleEraser={handleEraser} handleAddItemSetup={handleAddItemSetup}/>
                 <MapPreparationPanel handleEraser={handleEraser} handleAddItemSetup={handleAddItemSetup}/>
             </div>
