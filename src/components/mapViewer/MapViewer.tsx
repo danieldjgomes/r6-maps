@@ -9,18 +9,13 @@ import {SetupItemMap} from "../models/SetupItemMap";
 import {ApiService} from "./ApiService";
 import {ZippingService} from "./ZippingService";
 import MapIcons from "./MapIcons";
-import {InteractionState} from "./InteractionState";
+import {InteractionState} from "../state/InteractionState";
+import {useInteraction} from "../state/InteractionContext";
 
 const MapViewer: React.FC = () => {
     const allMaps: AllMaps = new AllMaps();
 
-    const [interactionState, setInteractionState] = useState<InteractionState>({
-        isPlacingItem: false,
-        isErasing: false,
-        mouseOverMap: false,
-        dragging: false,
-        itemPlacingType: null
-    });
+    const { interactionState, setInteractionState } = useInteraction();
 
     const [activeMap, setActiveMap] = useState<R6Map>(allMaps.getAllMaps()[0]);
     const [activeLevel, setActiveLevel] = useState<MapLevel>(allMaps.getAllMaps()[0].levels[0]);
@@ -95,7 +90,7 @@ const MapViewer: React.FC = () => {
             const y = event.clientY - rect.top;
             setMousePosition({x, y});
 
-            if (interactionState.dragging && dragStart &&!interactionState.isPlacingItem) {
+            if (interactionState.dragging && dragStart && !interactionState.isPlacingItem && !interactionState.isErasing) {
                 const dx = event.clientX - dragStart.x;
                 const dy = event.clientY - dragStart.y;
                 setImagePosition({x: imageDragOffset .x + dx, y: imageDragOffset .y + dy});
@@ -135,12 +130,12 @@ const MapViewer: React.FC = () => {
     useEffect(() => {
         const handleKeyDown = (event: KeyboardEvent) => {
             if (event.key === 'Escape') {
-                // Cancel item placement and erasing
-                if (interactionState.isPlacingItem) setInteractionState({...interactionState, itemPlacingType: null});
-                setInteractionState({...interactionState, isPlacingItem: false});
-            }
+                if (interactionState.isPlacingItem) {
+                    setInteractionState({...interactionState, itemPlacingType: null, isPlacingItem: false});
+                }
             if (interactionState.isErasing) {
                 setInteractionState({...interactionState, isErasing: false});
+            }
             }
         };
 
@@ -172,7 +167,7 @@ const MapViewer: React.FC = () => {
     };
 
     const handleMapClick = () => {
-        if (interactionState.isPlacingItem && mapImageRef.current && mousePosition) {
+        if (interactionState.isPlacingItem && mapImageRef.current && mousePosition && !interactionState.isErasing) {
             const rect = mapImageRef.current.getBoundingClientRect();
             const adjustedX = (mousePosition.x + xAdjustment) * 100 / rect.width;
             const adjustedY = (mousePosition.y + yAdjustment) * 100 / rect.height;
@@ -183,7 +178,6 @@ const MapViewer: React.FC = () => {
             }
 
             setInteractionState({...interactionState, itemPlacingType: null, isPlacingItem: false});
-
         }
     };
 
@@ -239,6 +233,8 @@ const MapViewer: React.FC = () => {
                                       setSetupItems={setSetupItems}
                                       setIsErasing={(value) => setInteractionState({
                                           ...interactionState,
+                                          isPlacingItem: false,
+                                          itemPlacingType: null,
                                           isErasing: value
                                       })}
                             />

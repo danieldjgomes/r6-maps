@@ -2,15 +2,17 @@ import {DefenseSetupItemType} from "../models/DefenseSetupItemType";
 import React from 'react';
 import {R6PlannerOperator} from "../mapViewer/r6PlannerOperator";
 import './ControlPanel.css'
+import {useInteraction} from "../state/InteractionContext";
 
 interface OperatorsPanelProps {
     handleEraser: () => void;
-    handleAddItemSetup: (setupItemType: DefenseSetupItemType) => void;
 }
 
-const OperatorsPanel: React.FC<OperatorsPanelProps> = ({handleAddItemSetup}) => {
+const OperatorsPanel: React.FC<OperatorsPanelProps> = () => {
     const operators = R6PlannerOperator.getAllOperators();
     const columns = 6;
+    const { interactionState, setInteractionState } = useInteraction();
+
 
     const columnsArr = Array.from({length: columns}, (_, colIndex) =>
         operators.filter((_, index) => index % columns === colIndex)
@@ -32,9 +34,13 @@ const OperatorsPanel: React.FC<OperatorsPanelProps> = ({handleAddItemSetup}) => 
                             <img className={"operator-icon"}
                                  onClick={
                                      () => {
-                                         console.log(op.operator)
-                                         handleAddItemSetup(DefenseSetupItemType[op.operator.name as keyof typeof DefenseSetupItemType])
-
+                                         if (!interactionState.isErasing && !interactionState.dragging) {
+                                             setInteractionState(
+                                                 {...interactionState,
+                                                     isPlacingItem: true,
+                                                     itemPlacingType: DefenseSetupItemType[op.operator.name as keyof typeof DefenseSetupItemType]
+                                                 })
+                                         }
                                      }
                                  }
                                  key={op.operator.name}

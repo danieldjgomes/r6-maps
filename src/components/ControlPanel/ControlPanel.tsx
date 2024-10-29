@@ -1,16 +1,14 @@
 import React, {useState} from 'react';
 import MapPreparationPanel from "../ControlPanel/MapPreparationPanel";
-import {DefenseSetupItemType} from "../models/DefenseSetupItemType";
 import OperatorPanel from "../ControlPanel/OperatorPanel";
 import './ControlPanel.css'
 
 
 interface ControlPanelProps {
     handleEraser: () => void;
-    handleAddItemSetup: (setupItemType: DefenseSetupItemType) => void;
 }
 
-const ControlPanel: React.FC<ControlPanelProps> = ({handleEraser, handleAddItemSetup}) => {
+const ControlPanel: React.FC<ControlPanelProps> = ({handleEraser}) => {
     const [isOpen, setIsOpen] = useState(false);
 
     const togglePanel = () => {
@@ -24,8 +22,8 @@ const ControlPanel: React.FC<ControlPanelProps> = ({handleEraser, handleAddItemS
             </button>
 
             <div className={`control-panel fixed-sidebar ${isOpen ? 'open' : ''}`}>
-                <OperatorPanel handleEraser={handleEraser} handleAddItemSetup={handleAddItemSetup}/>
-                <MapPreparationPanel handleEraser={handleEraser} handleAddItemSetup={handleAddItemSetup}/>
+                <OperatorPanel handleEraser={handleEraser}/>
+                <MapPreparationPanel handleEraser={handleEraser}/>
             </div>
         </>
     );

@@ -4,7 +4,7 @@ import SetupItemIcon from './icons/SetupItemIcon';
 import {SetupItemMap} from '../models/SetupItemMap';
 import {BombSite} from '../models/BombSite';
 import {MapLevel} from '../models/MapLevel';
-import {InteractionState} from "./InteractionState";
+import {InteractionState} from "../state/InteractionState";
 
 interface MapIconsProps {
     bombSites: BombSite[];
