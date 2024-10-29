@@ -31,8 +31,7 @@ const MapPreparationPanel: React.FC<MapPreparationPanelProps> = ({handleAddItemS
                     <img src={HeadHeightIconSVG} onClick={() => handleAddItemSetup(DefenseSetupItemType.HeadHeight)} alt="Head Height"/>
                     <img src={ReinforcementIconSVG} onClick={() => handleAddItemSetup(DefenseSetupItemType.ReinforcementWall)} alt="Wall Reinforcement"/>
                     <img src={HatchIconSVG} onClick={() => handleAddItemSetup(DefenseSetupItemType.ReinforcementHatch)} alt="Hatch Reinforcement"/>
-                    <CiEraser color={"#E0E1DD"} onClick={handleEraser}
-                              style={{width: "35px", height: "35px", cursor: "pointer", backgroundColor: "#23262B"}}/>
+                    <CiEraser className={"eraser-icon"} color={"#E0E1DD"} onClick={handleEraser}/>
                 </div>
             </div>
         </div>

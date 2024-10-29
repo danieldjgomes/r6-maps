@@ -73,6 +73,23 @@
 .setup-items img {
     width: 35px;
     height: 35px;
+    transition: transform 0.3s ease;
+}
+
+.setup-items img:hover {
+    transform: scale(1.5);
+}
+
+.eraser-icon {
+    width: 35px;
+    height: 35px;
+    cursor: pointer;
+    background-color: #23262B;
+    transition: transform 0.3s ease;
+}
+
+.eraser-icon:hover {
+    transform: scale(1.5);
 }
 
 .operator-icon-container {
@@ -82,4 +99,12 @@
     gap: 5px;
     justify-content: center;
     min-height: 100px;
+}
+
+.operator-icon:hover {
+    transform: scale(1.5);
+}
+
+.operator-icon {
+    transition: transform 0.3s ease; /* Adiciona uma transição suave */
 }
