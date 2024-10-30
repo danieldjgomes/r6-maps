@@ -9,7 +9,7 @@ import {SetupItem} from "../models/SetupItemMap";
 import {ApiService} from "./ApiService";
 import {ZippingService} from "./ZippingService";
 import MapIcons from "./MapIcons";
-import {useInteraction} from "../State/InteractionContext";
+import {useInteraction} from "../../stateControl/InteractionContext";
 
 const MapViewer: React.FC = () => {
     const allMaps: AllMaps = new AllMaps();

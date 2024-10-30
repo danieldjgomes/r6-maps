@@ -2,15 +2,15 @@ import React, {useState} from 'react';
 import {R6Map} from "../models/R6Map";
 import {MapLevel} from "../models/MapLevel";
 import {BombSite} from "../models/BombSite";
-import '../MapSelector.css';
+import './MapSelector/MapSelector.css';
 import './HeaderControlPanel.css';
 import {FaShareFromSquare} from "react-icons/fa6";
 import IconControlPanel from "./IconControlPanel/IconControlPanel";
 import {SetupItem} from "../models/SetupItemMap";
-import ShareWizard from "../mapViewer/ShareWizard/ShareWizard";
+import ShareWizard from "./ShareWizard/ShareWizard";
 import {ApiService} from "../mapViewer/ApiService";
 import {ZippingService} from "../mapViewer/ZippingService";
-import MapSelector from '../MapSelector';
+import MapSelector from './MapSelector/MapSelector';
 import {isBrowser} from "react-device-detect";
 
 interface HeaderControlPanelProps {

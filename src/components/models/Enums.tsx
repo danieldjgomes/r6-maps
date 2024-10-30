@@ -1,4 +1,3 @@
-// enums.ts
 export enum MapNames {
     Clubhouse = 'Clubhouse'
     // Adicione mais nomes de mapas aqui

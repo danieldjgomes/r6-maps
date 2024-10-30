@@ -7,7 +7,7 @@ import RotationIconSVG from '../../../../assets/icons/rotation.svg';
 import HatchIconSVG from '../../../../assets/icons/hatch.svg';
 import {CiEraser} from "react-icons/ci";
 import '../ControlPanel.css'
-import {useInteraction} from "../../../State/InteractionContext";
+import {useInteraction} from "../../../../stateControl/InteractionContext";
 
 
 const MapPreparationPanel = () => {
