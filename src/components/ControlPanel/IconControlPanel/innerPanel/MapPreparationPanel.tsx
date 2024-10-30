@@ -5,7 +5,6 @@ import HeadHeightIconSVG from '../../../../assets/icons/head.svg';
 import VaultHeightIconSVG from '../../../../assets/icons/vault.svg';
 import RotationIconSVG from '../../../../assets/icons/rotation.svg';
 import HatchIconSVG from '../../../../assets/icons/hatch.svg';
-import {DefenseSetupItemType} from "../../../models/DefenseSetupItemType";
 import {CiEraser} from "react-icons/ci";
 import '../ControlPanel.css'
 import {useInteraction} from "../../../State/InteractionContext";
@@ -15,10 +14,9 @@ const MapPreparationPanel = () => {
 
     const { interactionState, setInteractionState } = useInteraction();
 
-    const addItemSetupToState = (item: DefenseSetupItemType) => {
+    const addItemSetupToState = (item: string) => {
         setInteractionState(
             {...interactionState,
-                isPlacingItem: true,
                 itemPlacingType: item
             })
     }
@@ -33,12 +31,12 @@ const MapPreparationPanel = () => {
             <div>
                 <div
                     className="setup-items">
-                    <img src={RotationIconSVG} onClick={() => addItemSetupToState(DefenseSetupItemType.Rotation)} alt="Rotate Wall"/>
-                    <img src={VaultHeightIconSVG} onClick={() => addItemSetupToState(DefenseSetupItemType.Vault)} alt="Vault Height"/>
-                    <img src={FootHeightIconSVG} onClick={() => addItemSetupToState(DefenseSetupItemType.FootHeight)} alt="Foot Height"/>
-                    <img src={HeadHeightIconSVG} onClick={() => addItemSetupToState(DefenseSetupItemType.HeadHeight)} alt="Head Height"/>
-                    <img src={ReinforcementIconSVG} onClick={() => addItemSetupToState(DefenseSetupItemType.ReinforcementWall)} alt="Wall Reinforcement"/>
-                    <img src={HatchIconSVG} onClick={() => addItemSetupToState(DefenseSetupItemType.ReinforcementHatch)} alt="Hatch Reinforcement"/>
+                    <img src={RotationIconSVG} onClick={() => addItemSetupToState('Rotation')} alt="Rotate Wall"/>
+                    <img src={VaultHeightIconSVG} onClick={() => addItemSetupToState('Vault')} alt="Vault Height"/>
+                    <img src={FootHeightIconSVG} onClick={() => addItemSetupToState('FootHeight')} alt="Foot Height"/>
+                    <img src={HeadHeightIconSVG} onClick={() => addItemSetupToState('HeadHeight')} alt="Head Height"/>
+                    <img src={ReinforcementIconSVG} onClick={() => addItemSetupToState('ReinforcementWall')} alt="Wall Reinforcement"/>
+                    <img src={HatchIconSVG} onClick={() => addItemSetupToState('ReinforcementHatch')} alt="Hatch Reinforcement"/>
                     <CiEraser className={"eraser-icon"} color={"#E0E1DD"} onClick={() => setInteractionState({...interactionState, isErasing: true})}/>
                 </div>
             </div>

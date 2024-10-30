@@ -1,4 +1,3 @@
-import {DefenseSetupItemType} from "../../../models/DefenseSetupItemType";
 import React from 'react';
 import {R6PlannerOperator} from "../../../mapViewer/r6PlannerOperator";
 import '../ControlPanel.css'
@@ -34,8 +33,7 @@ const OperatorsPanel = () => {
                                          if (!interactionState.isErasing && !interactionState.dragging) {
                                              setInteractionState(
                                                  {...interactionState,
-                                                     isPlacingItem: true,
-                                                     itemPlacingType: DefenseSetupItemType[op.operator.name as keyof typeof DefenseSetupItemType]
+                                                     itemPlacingType: op.operator.name
                                                  })
                                          }
                                      }

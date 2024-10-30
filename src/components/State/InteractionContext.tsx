@@ -10,11 +10,10 @@ const InteractionContext = createContext<InteractionContextType | undefined>(und
 
 export const InteractionProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
     const [interactionState, setInteractionState] = useState<InteractionState>({
-        isPlacingItem: false,
         isErasing: false,
         mouseOverMap: false,
         dragging: false,
-        itemPlacingType: null
+        itemPlacingType: ''
     });
 
     return (

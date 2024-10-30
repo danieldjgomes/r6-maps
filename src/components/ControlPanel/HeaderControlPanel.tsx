@@ -1,13 +1,12 @@
 import React, {useState} from 'react';
 import {R6Map} from "../models/R6Map";
-import {AllMaps} from "../models/AllMaps";
 import {MapLevel} from "../models/MapLevel";
 import {BombSite} from "../models/BombSite";
 import '../MapSelector.css';
 import './HeaderControlPanel.css';
 import {FaShareFromSquare} from "react-icons/fa6";
 import IconControlPanel from "./IconControlPanel/IconControlPanel";
-import {SetupItemMap} from "../models/SetupItemMap";
+import {SetupItem} from "../models/SetupItemMap";
 import ShareWizard from "../mapViewer/ShareWizard/ShareWizard";
 import {ApiService} from "../mapViewer/ApiService";
 import {ZippingService} from "../mapViewer/ZippingService";
@@ -15,7 +14,7 @@ import MapSelector from '../MapSelector';
 import {isBrowser} from "react-device-detect";
 
 interface HeaderControlPanelProps {
-    setupItems: SetupItemMap[];
+    setupItems: SetupItem[];
     selectedMap: R6Map;
     selectedLevel: MapLevel;
     selectedBombSite: BombSite;

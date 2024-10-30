@@ -1,34 +1,33 @@
 import React from 'react';
 import BombIcon from './icons/BombIcon';
 import SetupItemIcon from './icons/SetupItemIcon';
-import {SetupItemMap} from '../models/SetupItemMap';
+import {SetupItem} from '../models/SetupItemMap';
 import {BombSite} from '../models/BombSite';
 import {MapLevel} from '../models/MapLevel';
 import {useInteraction} from "../State/InteractionContext";
 
 interface MapIconsProps {
     bombSites: BombSite[];
-    setupItems: SetupItemMap[];
+    setupItems: SetupItem[];
     iconSize: number;
-    setSetupItems: (item: SetupItemMap[]) => void;
+    setSetupItems: (item: SetupItem[]) => void;
     setIsErasing: (isErasing: boolean) => void;
     selectedLevel: MapLevel;
     activeBombSite: BombSite;
 }
 
 const MapIcons: React.FC<MapIconsProps> = ({
-                                               bombSites,
+
                                                setupItems,
                                                iconSize,
                                                selectedLevel,
                                                setSetupItems,
-                                               setIsErasing,
                                                activeBombSite
                                            }) => {
     const { interactionState, setInteractionState } = useInteraction();
 
 
-    const handleIconClick = (erasingWall: SetupItemMap) => {
+    const handleIconClick = (erasingWall: SetupItem) => {
         if (interactionState.isErasing) {
             setSetupItems(setupItems.filter(wall => wall !== erasingWall));
             if (setupItems.length <= 1){
@@ -41,7 +40,7 @@ const MapIcons: React.FC<MapIconsProps> = ({
         <div
             className="icon-container"
             style={{
-                pointerEvents: interactionState.isPlacingItem ? 'none' : 'all'
+                pointerEvents: interactionState.itemPlacingType != '' ? 'none' : 'all'
             }}
         >
             {activeBombSite.bombs.map((bomb, index) => (

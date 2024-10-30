@@ -1,10 +1,10 @@
 import LZString from "lz-string";
 import {R6Map} from "../models/R6Map";
-import {SetupItemMap} from "../models/SetupItemMap";
+import {SetupItem} from "../models/SetupItemMap";
 
 export class ZippingService {
 
-    compress(selectedMap: R6Map, setupItems: SetupItemMap[]): string {
+    compress(selectedMap: R6Map, setupItems: SetupItem[]): string {
         const configuration = {
             map: selectedMap.name,
             bombSites: selectedMap.bombSites.map((site) => ({
@@ -27,7 +27,7 @@ export class ZippingService {
     }
 
     decompress(compressedText: string) : string {
-        return LZString.decompressFromEncodedURIComponent(compressedText); // Descompacta os dados
+        return LZString.decompressFromEncodedURIComponent(compressedText);
 
     }
 }

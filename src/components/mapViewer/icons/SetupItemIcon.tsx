@@ -1,11 +1,11 @@
 import React from 'react';
-import {SetupItemDetails, DefenseSetupItemType, SetupItemManager} from '../../models/DefenseSetupItemType';
-import {SetupItemMap} from "../../models/SetupItemMap";
+import {SetupItemManager} from '../../models/DefenseSetupItemType';
+import {SetupItem} from "../../models/SetupItemMap";
 
 import Tooltip from "../Tooltip";
 
 interface SetupIconProps {
-    item: SetupItemMap
+    item: SetupItem
     level: string;
     iconSize: number;
     onClick?: () => void
@@ -15,7 +15,6 @@ interface SetupIconProps {
 const SetupItemIcon: React.FC<SetupIconProps> = ({item, level, iconSize, onClick,isErasing = false }) => {
     if (item.floor !== level) return null;
 
-    // @ts-ignore
     const itemDetails = SetupItemManager.getSetupItemByName(item.type)
 
 
