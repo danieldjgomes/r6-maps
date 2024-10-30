@@ -1,6 +1,6 @@
 import React from 'react';
-import {Bomb} from "../../models/Bomb";
-import {MapLevel} from "../../models/MapLevel";
+import {Bomb} from "../../Models/Bomb";
+import {MapLevel} from "../../Models/MapLevel";
 
 interface BombIconProps {
     bomb: Bomb;

@@ -1,9 +1,9 @@
 import React from 'react';
-import BombIcon from './icons/BombIcon';
-import SetupItemIcon from './icons/SetupItemIcon';
-import {SetupItem} from '../models/SetupItemMap';
-import {BombSite} from '../models/BombSite';
-import {MapLevel} from '../models/MapLevel';
+import BombIcon from './Icons/BombIcon';
+import SetupItemIcon from './Icons/SetupItemIcon';
+import {SetupItem} from '../Models/SetupItemMap';
+import {BombSite} from '../Models/BombSite';
+import {MapLevel} from '../Models/MapLevel';
 import {useInteraction} from "../../stateControl/InteractionContext";
 
 interface MapIconsProps {

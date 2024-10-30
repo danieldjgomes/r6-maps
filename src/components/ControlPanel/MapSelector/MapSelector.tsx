@@ -1,8 +1,8 @@
 import React from 'react';
-import {R6Map} from "../../models/R6Map";
-import {AllMaps} from "../../models/AllMaps";
-import {MapLevel} from "../../models/MapLevel";
-import {BombSite} from "../../models/BombSite";
+import {R6Map} from "../../Models/R6Map";
+import {AllMaps} from "../../Models/AllMaps";
+import {MapLevel} from "../../Models/MapLevel";
+import {BombSite} from "../../Models/BombSite";
 import '../HeaderControlPanel.css'
 
 interface MapSelectorProps {

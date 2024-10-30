@@ -1,13 +1,13 @@
 import React, {useEffect, useRef, useState} from 'react';
 import './MapViewer.css';
 import HeaderControlPanel from '../ControlPanel/HeaderControlPanel';
-import {R6Map} from "../models/R6Map";
-import {AllMaps} from "../models/AllMaps";
-import {MapLevel} from "../models/MapLevel";
-import {BombSite} from "../models/BombSite";
-import {SetupItem} from "../models/SetupItemMap";
-import {ApiService} from "./ApiService";
-import {ZippingService} from "./ZippingService";
+import {R6Map} from "../Models/R6Map";
+import {AllMaps} from "../Models/AllMaps";
+import {MapLevel} from "../Models/MapLevel";
+import {BombSite} from "../Models/BombSite";
+import {SetupItem} from "../Models/SetupItemMap";
+import {ApiService} from "../Services/ApiService";
+import {ZippingService} from "../Services/ZippingService";
 import MapIcons from "./MapIcons";
 import {useInteraction} from "../../stateControl/InteractionContext";
 

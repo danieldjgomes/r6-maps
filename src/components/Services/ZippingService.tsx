@@ -1,6 +1,6 @@
 import LZString from "lz-string";
-import {R6Map} from "../models/R6Map";
-import {SetupItem} from "../models/SetupItemMap";
+import {R6Map} from "../Models/R6Map";
+import {SetupItem} from "../Models/SetupItemMap";
 
 export class ZippingService {
 

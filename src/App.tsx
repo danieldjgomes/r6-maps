@@ -1,5 +1,5 @@
 import React from 'react';
-import MapViewer from './components/mapViewer/MapViewer';
+import MapViewer from './components/MapViewer/MapViewer';
 import {InteractionProvider} from "./stateControl/InteractionContext";
 
 const App: React.FC = () => {

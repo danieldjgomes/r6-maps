@@ -1,5 +1,5 @@
 import React from 'react';
-import {R6PlannerOperator} from "../../../mapViewer/r6PlannerOperator";
+import {R6PlannerOperator} from "../../../MapViewer/r6PlannerOperator";
 import '../ControlPanel.css'
 import {useInteraction} from "../../../../stateControl/InteractionContext";
 

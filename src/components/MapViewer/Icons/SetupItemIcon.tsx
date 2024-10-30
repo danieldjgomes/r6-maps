@@ -1,6 +1,6 @@
 import React from 'react';
-import {SetupItemManager} from '../../models/DefenseSetupItemType';
-import {SetupItem} from "../../models/SetupItemMap";
+import {SetupItemManager} from '../../Models/DefenseSetupItemType';
+import {SetupItem} from "../../Models/SetupItemMap";
 
 import Tooltip from "../Tooltip";
 

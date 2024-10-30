@@ -10,7 +10,7 @@ import VaultImage from '../../assets/images/vault_wall.jpeg';
 import ReinforcementHatchImage from '../../assets/images/reinforcement_hatch.jpeg';
 import ReinforcementWallImage from '../../assets/images/reinforcement_wall.jpeg';
 import ReinforcementIcon from '../../assets/icons/reinforcement.svg';
-import { R6PlannerOperator } from "../mapViewer/r6PlannerOperator";
+import { R6PlannerOperator } from "../MapViewer/r6PlannerOperator";
 
 const DEFAULT_SIZE = { width: 2.7, height: 2.7 };
 
