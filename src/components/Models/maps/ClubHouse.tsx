@@ -3,10 +3,10 @@ import {BombSite} from "../BombSite";
 import {MapLevel} from "../MapLevel";
 import {Bomb} from "../Bomb";
 import {BombType} from "../BombType";
-import basementImage from '../../../assets/maps/r6-maps-clubhouse-blueprint-1.jpeg'
-import firstImage from '../../../assets/maps/r6-maps-clubhouse-blueprint-2.jpg'
-import secondImage from '../../../assets/maps/r6-maps-clubhouse-blueprint-3.jpg'
-import roofImage from '../../../assets/maps/r6-maps-clubhouse-blueprint-4.jpg'
+import clubHouseBasementImage from '../../../assets/maps/r6-maps-clubhouse-blueprint-1.jpeg'
+import clubHouseFirstImage from '../../../assets/maps/r6-maps-clubhouse-blueprint-2.jpg'
+import clubHouseSecondImage from '../../../assets/maps/r6-maps-clubhouse-blueprint-3.jpg'
+import clubHouseRoofImage from '../../../assets/maps/r6-maps-clubhouse-blueprint-4.jpg'
 import {Floor} from "../Enums";
 
 export class ClubHouse extends R6Map {
@@ -30,10 +30,10 @@ export class ClubHouse extends R6Map {
 
 
         let maps: MapLevel[] = [
-            new MapLevel(basementImage, Floor.Basement),
-            new MapLevel(firstImage, Floor.FirstFloor),
-            new MapLevel(secondImage, Floor.SecondFloor),
-            new MapLevel(roofImage, Floor.Roof),
+            new MapLevel(clubHouseBasementImage, Floor.Basement),
+            new MapLevel(clubHouseFirstImage, Floor.FirstFloor),
+            new MapLevel(clubHouseSecondImage, Floor.SecondFloor),
+            new MapLevel(clubHouseRoofImage, Floor.Roof),
         ]
 
         let arsenalChurch = new BombSite(   arsenalChurchBombs, "Church and Arsenal Room");
@@ -42,6 +42,6 @@ export class ClubHouse extends R6Map {
         let cctv = new BombSite(cctvDinheiroBombs, "CCTV e Dinheiro")
 
 
-        super("Club House", "CH", [arsenalChurch, barStage, gymbedrom, cctv], maps);
+        super("Club House",  [arsenalChurch, barStage, gymbedrom, cctv], maps);
     }
 }
